@@ -1,0 +1,58 @@
+import { Testimonial } from '../types';
+
+export const testimonials: Testimonial[] = [
+  {
+    id: 1,
+    name: 'Sarah Johnson',
+    role: 'Marketing Director',
+    company: 'TechCorp',
+    avatar: 'https://i.pravatar.cc/150?img=1',
+    content: 'This AI tool has transformed our content creation process. We\'ve increased productivity by 300%!',
+    rating: 5,
+  },
+  {
+    id: 2,
+    name: 'Michael Chen',
+    role: 'CEO',
+    company: 'StartupX',
+    avatar: 'https://i.pravatar.cc/150?img=2',
+    content: 'The best investment we\'ve made this year. The ROI is incredible and the support team is outstanding.',
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: 'Emily Rodriguez',
+    role: 'Product Manager',
+    company: 'InnovateLabs',
+    avatar: 'https://i.pravatar.cc/150?img=3',
+    content: 'Intuitive interface, powerful features. Our entire team adopted it within days.',
+    rating: 5,
+  },
+  {
+    id: 4,
+    name: 'David Park',
+    role: 'Creative Director',
+    company: 'DesignStudio',
+    avatar: 'https://i.pravatar.cc/150?img=4',
+    content: 'Finally, an AI tool that understands creative workflows. Game changer!',
+    rating: 5,
+  },
+  {
+    id: 5,
+    name: 'Lisa Anderson',
+    role: 'CTO',
+    company: 'DataDriven',
+    avatar: 'https://i.pravatar.cc/150?img=5',
+    content: 'Seamless integration with our existing tools. The API is well-documented and reliable.',
+    rating: 5,
+  },
+  {
+    id: 6,
+    name: 'James Wilson',
+    role: 'Founder',
+    company: 'GrowthHacker',
+    avatar: 'https://i.pravatar.cc/150?img=6',
+    content: 'From ideation to execution, this tool covers everything. Highly recommended!',
+    rating: 5,
+  },
+];

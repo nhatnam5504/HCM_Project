@@ -1,0 +1,32 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Quizzes collection (read-only for users)
+    match /quizzes/{quizId} {
+      allow read: if true;
+      allow write: if false; // Admin only via Firebase Console
+      
+      // Questions subcollection
+      match /questions/{questionId} {
+        allow read: if true;
+        allow write: if false; // Admin only
+      }
+    }
+    
+    // Submissions collection (users can create only)
+    match /submissions/{submissionId} {
+      allow read: if false; // Private
+      allow create: if true; // Anyone can submit quiz results
+      allow update, delete: if false;
+    }
+    
+    // High scores collection (read for leaderboard, create for new scores)
+    match /highscores/{scoreId} {
+      allow read: if true; // Public leaderboard
+      allow create: if true; // Anyone can add their score
+      allow update, delete: if false;
+    }
+  }
+}
