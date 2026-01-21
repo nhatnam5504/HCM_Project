@@ -1,1192 +1,1681 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Clock,
   Trophy,
-  AlertCircle,
-  CheckCircle,
   X,
   Play,
-  Lightbulb,
-  Target,
-  Zap,
-} from "lucide-react";
+  RotateCcw,
+  Users,
+  Gift,
+  Bomb,
+  Star,
+  ChevronRight,
+  Check,
+  AlertTriangle,
+  HelpCircle,
+  Shuffle,
+  ArrowRight,
+  Hand,
+} from 'lucide-react';
+import {
+  TeamId,
+  TeamState,
+  TurnState,
+  QuestionStatus,
+  GameState,
+  Question,
+  DrawnCard,
+  DEFAULT_EXPLOSION_RATES,
+  BackupQuestion,
+} from '../types/meono';
+import {
+  allQuestions,
+  getQuestionsWithLetters,
+  getRandomBackupQuestion,
+} from '../data/meonoQuestions';
 
-// Instructions Modal Component
-const InstructionsModal: React.FC<{
-  game: "game1" | "game2";
-  onClose: () => void;
-  onStart: () => void;
-}> = ({ game, onClose, onStart }) => {
-  const instructions =
-    game === "game1"
-      ? {
-          title: "🌑 Siêu thị Tem Phiếu",
-          subtitle: "Đêm Trước Đổi Mới (1985)",
-          objective: "Chọn đúng các món đồ thiết yếu trước khi hết thời gian!",
-          rules: [
-            {
-              icon: "⏰",
-              title: "Thời gian",
-              desc: "Bạn có 90 giây để chọn món đồ",
-            },
-            {
-              icon: "✅",
-              title: "Món thiết yếu",
-              desc: "Gạo, Thịt, Cá, Rau củ, Vải, Xà phòng... (+10 điểm)",
-            },
-            {
-              icon: "❌",
-              title: "Món không thiết yếu",
-              desc: "Bánh kẹo, Đồ chơi, Tivi, Máy ảnh, Trang sức... (-5 điểm)",
-            },
-            {
-              icon: "🎯",
-              title: "Mục tiêu",
-              desc: "Chọn 15 món từ 50 item, ưu tiên món thiết yếu để đạt điểm cao nhất!",
-            },
-          ],
-          tips: [
-            "Trong thời kỳ khủng hoảng, người dân chỉ quan tâm nhu yếu phẩm",
-            "Tem phiếu bị giới hạn, hãy chọn thông minh!",
-            "Càng chọn đúng món thiết yếu, điểm số càng cao",
-          ],
-        }
-      : {
-          title: "⚡ Nhà Hoạch Định Chiến Lược",
-          subtitle: "Đại Hội VI (1986)",
-          objective: "Phân loại 50 item vào 3 giỏ ưu tiên trong 120 giây!",
-          rules: [
-            {
-              icon: "🗂️",
-              title: "3 Giỏ Ưu Tiên",
-              desc: "Lương thực, Hàng tiêu dùng, Hàng xuất khẩu",
-            },
-            {
-              icon: "✅",
-              title: "Kéo đúng",
-              desc: "Item vào giỏ đúng loại (+10 điểm)",
-            },
-            {
-              icon: "⚠️",
-              title: "Kéo sai",
-              desc: "Item sai loại hoặc Công nghiệp nặng (-5 điểm)",
-            },
-            {
-              icon: "⏱️",
-              title: "Thời gian",
-              desc: "120 giây để phân loại tất cả các item",
-            },
-          ],
-          tips: [
-            "Đại hội VI chuyển hướng từ công nghiệp nặng sang nông nghiệp",
-            "Ưu tiên: Lương thực thực phẩm, Hàng tiêu dùng, Hàng xuất khẩu",
-            "Tránh kéo Máy móc hạng nặng và Than đá vào giỏ!",
-            "Phân loại nhanh để đạt điểm cao trước khi hết giờ!",
-          ],
-        };
+// ===== CONSTANTS =====
+const TEAM_COLORS: Record<TeamId, string> = {
+  A: 'from-red-500 to-red-600',
+  B: 'from-blue-500 to-blue-600',
+  C: 'from-green-500 to-green-600',
+  D: 'from-purple-500 to-purple-600',
+};
+
+const TEAM_BG_COLORS: Record<TeamId, string> = {
+  A: 'bg-red-100 border-red-400',
+  B: 'bg-blue-100 border-blue-400',
+  C: 'bg-green-100 border-green-400',
+  D: 'bg-purple-100 border-purple-400',
+};
+
+const INITIAL_PRIZE_COUNT = 8;
+const WIN_THRESHOLD = 20;
+const MAX_DRAWS = 4;
+
+// ===== HELPER FUNCTIONS =====
+function getExplosionRate(drawCount: number, modifier: number): { point: number; explosion: number } {
+  const key = `draw${drawCount}` as keyof typeof DEFAULT_EXPLOSION_RATES;
+  const base = DEFAULT_EXPLOSION_RATES[key] || DEFAULT_EXPLOSION_RATES.draw5;
+  const adjustedExplosion = Math.min(100, Math.max(0, base.explosion + modifier));
+  return {
+    point: 100 - adjustedExplosion,
+    explosion: adjustedExplosion,
+  };
+}
+
+function getModifierForNextTurn(stoppedPoints: number): number {
+  if (stoppedPoints < 10) return 0; // Reset
+  if (stoppedPoints < 13) return 10; // +10%
+  if (stoppedPoints < 16) return 20; // +20%
+  return 0; // >= 16: giữ nguyên
+}
+
+function drawCard(explosionChance: number): DrawnCard {
+  const roll = Math.random() * 100;
+  if (roll < explosionChance) {
+    return { type: 'EXPLOSION' };
+  }
+  const points = Math.floor(Math.random() * 5) + 1;
+  return { type: 'POINT', points };
+}
+
+function getRandomInitialPoints(): number {
+  return Math.floor(Math.random() * 5) + 1;
+}
+
+function initializeTeams(): Record<TeamId, TeamState> {
+  return {
+    A: { id: 'A', name: 'Nhóm A', totalScore: 0, explosionModifier: 0, hasWonPrize: false },
+    B: { id: 'B', name: 'Nhóm B', totalScore: 0, explosionModifier: 0, hasWonPrize: false },
+    C: { id: 'C', name: 'Nhóm C', totalScore: 0, explosionModifier: 0, hasWonPrize: false },
+    D: { id: 'D', name: 'Nhóm D', totalScore: 0, explosionModifier: 0, hasWonPrize: false },
+  };
+}
+
+function initializeQuestions(): QuestionStatus[] {
+  const questionsWithLetters = getQuestionsWithLetters();
+  return questionsWithLetters.map(({ letter, question }) => ({
+    id: question.id,
+    letter,
+    used: false,
+    question,
+  }));
+}
+
+// ===== QUESTION TYPE COMPONENTS =====
+
+// Component: Ghép câu trả lời
+const MatchingQuestionComponent: React.FC<{
+  question: Question;
+  onAnswer: (correct: boolean) => void;
+}> = ({ question, onAnswer }) => {
+  if (question.type !== 'GHEP_CAU') return null;
+
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
+  const [selectedGoal, setSelectedGoal] = useState<string | null>(null);
+  const [selectedResult, setSelectedResult] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = () => {
+    if (!selectedAction || !selectedGoal || !selectedResult) return;
+    setSubmitted(true);
+    const isCorrect =
+      selectedAction === question.correctAnswer.action &&
+      selectedGoal === question.correctAnswer.goal &&
+      selectedResult === question.correctAnswer.result;
+    setTimeout(() => onAnswer(isCorrect), 1500);
+  };
+
+  const isComplete = selectedAction && selectedGoal && selectedResult;
+
+  return (
+    <div className="space-y-6">
+      <div className="text-center">
+        <span className="inline-block px-4 py-2 bg-yellow-100 rounded-full text-sm font-semibold text-yellow-800">
+          {question.context}
+        </span>
+        <h3 className="text-xl font-bold mt-3 text-gray-800">Ghép thành chuỗi logic đúng</h3>
+        <p className="text-gray-600 text-sm mt-1">Hành động → Mục đích → Kết quả</p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-4">
+        {/* Actions */}
+        <div className="space-y-2">
+          <h4 className="font-semibold text-center text-gray-700 mb-3">🎯 Hành động</h4>
+          {question.actions.map((action) => (
+            <button
+              key={action}
+              onClick={() => !submitted && setSelectedAction(action)}
+              disabled={submitted}
+              className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${
+                selectedAction === action
+                  ? 'border-red-500 bg-red-50 text-red-800 font-bold'
+                  : 'border-gray-300 hover:border-red-400 bg-white text-gray-800'
+              } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
+            >
+              {action}
+            </button>
+          ))}
+        </div>
+
+        {/* Goals */}
+        <div className="space-y-2">
+          <h4 className="font-semibold text-center text-gray-700 mb-3">🎯 Mục đích</h4>
+          {question.goals.map((goal) => (
+            <button
+              key={goal}
+              onClick={() => !submitted && setSelectedGoal(goal)}
+              disabled={submitted}
+              className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${
+                selectedGoal === goal
+                  ? 'border-yellow-500 bg-yellow-50 text-yellow-800 font-bold'
+                  : 'border-gray-300 hover:border-yellow-400 bg-white text-gray-800'
+              } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
+            >
+              {goal}
+            </button>
+          ))}
+        </div>
+
+        {/* Results */}
+        <div className="space-y-2">
+          <h4 className="font-semibold text-center text-gray-700 mb-3">✨ Kết quả</h4>
+          {question.results.map((result) => (
+            <button
+              key={result}
+              onClick={() => !submitted && setSelectedResult(result)}
+              disabled={submitted}
+              className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${
+                selectedResult === result
+                  ? 'border-green-500 bg-green-50 text-green-800 font-bold'
+                  : 'border-gray-300 hover:border-green-400 bg-white text-gray-800'
+              } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
+            >
+              {result}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Selected chain preview */}
+      {isComplete && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-red-50 via-yellow-50 to-green-50 p-4 rounded-xl border-2 border-yellow-300"
+        >
+          <p className="text-center text-sm text-gray-600 mb-2">Chuỗi bạn chọn:</p>
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <span className="px-3 py-1 bg-red-100 rounded-lg text-red-700 text-sm font-medium">
+              {selectedAction}
+            </span>
+            <ArrowRight className="w-4 h-4 text-gray-400" />
+            <span className="px-3 py-1 bg-yellow-100 rounded-lg text-yellow-700 text-sm font-medium">
+              {selectedGoal}
+            </span>
+            <ArrowRight className="w-4 h-4 text-gray-400" />
+            <span className="px-3 py-1 bg-green-100 rounded-lg text-green-700 text-sm font-medium">
+              {selectedResult}
+            </span>
+          </div>
+        </motion.div>
+      )}
+
+      {!submitted && (
+        <button
+          onClick={handleSubmit}
+          disabled={!isComplete}
+          className={`w-full py-3 rounded-xl font-bold text-lg transition-all ${
+            isComplete
+              ? 'bg-gradient-to-r from-red-600 to-yellow-600 text-white hover:shadow-lg'
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+          }`}
+        >
+          Xác nhận
+        </button>
+      )}
+
+      {submitted && (
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="text-center py-4"
+        >
+          <div className="text-4xl mb-2">⏳</div>
+          <p className="text-gray-600">Đang kiểm tra...</p>
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+// Component: Trả lời 3 câu hỏi liên tiếp
+const MultipleChoiceQuestionComponent: React.FC<{
+  question: Question;
+  onAnswer: (correct: boolean) => void;
+}> = ({ question, onAnswer }) => {
+  if (question.type !== 'TRA_LOI') return null;
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [submitted, setSubmitted] = useState(false);
+
+  const currentQ = question.questions[currentIndex];
+
+  const handleSelect = (optionIndex: number) => {
+    if (submitted) return;
+
+    const newAnswers = [...answers, optionIndex];
+    setAnswers(newAnswers);
+
+    if (currentIndex < question.questions.length - 1) {
+      setTimeout(() => setCurrentIndex(currentIndex + 1), 300);
+    } else {
+      setSubmitted(true);
+      // Check if all correct
+      const allCorrect = newAnswers.every(
+        (ans, idx) => ans === question.questions[idx].correctIndex
+      );
+      setTimeout(() => onAnswer(allCorrect), 1500);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="text-center">
+        <span className="inline-block px-4 py-2 bg-blue-100 rounded-full text-sm font-semibold text-blue-800">
+          {question.context}
+        </span>
+        <h3 className="text-xl font-bold mt-3 text-gray-800">Trả lời 3 câu liên tiếp</h3>
+        <p className="text-gray-600 text-sm mt-1">Phải đúng cả 3 câu mới PASS</p>
+      </div>
+
+      {/* Progress */}
+      <div className="flex justify-center gap-2">
+        {question.questions.map((_, idx) => (
+          <div
+            key={idx}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
+              idx < answers.length
+                ? 'bg-green-500 text-white'
+                : idx === currentIndex
+                ? 'bg-yellow-500 text-white animate-pulse'
+                : 'bg-gray-200 text-gray-500'
+            }`}
+          >
+            {idx + 1}
+          </div>
+        ))}
+      </div>
+
+      {!submitted && currentQ && (
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-4"
+        >
+          <div className="bg-white p-6 rounded-xl border-2 border-gray-200 shadow-sm">
+            <p className="text-lg font-semibold text-gray-800 text-center">{currentQ.question}</p>
+          </div>
+
+          <div className="space-y-3">
+            {currentQ.options.map((option, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleSelect(idx)}
+                className="w-full p-4 rounded-xl border-2 border-gray-300 bg-white hover:border-yellow-500 hover:bg-yellow-50 transition-all text-left text-base font-medium text-gray-800"
+              >
+                <span className="inline-block w-8 h-8 rounded-full bg-blue-100 text-blue-800 text-center leading-8 mr-3 font-bold">
+                  {String.fromCharCode(65 + idx)}
+                </span>
+                {option}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {submitted && (
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="text-center py-8"
+        >
+          <div className="text-5xl mb-3">⏳</div>
+          <p className="text-gray-600 text-lg">Đang kiểm tra kết quả...</p>
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+// Component: Mô phỏng đường Bác đi
+const PathQuestionComponent: React.FC<{
+  question: Question;
+  onAnswer: (correct: boolean) => void;
+}> = ({ question, onAnswer }) => {
+  if (question.type !== 'MO_PHONG') return null;
+
+  const [selectedCards, setSelectedCards] = useState<string[]>([]);
+  const [submitted, setSubmitted] = useState(false);
+
+  const shuffledCards = useMemo(
+    () => [...question.allCards].sort(() => Math.random() - 0.5),
+    [question.allCards]
+  );
+
+  const toggleCard = (card: string) => {
+    if (submitted) return;
+    if (selectedCards.includes(card)) {
+      setSelectedCards(selectedCards.filter((c) => c !== card));
+    } else {
+      setSelectedCards([...selectedCards, card]);
+    }
+  };
+
+  const moveUp = (index: number) => {
+    if (index === 0) return;
+    const newArr = [...selectedCards];
+    [newArr[index - 1], newArr[index]] = [newArr[index], newArr[index - 1]];
+    setSelectedCards(newArr);
+  };
+
+  const moveDown = (index: number) => {
+    if (index === selectedCards.length - 1) return;
+    const newArr = [...selectedCards];
+    [newArr[index], newArr[index + 1]] = [newArr[index + 1], newArr[index]];
+    setSelectedCards(newArr);
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    const isCorrect =
+      selectedCards.length === question.correctSequence.length &&
+      selectedCards.every((card, idx) => card === question.correctSequence[idx]);
+    setTimeout(() => onAnswer(isCorrect), 1500);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="text-center">
+        <span className="inline-block px-4 py-2 bg-purple-100 rounded-full text-sm font-semibold text-purple-800">
+          {question.context}
+        </span>
+        <h3 className="text-xl font-bold mt-3 text-gray-800">Mô phỏng đường Bác đi</h3>
+        <p className="text-gray-600 text-sm mt-1">Chọn và sắp xếp đúng trình tự</p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Available cards */}
+        <div>
+          <h4 className="font-semibold text-gray-700 mb-3 text-center">📋 Các thẻ có sẵn</h4>
+          <div className="space-y-2">
+            {shuffledCards.map((card) => {
+              const isSelected = selectedCards.includes(card);
+              return (
+                <button
+                  key={card}
+                  onClick={() => toggleCard(card)}
+                  disabled={submitted}
+                  className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${
+                    isSelected
+                      ? 'border-purple-500 bg-purple-100 text-purple-800 font-bold'
+                      : 'border-gray-300 hover:border-purple-400 bg-white text-gray-800'
+                  } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
+                >
+                  {isSelected ? '✓ ' : '+ '}
+                  {card}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Selected sequence */}
+        <div>
+          <h4 className="font-semibold text-gray-700 mb-3 text-center">📍 Trình tự đã chọn</h4>
+          {selectedCards.length === 0 ? (
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center text-gray-500">
+              Chọn thẻ từ bên trái
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {selectedCards.map((card, idx) => (
+                <div
+                  key={card}
+                  className="flex items-center gap-2 p-3 bg-purple-50 border-2 border-purple-300 rounded-lg"
+                >
+                  <span className="w-6 h-6 bg-purple-600 text-white rounded-full text-xs flex items-center justify-center font-bold">
+                    {idx + 1}
+                  </span>
+                  <span className="flex-1 text-base font-semibold text-gray-800">{card}</span>
+                  {!submitted && (
+                    <div className="flex gap-1">
+                      <button
+                        onClick={() => moveUp(idx)}
+                        className="p-1 hover:bg-purple-200 rounded"
+                        disabled={idx === 0}
+                      >
+                        ↑
+                      </button>
+                      <button
+                        onClick={() => moveDown(idx)}
+                        className="p-1 hover:bg-purple-200 rounded"
+                        disabled={idx === selectedCards.length - 1}
+                      >
+                        ↓
+                      </button>
+                      <button
+                        onClick={() => toggleCard(card)}
+                        className="p-1 hover:bg-red-200 rounded text-red-600"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {!submitted && (
+        <button
+          onClick={handleSubmit}
+          disabled={selectedCards.length === 0}
+          className={`w-full py-3 rounded-xl font-bold text-lg transition-all ${
+            selectedCards.length > 0
+              ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg'
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+          }`}
+        >
+          Xác nhận trình tự
+        </button>
+      )}
+
+      {submitted && (
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="text-center py-4"
+        >
+          <div className="text-4xl mb-2">⏳</div>
+          <p className="text-gray-600">Đang kiểm tra...</p>
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+// Component: Ghép hình với ý nghĩa
+const ImageMatchQuestionComponent: React.FC<{
+  question: Question;
+  onAnswer: (correct: boolean) => void;
+}> = ({ question, onAnswer }) => {
+  if (question.type !== 'GHEP_HINH') return null;
+
+  const [matches, setMatches] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const correctPairs = question.pairs.filter((p) => p.isCorrect);
+  const allMeanings = useMemo(
+    () => [...question.pairs.map((p) => p.meaning)].sort(() => Math.random() - 0.5),
+    [question.pairs]
+  );
+
+  const handleMatch = (imageLabel: string, meaning: string) => {
+    if (submitted) return;
+    setMatches({ ...matches, [imageLabel]: meaning });
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    // Check if all correct pairs are matched correctly
+    const correctCount = correctPairs.filter(
+      (pair) => matches[pair.label] === pair.meaning
+    ).length;
+    const isCorrect = correctCount === question.correctPairsCount;
+    setTimeout(() => onAnswer(isCorrect), 1500);
+  };
+
+  const matchedMeanings = Object.values(matches);
+  const isComplete = Object.keys(matches).length >= question.correctPairsCount;
+
+  return (
+    <div className="space-y-6">
+      <div className="text-center">
+        <span className="inline-block px-4 py-2 bg-orange-100 rounded-full text-sm font-semibold text-orange-800">
+          {question.context}
+        </span>
+        <h3 className="text-xl font-bold mt-3 text-gray-800">Ghép hình với ý nghĩa</h3>
+        <p className="text-gray-600 text-sm mt-1">
+          Chọn {question.correctPairsCount} cặp đúng (có hình bẫy!)
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Images */}
+        <div>
+          <h4 className="font-semibold text-gray-700 mb-3 text-center">🖼️ Hình ảnh</h4>
+          <div className="grid grid-cols-2 gap-3">
+            {question.pairs.map((pair) => (
+              <div
+                key={pair.label}
+                className={`p-4 rounded-xl border-2 text-center transition-all ${
+                  matches[pair.label]
+                    ? 'border-orange-500 bg-orange-50'
+                    : 'border-gray-200 bg-white'
+                }`}
+              >
+                <div className="text-4xl mb-2">{pair.image}</div>
+                <p className="text-sm font-medium text-gray-700">{pair.label}</p>
+                {matches[pair.label] && (
+                  <p className="text-xs text-orange-600 mt-1">→ {matches[pair.label]}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Meanings */}
+        <div>
+          <h4 className="font-semibold text-gray-700 mb-3 text-center">💡 Ý nghĩa</h4>
+          <div className="space-y-2">
+            {allMeanings.map((meaning) => {
+              const isUsed = matchedMeanings.includes(meaning);
+              return (
+                <div
+                  key={meaning}
+                  className={`p-3 rounded-lg border-2 transition-all ${
+                    isUsed
+                      ? 'border-gray-300 bg-gray-100 text-gray-500'
+                      : 'border-gray-300 bg-white'
+                  }`}
+                >
+                  <p className="text-base font-medium text-gray-800">{meaning}</p>
+                  {!isUsed && !submitted && (
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {question.pairs
+                        .filter((p) => !matches[p.label])
+                        .map((pair) => (
+                          <button
+                            key={pair.label}
+                            onClick={() => handleMatch(pair.label, meaning)}
+                            className="px-2 py-1 text-xs bg-orange-100 hover:bg-orange-200 rounded text-orange-700"
+                          >
+                            {pair.image}
+                          </button>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {!submitted && (
+        <div className="flex gap-3">
+          <button
+            onClick={() => setMatches({})}
+            className="flex-1 py-3 rounded-xl font-bold border-2 border-gray-300 hover:bg-gray-50 transition-all"
+          >
+            Làm lại
+          </button>
+          <button
+            onClick={handleSubmit}
+            disabled={!isComplete}
+            className={`flex-1 py-3 rounded-xl font-bold text-lg transition-all ${
+              isComplete
+                ? 'bg-gradient-to-r from-orange-600 to-red-600 text-white hover:shadow-lg'
+                : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+            }`}
+          >
+            Xác nhận ({Object.keys(matches).length}/{question.correctPairsCount})
+          </button>
+        </div>
+      )}
+
+      {submitted && (
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="text-center py-4"
+        >
+          <div className="text-4xl mb-2">⏳</div>
+          <p className="text-gray-600">Đang kiểm tra...</p>
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+// ===== BACKUP QUESTION COMPONENT =====
+const BackupQuestionModal: React.FC<{
+  question: BackupQuestion;
+  onAnswer: (correct: boolean) => void;
+}> = ({ question, onAnswer }) => {
+  const [selected, setSelected] = useState<number | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = () => {
+    if (selected === null) return;
+    setSubmitted(true);
+    setTimeout(() => onAnswer(selected === question.correctIndex), 1500);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+    >
+      <motion.div
+        initial={{ scale: 0.9 }}
+        animate={{ scale: 1 }}
+        className="bg-gradient-to-br from-yellow-50 to-red-50 rounded-2xl max-w-2xl w-full p-6 border-4 border-yellow-400"
+      >
+        <div className="text-center mb-6">
+          <div className="text-6xl mb-3">🛟</div>
+          <h2 className="text-2xl font-bold text-gray-800">CÂU HỎI BACKUP</h2>
+          <p className="text-gray-600">Trả lời đúng để giữ 50% điểm!</p>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl border-2 border-gray-200 mb-6">
+          <p className="text-lg font-semibold text-gray-800">{question.question}</p>
+        </div>
+
+        <div className="space-y-3 mb-6">
+          {question.options.map((option, idx) => (
+            <button
+              key={idx}
+              onClick={() => !submitted && setSelected(idx)}
+              disabled={submitted}
+              className={`w-full p-4 rounded-xl border-2 text-left text-base font-medium transition-all ${
+                selected === idx
+                  ? 'border-yellow-500 bg-yellow-50 text-yellow-800 font-bold'
+                  : 'border-gray-300 bg-white hover:border-yellow-400 text-gray-800'
+              } ${submitted ? 'cursor-not-allowed' : ''}`}
+            >
+              <span className="inline-block w-8 h-8 rounded-full bg-blue-100 text-blue-800 text-center leading-8 mr-3 font-bold">
+                {String.fromCharCode(65 + idx)}
+              </span>
+              {option}
+            </button>
+          ))}
+        </div>
+
+        {!submitted ? (
+          <button
+            onClick={handleSubmit}
+            disabled={selected === null}
+            className={`w-full py-4 rounded-xl font-bold text-lg transition-all ${
+              selected !== null
+                ? 'bg-gradient-to-r from-yellow-600 to-red-600 text-white hover:shadow-lg'
+                : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+            }`}
+          >
+            Xác nhận câu trả lời
+          </button>
+        ) : (
+          <div className="text-center py-4">
+            <div className="text-4xl mb-2">⏳</div>
+            <p className="text-gray-600">Đang kiểm tra...</p>
+          </div>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// ===== CARD DRAW ANIMATION =====
+const CardDrawAnimation: React.FC<{
+  card: DrawnCard;
+  onComplete: () => void;
+}> = ({ card, onComplete }) => {
+  useEffect(() => {
+    const timer = setTimeout(onComplete, 2000);
+    return () => clearTimeout(timer);
+  }, [onComplete]);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
-      onClick={onClose}
+      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[90] flex items-center justify-center"
     >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        transition={{ type: "spring", damping: 25 }}
-        className="bg-gradient-to-br from-white to-yellow-50 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[95vh] flex flex-col border-4 border-yellow-400"
-        onClick={(e) => e.stopPropagation()}
+        initial={{ scale: 0, rotateY: 180 }}
+        animate={{ scale: 1, rotateY: 0 }}
+        transition={{ type: 'spring', duration: 0.8 }}
+        className={`w-64 h-96 rounded-2xl flex flex-col items-center justify-center shadow-2xl ${
+          card.type === 'EXPLOSION'
+            ? 'bg-gradient-to-br from-red-600 to-orange-600'
+            : 'bg-gradient-to-br from-green-500 to-emerald-600'
+        }`}
       >
-        {/* Header - Fixed */}
-        <div className="bg-gradient-to-r from-red-600 to-yellow-600 p-4 md:p-5 rounded-t-2xl text-white relative flex-shrink-0">
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 p-1.5 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
-          <h2 className="text-2xl md:text-3xl font-bold mb-1">
-            {instructions.title}
-          </h2>
-          <p className="text-base md:text-lg opacity-90">
-            {instructions.subtitle}
-          </p>
-        </div>
-
-        {/* Scrollable Content */}
-        <div className="p-4 md:p-6 overflow-y-auto flex-1">
-          {/* Objective */}
-          <div className="bg-gradient-to-r from-yellow-100 to-red-100 p-3 md:p-4 rounded-xl mb-4 border-2 border-yellow-300">
-            <div className="flex items-start gap-3">
-              <Target className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-1">
-                  Mục tiêu
-                </h3>
-                <p className="text-sm md:text-base text-gray-700">
-                  {instructions.objective}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Rules */}
-          <div className="mb-4">
-            <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-              <Zap className="w-5 h-5 text-yellow-600" />
-              Luật chơi
-            </h3>
-            <div className="grid grid-cols-2 gap-2 md:gap-3">
-              {instructions.rules.map((rule, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="bg-white p-3 rounded-lg shadow-md border border-gray-200 hover:border-yellow-400 transition-colors"
-                >
-                  <div className="text-xl md:text-2xl mb-1.5">{rule.icon}</div>
-                  <h4 className="font-bold text-sm md:text-base text-gray-900 mb-1">
-                    {rule.title}
-                  </h4>
-                  <p className="text-xs md:text-sm text-gray-600 leading-snug">
-                    {rule.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Tips */}
-          <div className="mb-4">
-            <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5 text-yellow-500" />
-              Mẹo chơi
-            </h3>
-            <div className="space-y-2">
-              {instructions.tips.map((tip, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + index * 0.05 }}
-                  className="flex items-start gap-2 bg-yellow-50 p-2.5 md:p-3 rounded-lg border-l-4 border-yellow-500"
-                >
-                  <span className="text-lg">💡</span>
-                  <p className="text-xs md:text-sm text-gray-700 leading-snug">
-                    {tip}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Fixed Footer with Start Button */}
-        <div className="p-4 bg-white border-t-2 border-yellow-300 rounded-b-2xl flex-shrink-0">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={onStart}
-            className="w-full py-3 md:py-4 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-xl font-bold text-base md:text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
-          >
-            <Play className="w-5 h-5 md:w-6 md:h-6" />
-            Bắt đầu chơi ngay!
-          </motion.button>
-        </div>
+        {card.type === 'EXPLOSION' ? (
+          <>
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 0.5 }}
+              className="text-8xl mb-4"
+            >
+              💣
+            </motion.div>
+            <p className="text-3xl font-bold text-white">NỔ!</p>
+            <p className="text-white/80 mt-2">Mất toàn bộ điểm lượt</p>
+          </>
+        ) : (
+          <>
+            <motion.div
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 0.5 }}
+              className="text-8xl mb-4"
+            >
+              ⭐
+            </motion.div>
+            <p className="text-5xl font-bold text-white">+{card.points}</p>
+            <p className="text-white/80 mt-2">điểm</p>
+          </>
+        )}
       </motion.div>
     </motion.div>
   );
 };
 
-// Game 1: Survival Game - Siêu thị Tem Phiếu
-const SurvivalGame: React.FC = () => {
-  const [timeLeft, setTimeLeft] = useState(90);
-  const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [shuffledItems, setShuffledItems] = useState<typeof items>([]);
-  const [feedback, setFeedback] = useState<{
-    show: boolean;
-    isCorrect: boolean;
-    message: string;
-  }>({
-    show: false,
-    isCorrect: false,
-    message: "",
-  });
+// ===== MAIN GAME COMPONENT =====
+const MiniGamePage: React.FC = () => {
+  // Game state
+  const [gameState, setGameState] = useState<GameState>(() => ({
+    teams: initializeTeams(),
+    questions: initializeQuestions(),
+    currentTurn: null,
+    prizeCount: INITIAL_PRIZE_COUNT,
+    turnHistory: [],
+    gameEnded: false,
+    winner: null,
+  }));
 
-  const items = [
-    // Lương thực thiết yếu (40 items essential)
-    { name: "Gạo", isEssential: true, image: "🍚" },
-    { name: "Nước mắm", isEssential: true, image: "🧂" },
-    { name: "Muối", isEssential: true, image: "🧂" },
-    { name: "Dầu ăn", isEssential: true, image: "🫗" },
-    { name: "Đường", isEssential: true, image: "🍬" },
-    { name: "Thịt heo", isEssential: true, image: "🥩" },
-    { name: "Thịt gà", isEssential: true, image: "🍗" },
-    { name: "Thịt bò", isEssential: true, image: "🥩" },
-    { name: "Cá", isEssential: true, image: "🐟" },
-    { name: "Tôm", isEssential: true, image: "🦐" },
-    { name: "Trứng", isEssential: true, image: "🥚" },
-    { name: "Rau củ", isEssential: true, image: "🥬" },
-    { name: "Khoai tây", isEssential: true, image: "🥔" },
-    { name: "Vải", isEssential: true, image: "🧵" },
-    { name: "Xà phòng", isEssential: true, image: "🧼" },
-    { name: "Bột giặt", isEssential: true, image: "🧴" },
-    { name: "Kem đánh răng", isEssential: true, image: "🪥" },
-    { name: "Giấy vệ sinh", isEssential: true, image: "🧻" },
-    { name: "Thuốc men cơ bản", isEssential: true, image: "💊" },
-    { name: "Băng y tế", isEssential: true, image: "🩹" },
-    { name: "Quần áo cơ bản", isEssential: true, image: "👕" },
-    { name: "Giày dép", isEssential: true, image: "👟" },
-    { name: "Nước sạch", isEssential: true, image: "💧" },
-    { name: "Than củi", isEssential: true, image: "🪵" },
-    { name: "Dầu hỏa", isEssential: true, image: "🛢️" },
-    { name: "Mì gói", isEssential: true, image: "🍜" },
-    { name: "Phở khô", isEssential: true, image: "🍲" },
-    { name: "Bún khô", isEssential: true, image: "🍝" },
-    { name: "Cá khô", isEssential: true, image: "🐠" },
-    { name: "Tương ớt", isEssential: true, image: "🌶️" },
-    { name: "Giấm", isEssential: true, image: "🍶" },
-    { name: "Bột mì", isEssential: true, image: "🌾" },
-    { name: "Sữa bột", isEssential: true, image: "🥛" },
-    { name: "Cà phê", isEssential: true, image: "☕" },
-    { name: "Chè xanh", isEssential: true, image: "🍵" },
-    { name: "Khăn mặt", isEssential: true, image: "🧺" },
-    { name: "Chăn màn", isEssential: true, image: "🛏️" },
-    { name: "Nồi niêu", isEssential: true, image: "🍲" },
-    { name: "Bát đũa", isEssential: true, image: "🥢" },
-    { name: "Đèn dầu", isEssential: true, image: "🕯️" },
-    { name: "Diêm quẹt", isEssential: true, image: "🔥" },
-    { name: "Thuốc trừ sâu", isEssential: true, image: "🧪" },
-    { name: "Lưỡi dao cạo", isEssential: true, image: "🪒" },
-    { name: "Kim chỉ", isEssential: true, image: "🪡" },
-    { name: "Khay đựng", isEssential: true, image: "🥘" },
-    { name: "Xô nhựa", isEssential: true, image: "🪣" },
-    { name: "Cần câu", isEssential: true, image: "🎣" },
-    { name: "Lưới đánh cá", isEssential: true, image: "🥅" },
-    { name: "Dao nhà bếp", isEssential: true, image: "🔪" },
-    { name: "Giỏ xách", isEssential: true, image: "🧺" },
+  // UI state
+  const [showQuestionModal, setShowQuestionModal] = useState(false);
+  const [showCardAnimation, setShowCardAnimation] = useState(false);
+  const [lastDrawnCard, setLastDrawnCard] = useState<DrawnCard | null>(null);
+  const [showBackupQuestion, setShowBackupQuestion] = useState(false);
+  const [backupQuestion, setBackupQuestion] = useState<BackupQuestion | null>(null);
+  const [showResultModal, setShowResultModal] = useState(false);
+  const [resultMessage, setResultMessage] = useState({ title: '', message: '', isSuccess: true });
+  const [showInstructions, setShowInstructions] = useState(true);
 
-    // Hàng xa xỉ/không thiết yếu (50 items non-essential)
-    { name: "Bánh kẹo", isEssential: false, image: "🍭" },
-    { name: "Nước ngọt", isEssential: false, image: "🥤" },
-    { name: "Bia rượu", isEssential: false, image: "🍺" },
-    { name: "Rượu mạnh", isEssential: false, image: "🍷" },
-    { name: "Thuốc lá", isEssential: false, image: "🚬" },
-    { name: "Đồ chơi", isEssential: false, image: "🧸" },
-    { name: "Sách vở", isEssential: false, image: "📚" },
-    { name: "Điện thoại", isEssential: false, image: "📞" },
-    { name: "Tivi", isEssential: false, image: "📺" },
-    { name: "Đài radio", isEssential: false, image: "📻" },
-    { name: "Máy ảnh", isEssential: false, image: "📷" },
-    { name: "Đồng hồ đeo tay", isEssential: false, image: "⌚" },
-    { name: "Trang sức", isEssential: false, image: "💍" },
-    { name: "Nước hoa", isEssential: false, image: "🧴" },
-    { name: "Son môi", isEssential: false, image: "💄" },
-    { name: "Kính mắt thời trang", isEssential: false, image: "🕶️" },
-    { name: "Đồ trang trí", isEssential: false, image: "🎨" },
-    { name: "Bàn cờ", isEssential: false, image: "♟️" },
-    { name: "Nhạc cụ", isEssential: false, image: "🎸" },
-    { name: "Tranh ảnh", isEssential: false, image: "🖼️" },
-    { name: "Đồ cổ", isEssential: false, image: "🏺" },
-    { name: "Đồ sưu tầm", isEssential: false, image: "🎭" },
-    { name: "Máy tính", isEssential: false, image: "💻" },
-    { name: "Máy quay phim", isEssential: false, image: "🎥" },
-    { name: "Xe máy", isEssential: false, image: "🏍️" },
-    { name: "Socola nhập khẩu", isEssential: false, image: "🍫" },
-    { name: "Rượu vang", isEssential: false, image: "🍾" },
-    { name: "Xì gà", isEssential: false, image: "🚬" },
-    { name: "Áo khoác da", isEssential: false, image: "🧥" },
-    { name: "Giày thể thao hiệu", isEssential: false, image: "👟" },
-    { name: "Túi xách hiệu", isEssential: false, image: "👜" },
-    { name: "Đồng hồ Rolex", isEssential: false, image: "⌚" },
-    { name: "Kính râm hiệu", isEssential: false, image: "🕶️" },
-    { name: "Máy chơi game", isEssential: false, image: "🎮" },
-    { name: "Búp bê nhập khẩu", isEssential: false, image: "🎎" },
-    { name: "Xe đạp đua", isEssential: false, image: "🚴" },
-    { name: "Đàn piano", isEssential: false, image: "🎹" },
-    { name: "Vi-ô-lông", isEssential: false, image: "🎻" },
-    { name: "Máy cassette", isEssential: false, image: "📼" },
-    { name: "Thảm Ba Tư", isEssential: false, image: "🧶" },
-    { name: "Bình hoa sứ", isEssential: false, image: "🏺" },
-    { name: "Tượng trang trí", isEssential: false, image: "🗿" },
-    { name: "Gấu bông cao cấp", isEssential: false, image: "🧸" },
-    { name: "Đồ chơi điện tử", isEssential: false, image: "🕹️" },
-    { name: "Tem sưu tầm", isEssential: false, image: "🎫" },
-    { name: "Tranh sơn dầu", isEssential: false, image: "🖼️" },
-    { name: "Vòng tay vàng", isEssential: false, image: "📿" },
-    { name: "Nhẫn kim cương", isEssential: false, image: "💎" },
-    { name: "Áo choàng lụa", isEssential: false, image: "🥻" },
-  ];
+  const teamOrder: TeamId[] = ['A', 'B', 'C', 'D'];
 
-  // Shuffle items khi component mount hoặc restart
-  useEffect(() => {
-    const shuffled = [...items].sort(() => Math.random() - 0.5);
-    setShuffledItems(shuffled);
-  }, [gameOver]); // Re-shuffle khi restart game
+  // Derived state
+  const currentTeam = gameState.currentTurn
+    ? gameState.teams[gameState.currentTurn.currentTeamId]
+    : null;
 
-  useEffect(() => {
-    if (timeLeft > 0 && !gameOver) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeLeft === 0) {
-      setGameOver(true);
-    }
-  }, [timeLeft, gameOver]);
+  const currentQuestion = gameState.currentTurn?.selectedQuestionId
+    ? gameState.questions.find((q) => q.id === gameState.currentTurn!.selectedQuestionId)
+    : null;
 
-  const handleItemClick = (item: (typeof items)[0]) => {
-    if (gameOver) return;
-    if (selectedItems.includes(item.name)) return;
+  const currentExplosionRate = gameState.currentTurn
+    ? getExplosionRate(
+        gameState.currentTurn.drawCount + 1,
+        gameState.teams[gameState.currentTurn.currentTeamId].explosionModifier
+      )
+    : null;
 
-    const newSelectedItems = [...selectedItems, item.name];
-    setSelectedItems(newSelectedItems);
+  // Start new turn
+  const startNewTurn = useCallback((teamId: TeamId) => {
+    setGameState((prev) => ({
+      ...prev,
+      currentTurn: {
+        currentTeamId: teamId,
+        selectedQuestionId: null,
+        questionAnsweredCorrectly: null,
+        turnPoints: 0,
+        drawCount: 0,
+        drawnCards: [],
+        isBackupMode: false,
+        backupAnswered: null,
+        turnEnded: false,
+        turnResult: null,
+      },
+    }));
+  }, []);
 
-    if (item.isEssential) {
-      setScore(score + 10);
-      setFeedback({ show: true, isCorrect: true, message: "+10 điểm!" });
+  // Select question
+  const selectQuestion = useCallback((questionId: string) => {
+    setGameState((prev) => {
+      if (!prev.currentTurn) return prev;
+      return {
+        ...prev,
+        currentTurn: {
+          ...prev.currentTurn,
+          selectedQuestionId: questionId,
+        },
+      };
+    });
+    setShowQuestionModal(true);
+  }, []);
+
+  // Handle question answer
+  const handleQuestionAnswer = useCallback((correct: boolean) => {
+    setShowQuestionModal(false);
+
+    if (correct) {
+      const initialPoints = getRandomInitialPoints();
+      setGameState((prev) => {
+        if (!prev.currentTurn) return prev;
+        return {
+          ...prev,
+          questions: prev.questions.map((q) =>
+            q.id === prev.currentTurn!.selectedQuestionId ? { ...q, used: true } : q
+          ),
+          currentTurn: {
+            ...prev.currentTurn,
+            questionAnsweredCorrectly: true,
+            turnPoints: initialPoints,
+          },
+        };
+      });
+      setResultMessage({
+        title: '✅ Chính xác!',
+        message: `Bạn nhận được ${initialPoints} điểm khởi đầu. Dừng để bảo toàn hoặc tiếp tục rút thẻ?`,
+        isSuccess: true,
+      });
     } else {
-      setScore(Math.max(0, score - 5));
-      setFeedback({ show: true, isCorrect: false, message: "-5 điểm!" });
+      setGameState((prev) => {
+        if (!prev.currentTurn) return prev;
+        return {
+          ...prev,
+          questions: prev.questions.map((q) =>
+            q.id === prev.currentTurn!.selectedQuestionId ? { ...q, used: true } : q
+          ),
+          currentTurn: {
+            ...prev.currentTurn,
+            questionAnsweredCorrectly: false,
+            turnEnded: true,
+            turnResult: 'STOPPED',
+          },
+        };
+      });
+      setResultMessage({
+        title: '❌ Sai rồi!',
+        message: 'Không nhận được điểm. Lượt chơi kết thúc.',
+        isSuccess: false,
+      });
     }
+    setShowResultModal(true);
+  }, []);
 
-    setTimeout(
-      () => setFeedback({ show: false, isCorrect: false, message: "" }),
-      1000
-    );
+  // Draw card
+  const handleDrawCard = useCallback(() => {
+    if (!gameState.currentTurn || !currentExplosionRate) return;
+
+    const card = drawCard(currentExplosionRate.explosion);
+    setLastDrawnCard(card);
+    setShowCardAnimation(true);
+  }, [gameState.currentTurn, currentExplosionRate]);
+
+  // Process drawn card after animation
+  const processDrawnCard = useCallback(() => {
+    setShowCardAnimation(false);
+    if (!lastDrawnCard || !gameState.currentTurn) return;
+
+    if (lastDrawnCard.type === 'EXPLOSION') {
+      // Check for backup opportunity
+      if (gameState.currentTurn.turnPoints >= 16) {
+        setBackupQuestion(getRandomBackupQuestion());
+        setShowBackupQuestion(true);
+      } else {
+        // Exploded without backup
+        setGameState((prev) => {
+          if (!prev.currentTurn) return prev;
+          const modifier = getModifierForNextTurn(0);
+          return {
+            ...prev,
+            teams: {
+              ...prev.teams,
+              [prev.currentTurn.currentTeamId]: {
+                ...prev.teams[prev.currentTurn.currentTeamId],
+                explosionModifier: modifier,
+              },
+            },
+            currentTurn: {
+              ...prev.currentTurn,
+              drawnCards: [...prev.currentTurn.drawnCards, lastDrawnCard],
+              turnPoints: 0,
+              turnEnded: true,
+              turnResult: 'EXPLODED',
+            },
+            turnHistory: [
+              ...prev.turnHistory,
+              {
+                teamId: prev.currentTurn.currentTeamId,
+                questionId: prev.currentTurn.selectedQuestionId!,
+                earnedPoints: 0,
+                drawCount: prev.currentTurn.drawCount + 1,
+                result: 'EXPLODED',
+              },
+            ],
+          };
+        });
+        setResultMessage({
+          title: '💣 NỔ!',
+          message: 'Mất toàn bộ điểm của lượt này!',
+          isSuccess: false,
+        });
+        setShowResultModal(true);
+      }
+    } else {
+      // Got points
+      setGameState((prev) => {
+        if (!prev.currentTurn) return prev;
+        const newPoints = prev.currentTurn.turnPoints + (lastDrawnCard.points || 0);
+        return {
+          ...prev,
+          currentTurn: {
+            ...prev.currentTurn,
+            drawnCards: [...prev.currentTurn.drawnCards, lastDrawnCard],
+            turnPoints: newPoints,
+            drawCount: prev.currentTurn.drawCount + 1,
+          },
+        };
+      });
+      setResultMessage({
+        title: `⭐ +${lastDrawnCard.points} điểm!`,
+        message: 'Tiếp tục rút hay dừng để bảo toàn?',
+        isSuccess: true,
+      });
+      setShowResultModal(true);
+    }
+    setLastDrawnCard(null);
+  }, [lastDrawnCard, gameState.currentTurn]);
+
+  // Handle backup answer
+  const handleBackupAnswer = useCallback(
+    (correct: boolean) => {
+      setShowBackupQuestion(false);
+
+      if (correct) {
+        const keptPoints = Math.floor(gameState.currentTurn!.turnPoints / 2);
+        setGameState((prev) => {
+          if (!prev.currentTurn) return prev;
+          const modifier = getModifierForNextTurn(keptPoints);
+          return {
+            ...prev,
+            teams: {
+              ...prev.teams,
+              [prev.currentTurn.currentTeamId]: {
+                ...prev.teams[prev.currentTurn.currentTeamId],
+                totalScore:
+                  prev.teams[prev.currentTurn.currentTeamId].totalScore + keptPoints,
+                explosionModifier: modifier,
+              },
+            },
+            currentTurn: {
+              ...prev.currentTurn,
+              turnPoints: keptPoints,
+              turnEnded: true,
+              turnResult: 'BACKUP_SUCCESS',
+            },
+            turnHistory: [
+              ...prev.turnHistory,
+              {
+                teamId: prev.currentTurn.currentTeamId,
+                questionId: prev.currentTurn.selectedQuestionId!,
+                earnedPoints: keptPoints,
+                drawCount: prev.currentTurn.drawCount + 1,
+                result: 'BACKUP_SUCCESS',
+              },
+            ],
+          };
+        });
+        setResultMessage({
+          title: '🛟 Cứu thành công!',
+          message: `Giữ được ${keptPoints} điểm (50%)`,
+          isSuccess: true,
+        });
+      } else {
+        setGameState((prev) => {
+          if (!prev.currentTurn) return prev;
+          const modifier = getModifierForNextTurn(0);
+          return {
+            ...prev,
+            teams: {
+              ...prev.teams,
+              [prev.currentTurn.currentTeamId]: {
+                ...prev.teams[prev.currentTurn.currentTeamId],
+                explosionModifier: modifier,
+              },
+            },
+            currentTurn: {
+              ...prev.currentTurn,
+              turnPoints: 0,
+              turnEnded: true,
+              turnResult: 'BACKUP_FAILED',
+            },
+            turnHistory: [
+              ...prev.turnHistory,
+              {
+                teamId: prev.currentTurn.currentTeamId,
+                questionId: prev.currentTurn.selectedQuestionId!,
+                earnedPoints: 0,
+                drawCount: prev.currentTurn.drawCount + 1,
+                result: 'BACKUP_FAILED',
+              },
+            ],
+          };
+        });
+        setResultMessage({
+          title: '❌ Không cứu được!',
+          message: 'Mất toàn bộ điểm của lượt này.',
+          isSuccess: false,
+        });
+      }
+      setShowResultModal(true);
+    },
+    [gameState.currentTurn]
+  );
+
+  // Stop and keep points
+  const handleStopTurn = useCallback(() => {
+    setGameState((prev) => {
+      if (!prev.currentTurn) return prev;
+      const earnedPoints = prev.currentTurn.turnPoints;
+      const newTotal =
+        prev.teams[prev.currentTurn.currentTeamId].totalScore + earnedPoints;
+      const modifier = getModifierForNextTurn(earnedPoints);
+
+      // Check for prize
+      let newPrizeCount = prev.prizeCount;
+      let hasWonPrize = prev.teams[prev.currentTurn.currentTeamId].hasWonPrize;
+      if (newTotal >= WIN_THRESHOLD && !hasWonPrize && newPrizeCount > 0) {
+        newPrizeCount--;
+        hasWonPrize = true;
+      }
+
+      return {
+        ...prev,
+        prizeCount: newPrizeCount,
+        teams: {
+          ...prev.teams,
+          [prev.currentTurn.currentTeamId]: {
+            ...prev.teams[prev.currentTurn.currentTeamId],
+            totalScore: newTotal,
+            explosionModifier: modifier,
+            hasWonPrize,
+          },
+        },
+        currentTurn: {
+          ...prev.currentTurn,
+          turnEnded: true,
+          turnResult: 'STOPPED',
+        },
+        turnHistory: [
+          ...prev.turnHistory,
+          {
+            teamId: prev.currentTurn.currentTeamId,
+            questionId: prev.currentTurn.selectedQuestionId!,
+            earnedPoints,
+            drawCount: prev.currentTurn.drawCount,
+            result: 'STOPPED',
+          },
+        ],
+        gameEnded: newPrizeCount === 0,
+      };
+    });
+
+    // Show result modal after stopping
+    const earnedPoints = gameState.currentTurn?.turnPoints || 0;
+    if (earnedPoints > 0) {
+      setResultMessage({
+        title: `🎉 ĐỘI ${gameState.currentTurn?.currentTeamId} DỪNG LẠI!`,
+        message: `Đã giữ được ${earnedPoints} điểm lượt này!`,
+        isSuccess: true,
+      });
+    } else {
+      setResultMessage({
+        title: '📝 Kết thúc lượt',
+        message: `Đội ${gameState.currentTurn?.currentTeamId} kết thúc lượt chơi.`,
+        isSuccess: true,
+      });
+    }
+    setShowResultModal(true);
+  }, [gameState.currentTurn]);
+
+  // End turn and move to next team
+  const endTurnAndContinue = useCallback(() => {
+    setShowResultModal(false);
+
+    if (gameState.gameEnded) return;
+
+    // Find next team
+    const currentIdx = teamOrder.indexOf(gameState.currentTurn!.currentTeamId);
+    const nextIdx = (currentIdx + 1) % teamOrder.length;
+    const nextTeamId = teamOrder[nextIdx];
+
+    startNewTurn(nextTeamId);
+  }, [gameState.currentTurn, gameState.gameEnded, startNewTurn]);
+
+  // Reset game
+  const resetGame = useCallback(() => {
+    setGameState({
+      teams: initializeTeams(),
+      questions: initializeQuestions(),
+      currentTurn: null,
+      prizeCount: INITIAL_PRIZE_COUNT,
+      turnHistory: [],
+      gameEnded: false,
+      winner: null,
+    });
+    setShowInstructions(true);
+  }, []);
+
+  // Check for game end
+  useEffect(() => {
+    if (gameState.prizeCount === 0) {
+      setGameState((prev) => ({ ...prev, gameEnded: true }));
+    }
+  }, [gameState.prizeCount]);
+
+  // Render question based on type
+  const renderQuestion = () => {
+    if (!currentQuestion) return null;
+
+    switch (currentQuestion.question.type) {
+      case 'GHEP_CAU':
+        return (
+          <MatchingQuestionComponent
+            question={currentQuestion.question}
+            onAnswer={handleQuestionAnswer}
+          />
+        );
+      case 'TRA_LOI':
+        return (
+          <MultipleChoiceQuestionComponent
+            question={currentQuestion.question}
+            onAnswer={handleQuestionAnswer}
+          />
+        );
+      case 'MO_PHONG':
+        return (
+          <PathQuestionComponent
+            question={currentQuestion.question}
+            onAnswer={handleQuestionAnswer}
+          />
+        );
+      case 'GHEP_HINH':
+        return (
+          <ImageMatchQuestionComponent
+            question={currentQuestion.question}
+            onAnswer={handleQuestionAnswer}
+          />
+        );
+      default:
+        return null;
+    }
   };
 
-  const restartGame = () => {
-    setTimeLeft(90);
-    setScore(0);
-    setGameOver(false);
-    setSelectedItems([]);
-  };
-
-  return (
-    <div className="space-y-4 relative">
-      {/* Stats Bar - Sticky */}
-      <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-sm py-3 px-2 rounded-lg shadow-md border-2 border-yellow-300">
-        <div className="flex justify-center items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-red-100 px-4 py-2 rounded-lg border border-red-300">
-            <Clock className="w-5 h-5 text-red-600" />
-            <span
-              className={`text-lg font-bold ${
-                timeLeft <= 10 ? "text-red-600 animate-pulse" : "text-gray-900"
-              }`}
-            >
-              {timeLeft}s
-            </span>
-          </div>
-          <div className="flex items-center gap-2 bg-gradient-to-r from-yellow-50 to-yellow-100 px-4 py-2 rounded-lg border border-yellow-300">
-            <Trophy className="w-5 h-5 text-yellow-600" />
-            <span className="text-lg font-bold text-gray-900">
-              {score} điểm
-            </span>
-          </div>
-          <div className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-blue-100 px-4 py-2 rounded-lg border border-blue-300">
-            <span className="text-base font-bold text-gray-700">
-              {selectedItems.length} món
-            </span>
-          </div>
-          <button
-            onClick={restartGame}
-            className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all shadow-md hover:shadow-lg font-semibold text-sm flex items-center gap-2"
-          >
-            🔄 Chơi lại
-          </button>
-        </div>
-      </div>
-      {/* Feedback - Fixed Position */}
-      <AnimatePresence>
-        {feedback.show && (
+  // Instructions screen
+  if (showInstructions) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-50 via-yellow-50 to-white py-10 px-4">
+        <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-yellow-400"
           >
-            <div
-              className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl shadow-2xl text-base font-bold ${
-                feedback.isCorrect
-                  ? "bg-green-500 text-white"
-                  : "bg-red-500 text-white"
-              }`}
-            >
-              {feedback.isCorrect ? (
-                <CheckCircle className="w-4 h-4" />
-              ) : (
-                <AlertCircle className="w-4 h-4" />
-              )}
-              <span>{feedback.message}</span>
+            {/* Header */}
+            <div className="bg-gradient-to-r from-red-600 to-yellow-600 p-6 text-white text-center">
+              <div className="text-6xl mb-4">🐱💣</div>
+              <h1 className="text-4xl font-bold mb-2">MÈO NỔ</h1>
+              <p className="text-xl opacity-90">Hành Trình Tư Tưởng Hồ Chí Minh</p>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-6">
+              {/* Objective */}
+              <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-r-lg">
+                <h3 className="font-bold text-lg text-gray-800 mb-2">🎯 Mục tiêu</h3>
+                <ul className="text-gray-700 space-y-1 text-sm">
+                  <li>• Kiểm tra hiểu biết về tư tưởng Hồ Chí Minh</li>
+                  <li>• Rèn đạo đức "biết đủ, biết dừng"</li>
+                  <li>• Nhóm đạt 20 điểm trước được chọn quà</li>
+                </ul>
+              </div>
+
+              {/* Rules */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-blue-50 p-4 rounded-xl">
+                  <h4 className="font-bold text-blue-800 mb-2">📋 Luật chơi</h4>
+                  <ol className="text-sm text-gray-700 space-y-1 list-decimal list-inside">
+                    <li>Chọn 1 câu hỏi (A-Z)</li>
+                    <li>Trả lời đúng → nhận 1-5 điểm</li>
+                    <li>Chọn DỪNG hoặc ĐI TIẾP</li>
+                    <li>Đi tiếp → Rút thẻ Mèo Nổ</li>
+                  </ol>
+                </div>
+
+                <div className="bg-red-50 p-4 rounded-xl">
+                  <h4 className="font-bold text-red-800 mb-2">🎴 Thẻ Mèo Nổ</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>⭐ Thẻ Điểm: +1 đến +5</li>
+                    <li>💣 Thẻ Nổ: Mất hết điểm lượt</li>
+                    <li>⚠️ Rút càng nhiều, nổ càng cao!</li>
+                  </ul>
+                </div>
+
+                <div className="bg-green-50 p-4 rounded-xl">
+                  <h4 className="font-bold text-green-800 mb-2">🛟 Cơ hội Backup</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>≥16 điểm mà nổ → được backup</li>
+                    <li>Đúng: giữ 50% điểm</li>
+                    <li>Sai: mất hết</li>
+                  </ul>
+                </div>
+
+                <div className="bg-purple-50 p-4 rounded-xl">
+                  <h4 className="font-bold text-purple-800 mb-2">📊 Tỷ lệ nổ</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>Lần 1: 15% | Lần 2: 30%</li>
+                    <li>Lần 3: 50% | Lần 4: 70%</li>
+                    <li>Lần 5: 85% (gần như chắc nổ!)</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Question types */}
+              <div className="bg-gray-50 p-4 rounded-xl">
+                <h4 className="font-bold text-gray-800 mb-3">📚 4 Loại câu hỏi</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="text-center p-3 bg-white rounded-lg">
+                    <div className="text-2xl mb-1">🔗</div>
+                    <p className="text-xs font-medium">Ghép câu</p>
+                  </div>
+                  <div className="text-center p-3 bg-white rounded-lg">
+                    <div className="text-2xl mb-1">❓</div>
+                    <p className="text-xs font-medium">Trả lời 3 câu</p>
+                  </div>
+                  <div className="text-center p-3 bg-white rounded-lg">
+                    <div className="text-2xl mb-1">🛤️</div>
+                    <p className="text-xs font-medium">Đường Bác đi</p>
+                  </div>
+                  <div className="text-center p-3 bg-white rounded-lg">
+                    <div className="text-2xl mb-1">🖼️</div>
+                    <p className="text-xs font-medium">Ghép hình</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Start button */}
+              <button
+                onClick={() => {
+                  setShowInstructions(false);
+                  startNewTurn('A');
+                }}
+                className="w-full py-4 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-xl font-bold text-xl hover:shadow-xl transition-all flex items-center justify-center gap-3"
+              >
+                <Play className="w-6 h-6" />
+                Bắt đầu chơi!
+              </button>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      </div>
+    );
+  }
 
-      {/* Game Over */}
-      <AnimatePresence>
-        {gameOver && (
+  // Game ended screen
+  if (gameState.gameEnded) {
+    const sortedTeams = Object.values(gameState.teams).sort(
+      (a, b) => b.totalScore - a.totalScore
+    );
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-red-50 via-yellow-50 to-white py-10 px-4">
+        <div className="max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="absolute inset-0 bg-black/80 backdrop-blur-md rounded-2xl z-50 flex items-center justify-center p-8"
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-yellow-400"
           >
-            <div className="bg-gradient-to-br from-yellow-50 to-red-50 p-6 rounded-xl border-2 border-yellow-400 max-w-lg w-full">
-              <Trophy className="w-12 h-12 text-yellow-600 mx-auto mb-3" />
-              <p className="text-2xl font-bold text-center text-gray-900 mb-2">
-                Kết thúc!
-              </p>
-              <p className="text-center text-gray-700 mb-4">
-                Bạn đã chọn{" "}
-                <span className="font-bold text-green-600">
-                  {
-                    selectedItems.filter(
-                      (item) => items.find((i) => i.name === item)?.isEssential
-                    ).length
-                  }
-                </span>{" "}
-                món thiết yếu và{" "}
-                <span className="font-bold text-red-600">
-                  {
-                    selectedItems.filter(
-                      (item) => !items.find((i) => i.name === item)?.isEssential
-                    ).length
-                  }
-                </span>{" "}
-                món xa xỉ
-              </p>
+            <div className="bg-gradient-to-r from-red-600 to-yellow-600 p-6 text-white text-center">
+              <Trophy className="w-16 h-16 mx-auto mb-4" />
+              <h1 className="text-3xl font-bold">Kết thúc trò chơi!</h1>
+              <p className="opacity-90">Đã hết quà</p>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <h3 className="font-bold text-xl text-gray-800 text-center mb-4">
+                🏆 Bảng xếp hạng
+              </h3>
+
+              {sortedTeams.map((team, idx) => (
+                <div
+                  key={team.id}
+                  className={`flex items-center gap-4 p-4 rounded-xl ${
+                    idx === 0 ? 'bg-yellow-100 border-2 border-yellow-400' : 'bg-gray-50'
+                  }`}
+                >
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
+                      idx === 0
+                        ? 'bg-yellow-500'
+                        : idx === 1
+                        ? 'bg-gray-400'
+                        : idx === 2
+                        ? 'bg-orange-400'
+                        : 'bg-gray-300'
+                    }`}
+                  >
+                    {idx + 1}
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-bold text-gray-800">{team.name}</p>
+                    <p className="text-sm text-gray-600">{team.totalScore} điểm</p>
+                  </div>
+                  {team.hasWonPrize && (
+                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                      🎁 Đã nhận quà
+                    </span>
+                  )}
+                </div>
+              ))}
+
               <button
-                onClick={restartGame}
-                className="w-full px-6 py-3 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-lg hover:shadow-lg transition-all font-semibold"
+                onClick={resetGame}
+                className="w-full py-4 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 mt-6"
               >
+                <RotateCcw className="w-5 h-5" />
                 Chơi lại
               </button>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-      {/* Items Grid với padding để không bị sticky bar che */}
-      <div className="bg-gradient-to-br from-yellow-50 to-red-50 p-4 rounded-xl border border-yellow-200">
-        <h4 className="text-center font-bold text-gray-800 mb-4">
-          🛒 Chọn món đồ thiết yếu
-        </h4>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          <AnimatePresence>
-            {shuffledItems.map((item, index) => {
-              // Ẩn items đã chọn
-              if (selectedItems.includes(item.name)) return null;
-
-              return (
-                <motion.div
-                  key={`${item.name}-${index}`}
-                  initial={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.3 }}
-                  className={`p-4 border-2 rounded-xl text-center transition-all duration-300 ${
-                    gameOver
-                      ? "bg-gray-100 border-gray-300 cursor-not-allowed opacity-60"
-                      : "bg-white border-gray-300 hover:border-red-400 hover:shadow-xl cursor-pointer"
-                  }`}
-                  onClick={() => handleItemClick(item)}
-                  whileHover={{
-                    scale: gameOver ? 1 : 1.05,
-                  }}
-                  whileTap={{ scale: gameOver ? 1 : 0.95 }}
-                >
-                  <div className="text-4xl mb-2">{item.image}</div>
-                  <p className="text-sm font-semibold text-gray-800">
-                    {item.name}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
         </div>
       </div>
-    </div>
-  );
-};
-
-// Game 2: Drag & Drop - Nhà Hoạch Định Chiến Lược
-const ItemTypes = {
-  ITEM: "item",
-};
-
-interface Item {
-  id: string;
-  name: string;
-  category: "luongthuc" | "tieudung" | "xuatkhau" | "congnghiep";
-  image: string;
-}
-
-const Basket: React.FC<{ category: string; onDrop: (item: Item) => void }> = ({
-  category,
-  onDrop,
-}) => {
-  const [{ isOver }, drop] = useDrop(
-    () => ({
-      accept: ItemTypes.ITEM,
-      drop: (item: Item) => {
-        onDrop(item);
-        return undefined;
-      },
-      collect: (monitor) => ({
-        isOver: !!monitor.isOver(),
-        canDrop: !!monitor.canDrop(),
-      }),
-    }),
-    [onDrop]
-  );
-
-  const getCategoryColor = () => {
-    if (category === "Lương thực")
-      return "from-green-50 to-green-100 border-green-400";
-    if (category === "Hàng tiêu dùng")
-      return "from-blue-50 to-blue-100 border-blue-400";
-    return "from-purple-50 to-purple-100 border-purple-400";
-  };
-
-  const getCategoryIcon = () => {
-    if (category === "Lương thực") return "🌾";
-    if (category === "Hàng tiêu dùng") return "🛍️";
-    return "📦";
-  };
-
-  return (
-    <div
-      ref={drop}
-      className={`p-4 border-2 rounded-xl text-center min-h-[100px] flex flex-col justify-center transition-all duration-300 bg-gradient-to-br ${
-        isOver
-          ? "border-yellow-500 shadow-2xl scale-105 ring-4 ring-yellow-300"
-          : `${getCategoryColor()} shadow-md`
-      }`}
-      style={{
-        transform: isOver ? "scale(1.05)" : "scale(1)",
-      }}
-    >
-      <div className="text-3xl mb-2">{getCategoryIcon()}</div>
-      <h4 className="font-bold text-base text-gray-800">{category}</h4>
-      <p className="text-xs text-gray-600 mt-1">
-        {isOver ? "⬇️ Thả vào!" : "Kéo thả"}
-      </p>
-    </div>
-  );
-};
-
-const DraggableItem: React.FC<{ item: Item; isPlaced: boolean }> = ({
-  item,
-  isPlaced,
-}) => {
-  const [{ isDragging }, drag] = useDrag(
-    () => ({
-      type: ItemTypes.ITEM,
-      item: { ...item },
-      canDrag: !isPlaced,
-      collect: (monitor) => ({
-        isDragging: !!monitor.isDragging(),
-      }),
-    }),
-    [isPlaced]
-  );
-
-  if (isPlaced) {
-    return null; // Don't render placed items
+    );
   }
 
+  // Main game UI
   return (
-    <div
-      ref={drag}
-      className={`p-2 border rounded-lg text-center bg-white shadow-sm hover:shadow-md transition-all duration-300 ${
-        isDragging
-          ? "opacity-50 scale-110"
-          : "opacity-100 border-gray-300 cursor-move hover:border-yellow-400"
-      }`}
-      style={{
-        transform: isDragging ? "scale(1.1)" : "none",
-        cursor: isPlaced ? "default" : "move",
-      }}
-    >
-      <div className="text-2xl md:text-3xl mb-1">{item.image}</div>
-      <p className="text-[10px] md:text-xs font-semibold text-gray-800 leading-tight">
-        {item.name}
-      </p>
-    </div>
-  );
-};
-
-const StrategyGame: React.FC = () => {
-  const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(120);
-  const [gameOver, setGameOver] = useState(false);
-  const [placedItemIds, setPlacedItemIds] = useState<string[]>([]);
-  const [wrongAttempts, setWrongAttempts] = useState(0);
-  const [correctAttempts, setCorrectAttempts] = useState(0);
-  const [showFeedback, setShowFeedback] = useState<{
-    show: boolean;
-    isCorrect: boolean;
-    message: string;
-  }>({ show: false, isCorrect: false, message: "" });
-
-  // Comprehensive item list - 80 items total
-  const allItems: Item[] = [
-    // Lương thực thực phẩm (28 items)
-    { id: "1", name: "Lúa gạo", category: "luongthuc", image: "🌾" },
-    { id: "2", name: "Ngô", category: "luongthuc", image: "🌽" },
-    { id: "3", name: "Khoai lang", category: "luongthuc", image: "🍠" },
-    { id: "4", name: "Khoai tây", category: "luongthuc", image: "🥔" },
-    { id: "5", name: "Sắn", category: "luongthuc", image: "🌿" },
-    { id: "6", name: "Thịt heo", category: "luongthuc", image: "🥩" },
-    { id: "7", name: "Thịt gà", category: "luongthuc", image: "🍗" },
-    { id: "8", name: "Thịt bò", category: "luongthuc", image: "🥩" },
-    { id: "9", name: "Cá", category: "luongthuc", image: "🐟" },
-    { id: "10", name: "Tôm", category: "luongthuc", image: "🦐" },
-    { id: "11", name: "Mực", category: "luongthuc", image: "🦑" },
-    { id: "12", name: "Trứng", category: "luongthuc", image: "🥚" },
-    { id: "13", name: "Rau củ", category: "luongthuc", image: "🥬" },
-    { id: "14", name: "Đậu phụ", category: "luongthuc", image: "🧈" },
-    { id: "15", name: "Nước mắm", category: "luongthuc", image: "🧂" },
-    { id: "16", name: "Dầu ăn", category: "luongthuc", image: "🫗" },
-    { id: "17", name: "Sữa", category: "luongthuc", image: "🥛" },
-    { id: "18", name: "Bún khô", category: "luongthuc", image: "🍜" },
-    { id: "19", name: "Mì gói", category: "luongthuc", image: "🍝" },
-    { id: "20", name: "Phở khô", category: "luongthuc", image: "🍲" },
-    { id: "21", name: "Cá khô", category: "luongthuc", image: "🐠" },
-    { id: "22", name: "Mắm tôm", category: "luongthuc", image: "🧂" },
-    { id: "23", name: "Muối", category: "luongthuc", image: "🧂" },
-    { id: "24", name: "Đường", category: "luongthuc", image: "🍬" },
-    { id: "25", name: "Bột mì", category: "luongthuc", image: "🌾" },
-    { id: "26", name: "Đậu xanh", category: "luongthuc", image: "🫘" },
-    { id: "27", name: "Đậu đỏ", category: "luongthuc", image: "🫘" },
-    { id: "28", name: "Mè", category: "luongthuc", image: "🌱" },
-    { id: "83", name: "Thóc", category: "luongthuc", image: "🌾" },
-    { id: "84", name: "Bánh đa", category: "luongthuc", image: "🥮" },
-    { id: "85", name: "Bánh tráng", category: "luongthuc", image: "🍘" },
-    { id: "86", name: "Cháo lòng", category: "luongthuc", image: "🍜" },
-
-    // Hàng tiêu dùng (35 items)
-    { id: "29", name: "Quần áo", category: "tieudung", image: "👕" },
-    { id: "30", name: "Giày dép", category: "tieudung", image: "👟" },
-    { id: "31", name: "Mũ nón", category: "tieudung", image: "🧢" },
-    { id: "32", name: "Xà phòng", category: "tieudung", image: "🧼" },
-    { id: "33", name: "Bàn chải", category: "tieudung", image: "🪥" },
-    { id: "34", name: "Kem đánh răng", category: "tieudung", image: "🦷" },
-    { id: "35", name: "Bột giặt", category: "tieudung", image: "🧴" },
-    { id: "36", name: "Xe đạp", category: "tieudung", image: "🚲" },
-    { id: "37", name: "Đồ dùng nhà bếp", category: "tieudung", image: "🍳" },
-    { id: "38", name: "Vải vóc", category: "tieudung", image: "🧵" },
-    { id: "39", name: "Đồ gốm sứ", category: "tieudung", image: "🏺" },
-    { id: "40", name: "Giấy viết", category: "tieudung", image: "📄" },
-    { id: "41", name: "Bút viết", category: "tieudung", image: "✏️" },
-    { id: "42", name: "Đồ nhựa gia dụng", category: "tieudung", image: "🥤" },
-    { id: "43", name: "Đồ mây tre", category: "tieudung", image: "🧺" },
-    { id: "44", name: "Chiếu", category: "tieudung", image: "🛏️" },
-    { id: "45", name: "Màn", category: "tieudung", image: "🪟" },
-    { id: "46", name: "Khăn mặt", category: "tieudung", image: "🧣" },
-    { id: "47", name: "Chăn gối", category: "tieudung", image: "🛏️" },
-    { id: "48", name: "Nồi niêu", category: "tieudung", image: "🍲" },
-    { id: "49", name: "Bát đũa", category: "tieudung", image: "🥢" },
-    { id: "50", name: "Thau chậu", category: "tieudung", image: "🪣" },
-    { id: "51", name: "Bàn ghế", category: "tieudung", image: "🪑" },
-    { id: "52", name: "Chổi lau nhà", category: "tieudung", image: "🧹" },
-    { id: "53", name: "Giấy vệ sinh", category: "tieudung", image: "🧻" },
-    { id: "54", name: "Khăn tắm", category: "tieudung", image: "🧴" },
-    { id: "55", name: "Dây thừng", category: "tieudung", image: "🪢" },
-    { id: "56", name: "Đèn dầu", category: "tieudung", image: "🕯️" },
-    { id: "87", name: "Gương soi", category: "tieudung", image: "🪞" },
-    { id: "88", name: "Lược chải tóc", category: "tieudung", image: "💇" },
-    { id: "89", name: "Kéo cắt", category: "tieudung", image: "✂️" },
-    { id: "90", name: "Dao cạo râu", category: "tieudung", image: "🪒" },
-    { id: "91", name: "Ổ khóa", category: "tieudung", image: "🔒" },
-    { id: "92", name: "Chìa khóa", category: "tieudung", image: "🔑" },
-    { id: "93", name: "Đinh ốc vít", category: "tieudung", image: "🔩" },
-
-    // Hàng xuất khẩu (22 items)
-    { id: "57", name: "Cà phê", category: "xuatkhau", image: "☕" },
-    { id: "58", name: "Tôm đông lạnh", category: "xuatkhau", image: "🦐" },
-    { id: "59", name: "Cao su", category: "xuatkhau", image: "🌳" },
-    { id: "60", name: "Hạt điều", category: "xuatkhau", image: "🥜" },
-    { id: "61", name: "Dệt may", category: "xuatkhau", image: "👔" },
-    { id: "62", name: "Hạt tiêu", category: "xuatkhau", image: "🌶️" },
-    { id: "63", name: "Dừa khô", category: "xuatkhau", image: "🥥" },
-    { id: "64", name: "Chè", category: "xuatkhau", image: "🍵" },
-    { id: "65", name: "Gỗ", category: "xuatkhau", image: "🪵" },
-    { id: "66", name: "Thủ công mỹ nghệ", category: "xuatkhau", image: "🎨" },
-    { id: "67", name: "Mía đường", category: "xuatkhau", image: "🎋" },
-    { id: "68", name: "Cá tra xuất khẩu", category: "xuatkhau", image: "🐟" },
-    { id: "69", name: "Gạo Jasmine", category: "xuatkhau", image: "🍚" },
-    { id: "70", name: "Hoa quả nhiệt đới", category: "xuatkhau", image: "🍍" },
-    { id: "71", name: "Mật ong", category: "xuatkhau", image: "🍯" },
-    { id: "72", name: "Hạt sắn", category: "xuatkhau", image: "🌿" },
-    { id: "73", name: "Nghệ vàng", category: "xuatkhau", image: "🟡" },
-    { id: "74", name: "Vải thiều", category: "xuatkhau", image: "🍇" },
-    { id: "94", name: "Thanh long", category: "xuatkhau", image: "🐉" },
-    { id: "95", name: "Măng khô", category: "xuatkhau", image: "🎍" },
-    { id: "96", name: "Nấm khô", category: "xuatkhau", image: "🍄" },
-    { id: "97", name: "Tỏi khô", category: "xuatkhau", image: "🧄" },
-
-    // Công nghiệp nặng (TRAP - 10 items)
-    {
-      id: "75",
-      name: "Máy móc hạng nặng",
-      category: "congnghiep",
-      image: "⚙️",
-    },
-    { id: "76", name: "Than đá", category: "congnghiep", image: "⛏️" },
-    { id: "77", name: "Thép", category: "congnghiep", image: "🏗️" },
-    { id: "78", name: "Xi măng", category: "congnghiep", image: "🧱" },
-    { id: "79", name: "Máy công nghiệp", category: "congnghiep", image: "🔧" },
-    { id: "80", name: "Thiết bị nặng", category: "congnghiep", image: "🏭" },
-    { id: "81", name: "Sắt thô", category: "congnghiep", image: "⚒️" },
-    { id: "82", name: "Máy xúc", category: "congnghiep", image: "🚜" },
-    { id: "98", name: "Nhà máy điện", category: "congnghiep", image: "🏭" },
-    { id: "99", name: "Đầu máy xe lửa", category: "congnghiep", image: "🚂" },
-  ];
-
-  const totalCorrectItems = allItems.filter(
-    (item) => item.category !== "congnghiep"
-  ).length;
-
-  // Timer countdown
-  useEffect(() => {
-    if (timeLeft > 0 && !gameOver) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeLeft === 0) {
-      setGameOver(true);
-    }
-  }, [timeLeft, gameOver]);
-
-  // Check if game completed
-  useEffect(() => {
-    if (correctAttempts === totalCorrectItems) {
-      setGameOver(true);
-    }
-  }, [correctAttempts, totalCorrectItems]);
-
-  const handleDrop = React.useCallback((basketCategory: string, item: Item) => {
-    // Check if item already placed
-    setPlacedItemIds((prev) => {
-      if (prev.includes(item.id)) {
-        return prev;
-      }
-
-      // Heavy industry items are WRONG
-      if (item.category === "congnghiep") {
-        setScore((s) => Math.max(0, s - 5));
-        setWrongAttempts((w) => w + 1);
-        setShowFeedback({
-          show: true,
-          isCorrect: false,
-          message: "❌ Sai lầm! Đại hội VI không ưu tiên Công nghiệp nặng!",
-        });
-        setTimeout(
-          () => setShowFeedback({ show: false, isCorrect: false, message: "" }),
-          2000
-        );
-        return [...prev, item.id];
-      }
-
-      // Check if correct category
-      if (item.category === basketCategory) {
-        setScore((s) => s + 10);
-        setCorrectAttempts((c) => c + 1);
-        setShowFeedback({
-          show: true,
-          isCorrect: true,
-          message: "✅ Chính xác! +10 điểm",
-        });
-        setTimeout(
-          () => setShowFeedback({ show: false, isCorrect: false, message: "" }),
-          1000
-        );
-        return [...prev, item.id];
-      } else {
-        setScore((s) => Math.max(0, s - 5));
-        setWrongAttempts((w) => w + 1);
-        setShowFeedback({
-          show: true,
-          isCorrect: false,
-          message: "⚠️ Sai giỏ rồi! -5 điểm",
-        });
-        setTimeout(
-          () => setShowFeedback({ show: false, isCorrect: false, message: "" }),
-          1500
-        );
-        return prev;
-      }
-    });
-  }, []);
-
-  const restartGame = () => {
-    setScore(0);
-    setTimeLeft(120);
-    setGameOver(false);
-    setPlacedItemIds([]);
-    setWrongAttempts(0);
-    setCorrectAttempts(0);
-    setShowFeedback({ show: false, isCorrect: false, message: "" });
-  };
-
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="space-y-4 relative">
-        {/* Compact Stats Bar */}
-        <div className="bg-white/80 backdrop-blur-sm p-3 rounded-lg border-2 border-yellow-300 sticky top-0 z-10">
-          <div className="flex justify-center items-center gap-2 md:gap-4 flex-wrap">
-            <div className="flex items-center gap-2 bg-gradient-to-r from-yellow-50 to-yellow-100 px-4 py-2 rounded-lg border border-yellow-300">
-              <Trophy className="w-5 h-5 text-yellow-600" />
-              <span className="text-lg font-bold text-gray-900">{score}</span>
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-yellow-50 to-white py-6 px-4">
+      <div className="max-w-6xl mx-auto space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-4xl">🐱💣</span>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">Mèo Nổ</h1>
+              <p className="text-sm text-gray-600">Hành Trình Tư Tưởng HCM</p>
             </div>
+          </div>
 
-            <div
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border ${
-                timeLeft <= 20
-                  ? "bg-red-100 border-red-400 animate-pulse"
-                  : "bg-blue-50 border-blue-300"
-              }`}
-            >
-              <Clock
-                className={`w-5 h-5 ${
-                  timeLeft <= 20 ? "text-red-600" : "text-blue-600"
-                }`}
-              />
-              <span
-                className={`text-lg font-bold ${
-                  timeLeft <= 20 ? "text-red-600" : "text-gray-900"
-                }`}
-              >
-                {timeLeft}s
-              </span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 bg-yellow-100 px-4 py-2 rounded-lg border border-yellow-300">
+              <Gift className="w-5 h-5 text-yellow-600" />
+              <span className="font-bold text-gray-800">{gameState.prizeCount} quà</span>
             </div>
-
             <button
-              onClick={restartGame}
-              className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all shadow-md hover:shadow-lg font-semibold text-sm flex items-center gap-2"
+              onClick={resetGame}
+              className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+              title="Reset game"
             >
-              🔄 Chơi lại
+              <RotateCcw className="w-5 h-5 text-gray-600" />
             </button>
           </div>
         </div>
 
-        {/* Feedback Messages - Fixed Position */}
-        <AnimatePresence>
-          {showFeedback.show && (
-            <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50"
-            >
-              <div
-                className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl shadow-2xl text-base font-bold ${
-                  showFeedback.isCorrect
-                    ? "bg-green-500 text-white"
-                    : "bg-red-500 text-white"
+        {/* Team scores */}
+        <div className="grid grid-cols-4 gap-3">
+          {teamOrder.map((teamId) => {
+            const team = gameState.teams[teamId];
+            const isCurrentTeam = gameState.currentTurn?.currentTeamId === teamId;
+
+            return (
+              <motion.div
+                key={teamId}
+                animate={{ scale: isCurrentTeam ? 1.02 : 1 }}
+                className={`p-4 rounded-xl border-2 transition-all ${
+                  isCurrentTeam
+                    ? `${TEAM_BG_COLORS[teamId]} ring-2 ring-offset-2 ring-yellow-400`
+                    : 'bg-white border-gray-200'
                 }`}
               >
-                {showFeedback.message}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Game Over Screen */}
-        <AnimatePresence>
-          {gameOver && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md rounded-2xl z-50 flex items-center justify-center p-8"
-            >
-              <div className="bg-gradient-to-br from-yellow-50 to-red-50 p-10 rounded-3xl shadow-2xl max-w-2xl w-full border-4 border-yellow-400">
-                <Trophy className="w-20 h-20 text-yellow-600 mx-auto mb-6" />
-                <h3 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-transparent">
-                  {correctAttempts === totalCorrectItems
-                    ? "🎉 Hoàn Thành Xuất Sắc!"
-                    : "⏰ Hết Giờ!"}
-                </h3>
-
-                <div className="grid grid-cols-2 gap-6 mb-8">
-                  <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                    <p className="text-gray-600 mb-2">Tổng điểm</p>
-                    <p className="text-4xl font-bold text-yellow-600">
-                      {score}
-                    </p>
-                  </div>
-                  <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                    <p className="text-gray-600 mb-2">Độ chính xác</p>
-                    <p className="text-4xl font-bold text-green-600">
-                      {Math.round(
-                        (correctAttempts / (correctAttempts + wrongAttempts)) *
-                          100
-                      ) || 0}
-                      %
-                    </p>
-                  </div>
-                  <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                    <p className="text-gray-600 mb-2">Đúng</p>
-                    <p className="text-4xl font-bold text-green-600">
-                      {correctAttempts}
-                    </p>
-                  </div>
-                  <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                    <p className="text-gray-600 mb-2">Sai</p>
-                    <p className="text-4xl font-bold text-red-600">
-                      {wrongAttempts}
-                    </p>
-                  </div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-bold text-gray-800">{team.name}</span>
+                  {isCurrentTeam && (
+                    <span className="text-xs bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full">
+                      Đang chơi
+                    </span>
+                  )}
                 </div>
-
-                <div className="bg-yellow-100 border-l-4 border-yellow-600 p-6 rounded-lg mb-8">
-                  <p className="text-sm text-gray-800 leading-relaxed">
-                    <strong>📚 Bài học lịch sử:</strong> Đại hội VI (1986) đánh
-                    dấu bước ngoặt lịch sử, chuyển hướng từ ưu tiên công nghiệp
-                    nặng sang 3 chương trình kinh tế: Lương thực thực phẩm, Hàng
-                    tiêu dùng, và Hàng xuất khẩu.
-                  </p>
-                </div>
-
-                <button
-                  onClick={restartGame}
-                  className="w-full py-4 bg-gradient-to-r from-yellow-600 to-red-600 text-white rounded-xl font-bold text-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3"
-                >
-                  🔄 Chơi lại để cải thiện
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Layout 2 cột: Items bên trái, Baskets bên phải (sticky) */}
-        <div className="grid lg:grid-cols-[1fr,320px] gap-4">
-          {/* Items Grid - Scrollable bên trái */}
-          <div className="bg-white/80 p-3 md:p-4 rounded-xl shadow-inner border border-gray-200 max-h-[600px] overflow-y-auto">
-            <h4 className="text-sm font-bold text-gray-700 mb-3 text-center sticky top-0 bg-white/95 py-2 z-10 rounded">
-              📦 Kéo thả các item vào giỏ bên phải
-            </h4>
-            <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
-              {allItems.map((item) => (
-                <DraggableItem
-                  key={item.id}
-                  item={item}
-                  isPlaced={placedItemIds.includes(item.id)}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Baskets - Sticky bên phải */}
-          <div className="lg:sticky lg:top-4 h-fit">
-            <div className="bg-gradient-to-br from-yellow-50 to-red-50 p-4 rounded-xl border-2 border-yellow-300 shadow-lg">
-              <h4 className="text-center font-bold text-gray-800 mb-4 text-lg">
-                🎯 3 Chương Trình Kinh Tế
-              </h4>
-              <div className="space-y-3">
-                <Basket
-                  category="Lương thực"
-                  onDrop={(item) => handleDrop("luongthuc", item)}
-                />
-                <Basket
-                  category="Hàng tiêu dùng"
-                  onDrop={(item) => handleDrop("tieudung", item)}
-                />
-                <Basket
-                  category="Hàng xuất khẩu"
-                  onDrop={(item) => handleDrop("xuatkhau", item)}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </DndProvider>
-  );
-};
-
-const MiniGamePage: React.FC = () => {
-  const [selectedGame, setSelectedGame] = useState<"game1" | "game2" | null>(
-    null
-  );
-  const [showInstructions, setShowInstructions] = useState(false);
-  const [gameToStart, setGameToStart] = useState<"game1" | "game2" | null>(
-    null
-  );
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const handleGameClick = (gameId: "game1" | "game2") => {
-    setGameToStart(gameId);
-    setShowInstructions(true);
-  };
-
-  const handleStartGame = () => {
-    setSelectedGame(gameToStart);
-    setShowInstructions(false);
-  };
-
-  const handleCloseGame = () => {
-    setSelectedGame(null);
-    setGameToStart(null);
-  };
-
-  // Scroll to top when game modal opens
-  useEffect(() => {
-    if (selectedGame && scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = 0;
-    }
-  }, [selectedGame]);
-
-  const games = [
-    {
-      id: "game1" as const,
-      title: "Siêu thị Tem Phiếu",
-      subtitle: "Đêm Trước Đổi Mới (90s)",
-      description:
-        "Lạm phát 774%, thiếu lương thực, ngăn sông cấm chợ. Chọn 15 món đồ thiết yếu từ 50 item trong 90 giây. Cảm nhận sự khan hiếm và áp lực của cơ chế tập trung quan liêu bao cấp.",
-      icon: "🌑",
-      color: "from-red-500 to-orange-600",
-      bgColor: "from-red-50 to-orange-50",
-    },
-    {
-      id: "game2" as const,
-      title: "Nhà Hoạch Định Chiến Lược",
-      subtitle: "Cú Hích Lịch Sử - Đại Hội VI (120s)",
-      description:
-        "Phân loại 50 item vào 3 chương trình kinh tế ưu tiên của Đại hội VI. Chuyển hướng từ công nghiệp nặng sang lương thực, hàng tiêu dùng, xuất khẩu. Thử thách khả năng hiểu biết lịch sử!",
-      icon: "⚡",
-      color: "from-yellow-500 to-red-600",
-      bgColor: "from-yellow-50 to-red-50",
-    },
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-yellow-50 to-white py-20">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <div className="inline-block bg-gradient-to-r from-red-600 to-yellow-600 p-1 rounded-2xl mb-6">
-            <div className="bg-white px-8 py-4 rounded-xl">
-              <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-red-600 to-yellow-600 bg-clip-text text-transparent">
-                🎮 Mini Games: Đổi Mới 1986
-              </h1>
-            </div>
-          </div>
-          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto font-medium">
-            Trải nghiệm lịch sử qua những trò chơi tương tác về thời kỳ khủng
-            hoảng và đổi mới.
-          </p>
-        </motion.div>
-
-        {/* Game Selection Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {games.map((game, index) => (
-            <motion.div
-              key={game.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              whileHover={{ scale: 1.03, y: -5 }}
-              className={`bg-gradient-to-br ${game.bgColor} p-8 rounded-3xl shadow-2xl cursor-pointer border-2 border-transparent hover:border-red-300 transition-all flex flex-col`}
-              onClick={() => handleGameClick(game.id)}
-            >
-              <div className="text-center mb-6">
-                <div className="text-7xl mb-4">{game.icon}</div>
-                <h2
-                  className={`text-3xl font-bold mb-2 bg-gradient-to-r ${game.color} bg-clip-text text-transparent`}
-                >
-                  {game.title}
-                </h2>
-                <p className="text-sm font-semibold text-gray-600 mb-4">
-                  {game.subtitle}
-                </p>
-              </div>
-              <p className="text-gray-700 leading-relaxed mb-6 flex-grow">
-                {game.description}
-              </p>
-              <button
-                className={`w-full py-4 px-6 bg-gradient-to-r ${game.color} text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 mt-auto`}
-              >
-                <Play className="w-6 h-6" />
-                Chơi ngay
-              </button>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Instructions Modal */}
-        <AnimatePresence>
-          {showInstructions && gameToStart && (
-            <InstructionsModal
-              game={gameToStart}
-              onClose={() => setShowInstructions(false)}
-              onStart={handleStartGame}
-            />
-          )}
-        </AnimatePresence>
-
-        {/* Game Modal */}
-        <AnimatePresence>
-          {selectedGame && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
-              onClick={handleCloseGame}
-            >
-              <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
-                transition={{ type: "spring", damping: 25 }}
-                className="h-full w-full flex flex-col"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* Fixed Header with Close Button */}
-                <div className="flex-shrink-0 bg-gradient-to-r from-red-600 to-yellow-600 p-4 shadow-lg">
-                  <div className="container mx-auto flex justify-between items-center">
-                    <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                      {selectedGame === "game1"
-                        ? "🌑 Siêu thị Tem Phiếu"
-                        : "⚡ Nhà Hoạch Định Chiến Lược"}
-                    </h2>
-                    <button
-                      onClick={handleCloseGame}
-                      className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
-                    >
-                      <X className="w-6 h-6 text-white" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Game Content - Scrollable */}
-                <div
-                  ref={scrollContainerRef}
-                  className="flex-1 bg-white overflow-y-auto"
-                >
-                  <div className="container mx-auto p-4 md:p-6">
-                    {selectedGame === "game1" && <SurvivalGame />}
-                    {selectedGame === "game2" && <StrategyGame />}
-                  </div>
-                </div>
+                <p className="text-3xl font-bold text-gray-900">{team.totalScore}</p>
+                {team.hasWonPrize && (
+                  <span className="text-xs text-green-600">🎁 Đã nhận quà</span>
+                )}
+                {team.explosionModifier > 0 && (
+                  <span className="text-xs text-red-600 block">
+                    ⚠️ +{team.explosionModifier}% nổ
+                  </span>
+                )}
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            );
+          })}
+        </div>
+
+        {/* Current turn info */}
+        {gameState.currentTurn && currentTeam && (
+          <div className="bg-white rounded-xl border-2 border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-gray-800">
+                Lượt của {currentTeam.name}
+              </h2>
+
+              {gameState.currentTurn.questionAnsweredCorrectly && (
+                <div className="flex items-center gap-4">
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">Điểm lượt này</p>
+                    <p className="text-3xl font-bold text-green-600">
+                      {gameState.currentTurn.turnPoints}
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">Đã rút</p>
+                    <p className="text-xl font-bold text-gray-800">
+                      {gameState.currentTurn.drawCount}/{MAX_DRAWS}
+                    </p>
+                  </div>
+                  {currentExplosionRate && (
+                    <div className="text-center">
+                      <p className="text-xs text-gray-500">Tỷ lệ nổ tiếp</p>
+                      <p className="text-xl font-bold text-red-600">
+                        {currentExplosionRate.explosion}%
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Phase: Select question */}
+            {!gameState.currentTurn.selectedQuestionId && (
+              <div>
+                <p className="text-gray-600 mb-4">Chọn một câu hỏi:</p>
+                <div className="grid grid-cols-6 md:grid-cols-8 lg:grid-cols-13 gap-2">
+                  {gameState.questions.map((q) => (
+                    <button
+                      key={q.id}
+                      onClick={() => !q.used && selectQuestion(q.id)}
+                      disabled={q.used}
+                      className={`aspect-square rounded-lg font-bold text-lg transition-all ${
+                        q.used
+                          ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                          : 'bg-gradient-to-br from-red-600 to-orange-500 text-white hover:shadow-lg hover:scale-105 drop-shadow-md'
+                      }`}
+                    >
+                      {q.letter}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Phase: Answered correctly, choose to draw or stop */}
+            {gameState.currentTurn.questionAnsweredCorrectly &&
+              !gameState.currentTurn.turnEnded && (
+                <div className="flex justify-center gap-4 mt-6">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleStopTurn}
+                    className="px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+                  >
+                    <Hand className="w-5 h-5" />
+                    DỪNG ({gameState.currentTurn.turnPoints} điểm)
+                  </motion.button>
+
+                  {gameState.currentTurn.drawCount < MAX_DRAWS && (
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={handleDrawCard}
+                      className="px-8 py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+                    >
+                      <Bomb className="w-5 h-5" />
+                      RÚT THẺ ({currentExplosionRate?.explosion}% nổ)
+                    </motion.button>
+                  )}
+                </div>
+              )}
+
+            {/* Drawn cards history */}
+            {gameState.currentTurn.drawnCards.length > 0 && (
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <p className="text-sm text-gray-500 mb-2">Thẻ đã rút:</p>
+                <div className="flex gap-2 flex-wrap">
+                  {gameState.currentTurn.drawnCards.map((card, idx) => (
+                    <span
+                      key={idx}
+                      className={`px-3 py-1 rounded-lg text-sm font-medium ${
+                        card.type === 'EXPLOSION'
+                          ? 'bg-red-100 text-red-700'
+                          : 'bg-green-100 text-green-700'
+                      }`}
+                    >
+                      {card.type === 'EXPLOSION' ? '💣 Nổ' : `⭐ +${card.points}`}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
+
+      {/* Question Modal */}
+      <AnimatePresence>
+        {showQuestionModal && currentQuestion && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6"
+            >
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <span className="text-sm text-gray-500">Câu {currentQuestion.letter}</span>
+                  <h2 className="text-xl font-bold text-gray-800">
+                    {currentQuestion.question.title}
+                  </h2>
+                </div>
+                <span className="px-3 py-1 bg-gray-100 rounded-full text-sm font-medium">
+                  {currentQuestion.question.type === 'GHEP_CAU' && '🔗 Ghép câu'}
+                  {currentQuestion.question.type === 'TRA_LOI' && '❓ Trả lời'}
+                  {currentQuestion.question.type === 'MO_PHONG' && '🛤️ Mô phỏng'}
+                  {currentQuestion.question.type === 'GHEP_HINH' && '🖼️ Ghép hình'}
+                </span>
+              </div>
+
+              {renderQuestion()}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Card Draw Animation */}
+      <AnimatePresence>
+        {showCardAnimation && lastDrawnCard && (
+          <CardDrawAnimation card={lastDrawnCard} onComplete={processDrawnCard} />
+        )}
+      </AnimatePresence>
+
+      {/* Backup Question Modal */}
+      <AnimatePresence>
+        {showBackupQuestion && backupQuestion && (
+          <BackupQuestionModal question={backupQuestion} onAnswer={handleBackupAnswer} />
+        )}
+      </AnimatePresence>
+
+      {/* Result Modal */}
+      <AnimatePresence>
+        {showResultModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              className={`rounded-2xl p-8 max-w-md w-full text-center ${
+                resultMessage.isSuccess
+                  ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-400'
+                  : 'bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-400'
+              }`}
+            >
+              <div className="text-5xl mb-4">
+                {resultMessage.isSuccess ? '🎉' : '😢'}
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                {resultMessage.title}
+              </h3>
+              <p className="text-gray-600 mb-6">{resultMessage.message}</p>
+
+              {gameState.currentTurn?.turnEnded ? (
+                <button
+                  onClick={endTurnAndContinue}
+                  className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
+                >
+                  Tiếp tục → Nhóm tiếp theo
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowResultModal(false)}
+                  className="w-full py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
+                >
+                  Đóng
+                </button>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
