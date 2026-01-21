@@ -17,37 +17,44 @@ export default function LibraryPage() {
   // Historical images from DomeGallery with additional ones
   const domeImages = [
     {
-      src: "https://media.vietnamplus.vn/images/ed1918d4cf848798286fdbd286ae25b49193a1c5d1fb33e969ef22f27d52ae3d4fa848ce7d2b15dcfa2646bd42731b69a74f6b1bfe70b3203772c7979020cefa/ttxvn-nguyen-ai-quoc.jpg",
-      alt: "Nguyễn Ái Quốc với nhân dân Moskva (Nga) trên đồi Chim Sẻ, trong thời gian tham dự Đại hội lần thứ V Quốc tế cộng sản (17-6/8-7-1924). Ảnh: Tư liệu/TTXVN - Thể hiện tinh thần quốc tế vô sản.",
+      src: "https://baovinhlong.com.vn/file/e7837c027f6ecd14017ffa4e5f2a0e34/dataimages/202005/original/images2285462_image004.jpg",
+      alt: "Vào đầu những năm 1910, một thanh niên Việt Nam rời quê hương với khát vọng tìm con đường giải phóng dân tộc. Trên hành trình bôn ba khắp thế giới, ông đã đến Pháp và phải lao động bằng nhiều nghề khác nhau để sinh sống, trong đó có nghề phụ bếp/đầu bếp tại các nhà hàng, khách sạn. Ở Paris, công việc trong bếp rất vất vả: dậy từ rất sớm, làm việc nhiều giờ liền, công việc nặng nhọc, lương thấp, sống trong những căn phòng chật hẹp của người lao động nhập cư. Nhưng chính trong những căn bếp nóng nực ấy, ông học được tác phong kỷ luật, ngăn nắp, quan sát xã hội Pháp, sự phân hóa giàu nghèo, đời sống công nhân, tiếp cận tư tưởng tiến bộ, tham gia các cuộc thảo luận chính trị, đọc báo, viết bài. Ban ngày lao động kiếm sống, ban đêm ông học tập và viết, từng bước hình thành tư duy cách mạng. Từ một người làm bếp vô danh, ông dần trở thành một nhà hoạt động chính trị, rồi sau này là lãnh tụ của phong trào giải phóng dân tộc Việt Nam.",
     },
     {
-      src: "https://file.qdnd.vn/data/images/0/2021/05/29/phucthang/06-hcm01.jpg?dpi=150&quality=100&w=575",
-      alt: "Hình ảnh trong chuyến hành trình tìm đường cứu nước của Bác từ ngày 25 đến 30-12-1920, chàng thanh niên yêu nước Nguyễn Ái Quốc (tên của Chủ tịch Hồ Chí Minh trong thời gian hoạt động cách mạng ở Pháp) tham dự Đại hội lần thứ 18 Đảng Xã hội Pháp ở thành phố Tours với tư cách đại biểu Đông Dương.",
+      src: "https://cly.1cdn.vn/2016/05/19/congly-vn_bachovoinuocnga8.jpg",
+      alt: `Sau Hiệp định Giơnevơ 1954, Chủ tịch Hồ Chí Minh xác định đấu tranh thực hiện hòa bình, thống nhất đất nước là lâu dài và gian khổ, trong đó đấu tranh ngoại giao và tranh thủ sự ủng hộ quốc tế giữ vai trò rất quan trọng. Xuất phát từ nhận thức đó, năm 1955, Người dẫn đầu đoàn đại biểu Chính phủ Việt Nam Dân chủ Cộng hòa đi thăm hữu nghị Liên Xô, Trung Quốc và Mông Cổ.
+Chuyến thăm nhằm củng cố tình đoàn kết với các nước xã hội chủ nghĩa anh em, tranh thủ sự ủng hộ quốc tế cho sự nghiệp hòa bình, thống nhất và xây dựng đất nước. Trong các cuộc gặp gỡ và tuyên bố chung, các nước đều bày tỏ sự ủng hộ mạnh mẽ đối với Việt Nam, đặc biệt là việc thực hiện hiệp thương, tổng tuyển cử theo Hiệp định Giơnevơ.
+Kết quả, Việt Nam nhận được sự giúp đỡ to lớn về chính trị, kinh tế, kỹ thuật, đào tạo cán bộ và hợp tác văn hóa – giáo dục. Chủ tịch Hồ Chí Minh khẳng định chuyến đi đã hoàn toàn đạt mục đích, góp phần nâng cao uy tín quốc tế của Việt Nam, củng cố mặt trận đoàn kết quốc tế, tạo cơ sở cho cuộc đấu tranh thống nhất và phát triển đất nước sau này.`,
     },
     {
-      src: "https://media-cdn-v2.laodong.vn/storage/newsportal/2024/3/24/1318919/002.jpg",
-      alt: "Chiến thắng Điện Biên Phủ năm 1954 - Biểu tượng cho sức mạnh của ý chí và tinh thần đoàn kết toàn dân tộc.",
+      src: "https://images.vietnamtourism.gov.vn/vn//images/2020/Albulm/Bac_Ho/Bac_Ho_tham_dao_Titop.jpg",
+      alt: "Tháng 01 năm 1962, trong chuyến thăm Việt Nam, anh hùng phi công vũ trụ Liên Xô Gherman Titov đã có dịp cùng Chủ tịch Hồ Chí Minh tham quan vịnh Hạ Long, một thắng cảnh nổi tiếng của đất nước Việt Nam, trên con tàu lướt nhẹ giữa làn nước xanh biếc và những đảo đá trùng điệp, Bác Hồ với phong thái giản dị, thân tình đã trò chuyện cởi mở với Titov và các bạn Liên Xô, hỏi thăm về chuyến bay vào vũ trụ, về khoa học kỹ thuật hiện đại, đồng thời kể cho bạn bè quốc tế nghe về thiên nhiên, con người và khát vọng hòa bình của nhân dân Việt Nam, Bác ví tình hữu nghị Việt Nam – Liên Xô như những hòn đảo vững chãi giữa biển khơi, dù sóng gió vẫn bền chặt và gắn bó, còn Titov thì bày tỏ sự khâm phục trước ý chí kiên cường của dân tộc Việt Nam và vẻ đẹp kỳ vĩ của vịnh Hạ Long, cuộc trò chuyện diễn ra trong không khí ấm áp, chan hòa, thể hiện sâu sắc tình đoàn kết quốc tế, sự giao thoa giữa trí tuệ khoa học tiên tiến của nhân loại với tâm hồn yêu nước, yêu hòa bình của vị lãnh tụ Việt Nam, để lại một kỷ niệm đẹp về tình bạn thủy chung giữa hai dân tộc Việt Nam và Liên Xô.",
     },
     {
-      src: "https://inkythuatso.com/uploads/thumbnails/800/2023/03/2-hinh-anh-bac-ho-o-chien-khu-inkythuatso-06-09-42-16.jpg",
-      alt: "Hồ Chí Minh với cán bộ, chiến sĩ tại chiến khu Việt Bắc năm 1947 - Thể hiện sự gần gũi với bộ đội và nhân dân.",
+      src: "https://hochiminh.vn/upload/3000001/20251024/ae8080ce0a7550c9538ababaf43a33e1bac-ho-voi-nuoc-duc.jpg",
+      alt: "Những năm 1980, khi công nhân Việt Nam sang lao động tại Cộng hòa Dân chủ Đức, hình ảnh Chủ tịch Hồ Chí Minh đã trở thành sợi dây gắn kết đặc biệt giữa người Việt và người Đức, bởi chỉ cần nhắc đến tên Bác là nhận được sự trân trọng, thân thiện và giúp đỡ chân thành, thể hiện qua việc nhiều người Đức hiểu biết, kính trọng Bác, nhiều đội thiếu niên, khu phố, công trình mang tên Hồ Chí Minh, bắt nguồn từ tình hữu nghị Việt Nam – Đức được Người đặt nền móng trong chuyến thăm năm 1957 và từ tấm gương đạo đức, nhân cách lớn lao của Bác được bạn bè quốc tế yêu mến.",
     },
-    {
-      src: "https://tapchigiaothong.qltns.mediacdn.vn/tapchigiaothong.vn/files/Tapchigiay/2021/01/26/bac-ho-0957.jpg",
-      alt: "Đại hội Đại biểu toàn quốc lần thứ III của Đảng (1960) - Đánh dấu bước chuyển sang thời kỳ xây dựng chủ nghĩa xã hội.",
+    { 
+      src: "https://cly.1cdn.vn/2016/05/19/congly-vn_bachovoinuocnga8.jpg",
+      alt: "Năm 1956, đoàn chuyên gia y tế Cộng hòa Dân chủ Đức sang Việt Nam giúp trang bị Bệnh viện Phủ Doãn và xây dựng xưởng làm chân tay giả cho thương binh, trong quá trình công tác đã nhiều lần được gặp và trò chuyện với Chủ tịch Hồ Chí Minh, người luôn dành sự quan tâm sâu sắc, chân tình đến các chuyên gia và đặc biệt là thương binh Việt Nam, động viên họ vượt lên thương tật, khẳng định “thương binh tàn chứ không phế”, qua đó thể hiện tấm lòng nhân ái, tư tưởng nhân văn và sự trân trọng của Bác đối với sự giúp đỡ quốc tế, để lại ấn tượng sâu đậm và nguồn động lực lớn lao cho các chuyên gia Đức trong suốt thời gian làm việc tại Việt Nam.",
     },
-    {
-      src: "https://imgnvsk.vnanet.vn/MediaUpload/Medium/2023/07/21/capture21-15-55-29.png",
-      alt: "Đại hội Đại biểu toàn quốc lần thứ V của Đảng Cộng sản Việt Nam năm 1982 – Đề ra nhiệm vụ ổn định kinh tế - xã hội và mở ra các bước đột phá cải cách 1982–1986.",
+    { // 
+      src: "https://cly.1cdn.vn/2016/05/19/congly-vn_bachovoinuocnga3.jpg",
+      alt: "Trong Chiến dịch Điện Biên Phủ năm 1954, Chủ tịch Hồ Chí Minh đã gặp gỡ và trao đổi với nhà làm phim nổi tiếng Liên Xô Roman Karmen, người trực tiếp ghi lại bằng ống kính điện ảnh chân thực và sinh động cuộc chiến đấu anh dũng của quân và dân Việt Nam, góp phần đưa chiến thắng lịch sử Điện Biên Phủ ra trước dư luận tiến bộ và yêu chuộng hòa bình trên toàn thế giới.",
     },
-    {
-      src: "https://th.bing.com/th/id/R.c89bc199a377256fe56dcaf53874b742?rik=XtuJd6brDcL4mA&pid=ImgRaw&r=0",
-      alt: "Tiền Việt Nam năm 1985 – Hình ảnh gắn liền với cải cách giá - lương - tiền, nguyên nhân trực tiếp dẫn tới quyết định đổi mới toàn diện tại Đại hội VI năm 1986.",
+    { // 
+      src: "https://cly.1cdn.vn/2016/05/19/congly-vn_bachovoinuocnga12.jpg",
+      alt: "Năm 1962, Chủ tịch Hồ Chí Minh đã có cuộc gặp gỡ thân thiết với phi hành gia Liên Xô German Titov, thể hiện tình hữu nghị sâu sắc giữa Việt Nam và Liên Xô, đồng thời bày tỏ sự trân trọng của Bác đối với những thành tựu khoa học vũ trụ của nhân loại và tinh thần đoàn kết quốc tế vì hòa bình.",
     },
-    {
-      src: "https://file3.qdnd.vn/data/images/0/2022/07/20/tranhuyen/01botruongngoaigiaonguyenmanhcam.jpg?dpi=150&quality=100&w=870",
-      alt: "Việt Nam gia nhập ASEAN năm 1995 – Thành tựu quan trọng của tiến trình đổi mới, mở rộng quan hệ đối ngoại và hội nhập khu vực.",
+    { //
+      src: "https://cly.1cdn.vn/2016/05/19/congly-vn_bachovoinuocnga10.jpg",
+      alt: "Năm 1959, trong chuyến thăm Liên Xô, Chủ tịch Hồ Chí Minh đã tới nhà hát Bolshoi ở Moscow, thể hiện sự trân trọng của Người đối với nền văn hóa, nghệ thuật Nga và tình hữu nghị bền chặt giữa Việt Nam và Liên Xô.",
     },
+    { //
+      src: "https://cly.1cdn.vn/2016/05/19/congly-vn_bachovoinuocnga10.jpg",
+      alt: "Năm 1959, trong chuyến thăm Liên Xô, Chủ tịch Hồ Chí Minh đã tới nhà hát Bolshoi ở Moscow, thể hiện sự trân trọng của Người đối với nền văn hóa, nghệ thuật Nga và tình hữu nghị bền chặt giữa Việt Nam và Liên Xô.",
+    },
+    
 
     // ========================================================================
   ];
