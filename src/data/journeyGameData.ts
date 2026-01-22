@@ -443,19 +443,19 @@ Từ kho lý luận, Người tìm cách kết nối nguyên lý chung với ho�
         },
         message: '🎓 "Lý luận mà không có thực tiễn là lý luận suông. Thực tiễn mà không có lý luận là thực tiễn mù quáng." - Hồ Chí Minh',
       },
-      // Scenario 2: Multiple choice - Cách vận dụng (KHÓ HƠN)
+      // Scenario 2: Multiple choice - Bác học và vận dụng tại Liên Xô
       {
         id: 'ussr-mc-1',
         type: 'multiple-choice',
-        intro: 'Bạn học được phương pháp Pomodoro (làm việc 25 phút, nghỉ 5 phút) từ một cuốn sách về năng suất. Sau 1 tuần thử, bạn thấy 25 phút quá ngắn - vừa tập trung được thì hết giờ.',
-        question: 'Theo tinh thần "vận dụng sáng tạo" của Bác, bạn nên làm gì?',
+        intro: 'Năm 1923, Nguyễn Ái Quốc đến Liên Xô và học tại Đại học Phương Đông (nơi đào tạo cán bộ cách mạng). Các giảng viên dạy mô hình cách mạng dựa trên giai cấp công nhân thành thị, phù hợp với nước Nga công nghiệp. Nhưng Việt Nam là nước nông nghiệp với 90% dân số là nông dân.',
+        question: 'Nguyễn Ái Quốc đã vận dụng lý luận Mác-Lênin như thế nào cho phù hợp với Việt Nam?',
         options: [
-          { id: 'a', text: '📋 Tiếp tục làm đúng 25 phút vì sách đã chứng minh hiệu quả.', isCorrect: false },
-          { id: 'b', text: '🚫 Bỏ phương pháp Pomodoro vì không hợp với mình.', isCorrect: false },
-          { id: 'c', text: '🔧 Điều chỉnh: thử 45-50 phút làm, 10 phút nghỉ - giữ nguyên LÝ (nghỉ định kỳ), đổi CÁCH (thời lượng).', isCorrect: true },
-          { id: 'd', text: '🤔 Hỏi tác giả sách xem mình làm sai chỗ nào.', isCorrect: false },
+          { id: 'a', text: '📋 Áp dụng nguyên xi mô hình Liên Xô: cách mạng do công nhân lãnh đạo, bỏ qua nông dân.', isCorrect: false },
+          { id: 'b', text: '🚫 Từ chối học Chủ nghĩa Mác-Lênin vì không phù hợp với Việt Nam.', isCorrect: false },
+          { id: 'c', text: '🎯 Giữ nguyên lý cốt lõi (giải phóng dân tộc, đấu tranh giai cấp) nhưng nhấn mạnh vai trò NÔNG DÂN - lực lượng chủ yếu của cách mạng Việt Nam.', isCorrect: true },
+          { id: 'd', text: '⏳ Chờ đến khi Việt Nam phát triển công nghiệp như Nga rồi mới làm cách mạng.', isCorrect: false },
         ],
-        message: '💡 Bác Hồ tiếp thu Chủ nghĩa Mác-Lênin nhưng KHÔNG sao chép y nguyên. Người giữ NGUYÊN LÝ cốt lõi, điều chỉnh CÁCH LÀM phù hợp hoàn cảnh Việt Nam!',
+        message: '💡 Bác Hồ nhận ra: Việt Nam cần "cách mạng giải phóng dân tộc" với nông dân làm chủ lực, khác với Nga. Người giữ NGUYÊN LÝ Mác-Lênin nhưng VẬN DỤNG SÁNG TẠO phù hợp hoàn cảnh Việt Nam!',
       },
     ],
   },

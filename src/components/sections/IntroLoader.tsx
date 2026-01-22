@@ -4,16 +4,16 @@ import { useState, useEffect, useCallback } from "react";
 
 const introQuotes = [
   {
-    line1: "Lịch sử không chỉ để nhớ…",
-    line2: "Mà để tiếp lửa – dựng xây ngày mai.",
+    line1: "Từ bến cảng Nhà Rồng năm 1911…",
+    line2: "Một hành trình 30 năm tìm đường cứu nước bắt đầu.",
   },
   {
-    line1: "1986–1996: Hai miền – Một ý chí",
-    line2: "Dưới ngọn cờ Đảng – dân tộc kiên cường đi tới.",
+    line1: "Người đi tìm hình của Nước",
+    line2: "Để dân tộc Việt Nam không còn nô lệ.",
   },
   {
-    line1: "Một dân tộc – một dòng máu Việt",
-    line2: "Có Đảng – có đường đi trong bão lửa.",
+    line1: "Quan sát – Rèn luyện – Đấu tranh",
+    line2: "Mỗi chặng đường là một bài học cho hôm nay.",
   },
 ];
 
@@ -227,7 +227,7 @@ export default function IntroLoader({
         {/* Year badge */}
         <div className="mt-12 px-6 py-2 border border-[#C9A227]/30 rounded-full">
           <span className="text-[#C9A227]/70 text-sm md:text-base tracking-[0.3em] font-light">
-            1986 — 1996
+            1911 — 1941
           </span>
         </div>
       </div>

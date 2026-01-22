@@ -451,11 +451,20 @@ const JourneyGame: React.FC = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="flex items-center justify-center gap-4 mb-6"
+          className="flex items-center justify-center gap-4 mb-4"
         >
           <div className="h-px w-16 bg-gradient-to-r from-transparent to-yellow-400" />
-          <span className="text-yellow-400 text-lg font-medium tracking-[0.3em]">1911 — 1941</span>
+          <span className="text-yellow-400 text-lg font-medium tracking-[0.3em]">Hành Trình Tìm Đường Cứu Nước</span>
           <div className="h-px w-16 bg-gradient-to-l from-transparent to-yellow-400" />
+        </motion.div>
+
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.45 }}
+          className="flex items-center justify-center gap-2 mb-6"
+        >
+          <span className="text-yellow-300/80 text-base font-medium">🚢 1911 — 1941 🇻🇳</span>
         </motion.div>
 
         <motion.p
@@ -464,7 +473,7 @@ const JourneyGame: React.FC = () => {
           transition={{ delay: 0.5 }}
           className="text-xl md:text-2xl text-yellow-300 font-medium mb-8"
         >
-          Hành trình – Trải nghiệm – Chiêm nghiệm
+          30 năm bôn ba — Một con đường cách mạng
         </motion.p>
 
         <motion.div
@@ -474,8 +483,9 @@ const JourneyGame: React.FC = () => {
           className="max-w-2xl mx-auto mb-10 bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30"
         >
           <p className="text-lg text-white/90 italic leading-relaxed">
-            "Mỗi chặng đường Bác đi qua đều để lại những bài học quý giá về tư duy, lao động và lối sống. 
-            Hãy bước vào hành trình này không phải để thi đố, mà để cùng suy ngẫm và lựa chọn cách ứng xử của riêng bạn."
+            "Ngày 5/6/1911, từ bến cảng Nhà Rồng, người thanh niên Nguyễn Tất Thành bước lên con tàu Amiral Latouche Tréville, 
+            bắt đầu hành trình 30 năm tìm đường cứu nước. Mỗi chặng đường để lại bài học quý về tư duy, lao động và lối sống. 
+            Hãy cùng trải nghiệm và chiêm nghiệm!"
           </p>
         </motion.div>
 
