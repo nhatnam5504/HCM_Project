@@ -281,11 +281,11 @@ const JourneyGame: React.FC = () => {
       case 'balance':
         if (scenario.balanceGame) {
           // Check if all CORRECT weights are placed AND no WRONG weights are placed
-          const correctWeights = scenario.balanceGame.weights.filter(w => w.isCorrect === true);
-          const wrongWeights = scenario.balanceGame.weights.filter(w => w.isCorrect === false);
+          const correctWeights = scenario.balanceGame.weights.filter((w: BalanceWeight) => w.isCorrect === true);
+          const wrongWeights = scenario.balanceGame.weights.filter((w: BalanceWeight) => w.isCorrect === false);
           
-          const allCorrectPlaced = correctWeights.every(w => balanceWeights.includes(w.id));
-          const noWrongPlaced = !wrongWeights.some(w => balanceWeights.includes(w.id));
+          const allCorrectPlaced = correctWeights.every((w: BalanceWeight) => balanceWeights.includes(w.id));
+          const noWrongPlaced = !wrongWeights.some((w: BalanceWeight) => balanceWeights.includes(w.id));
           
           correct = allCorrectPlaced && noWrongPlaced && balanceWeights.length === correctWeights.length;
         }
@@ -623,6 +623,53 @@ const JourneyGame: React.FC = () => {
               📖 Chủ đề: {currentStage.themeVi}
             </p>
           </div>
+
+          {/* Story Connection - Liên kết từ chặng trước */}
+          {currentStage.storyConnection && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-gradient-to-r from-yellow-500/20 to-yellow-400/10 backdrop-blur-sm rounded-xl p-4 mb-6 max-w-2xl mx-auto border border-yellow-400/30"
+            >
+              <p className="text-yellow-300 text-lg font-medium italic">
+                {currentStage.storyConnection}
+              </p>
+            </motion.div>
+          )}
+
+          {/* Story Intro - Câu chuyện mở đầu */}
+          {currentStage.storyIntro && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="bg-white/10 backdrop-blur-md rounded-2xl p-6 mb-6 max-w-3xl mx-auto border border-white/20 text-left"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-3xl">📜</span>
+                <h3 className="text-xl font-bold text-yellow-400">CÂU CHUYỆN</h3>
+              </div>
+              <div className="text-white/90 text-base leading-relaxed whitespace-pre-line mb-4">
+                {currentStage.storyIntro}
+              </div>
+              
+              {/* Key Points */}
+              {currentStage.keyPoints && currentStage.keyPoints.length > 0 && (
+                <div className="bg-yellow-400/10 rounded-xl p-4 mt-4 border border-yellow-400/20">
+                  <p className="text-yellow-400 font-bold text-sm mb-3">✨ Ý CHÍNH:</p>
+                  <ul className="space-y-2">
+                    {currentStage.keyPoints.map((point: string, i: number) => (
+                      <li key={i} className="flex items-start gap-3 text-white/90 text-sm">
+                        <span className="text-yellow-400 mt-0.5">•</span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </motion.div>
+          )}
 
           {/* Game Rules Info Box */}
           {gameState.currentScenario && (
@@ -1091,49 +1138,104 @@ const JourneyGame: React.FC = () => {
     const scenario = gameState.currentScenario!;
     const blanks = scenario.fillBlanks!;
     
-    // Parse the text and replace blanks with inputs
+    // Parse the text and replace blanks with dropdown selects
     const parts = blanks.text.split('___');
+    
+    // Get the current blank being selected (for showing options)
+    const [activeBlank, setActiveBlank] = React.useState<string | null>(null);
     
     return (
       <div className="space-y-6">
         {/* Timer */}
-        {renderGameTimer('✏️ Điền từ vào chỗ trống!')}
+        {renderGameTimer('✏️ Chọn từ đúng vào chỗ trống!')}
         
         <div className="bg-gradient-to-r from-red-800 to-red-700 p-4 rounded-xl mb-4 border-l-4 border-yellow-400">
           <p className="text-xl font-medium text-white">{scenario.question}</p>
         </div>
-        <div className="bg-yellow-50 p-6 rounded-xl text-xl leading-relaxed border-2 border-yellow-200">
-          {parts.map((part: string, i: number) => (
-            <React.Fragment key={i}>
-              {part}
-              {i < parts.length - 1 && (
-                <input
-                  type="text"
-                  value={fillBlanks[blanks.blanks[i].id] || ''}
-                  onChange={(e) => setFillBlanks(prev => ({
-                    ...prev,
-                    [blanks.blanks[i].id]: e.target.value
-                  }))}
-                  disabled={showMessage}
-                  placeholder="..."
-                  className={`w-32 mx-2 px-3 py-1 border-b-2 bg-transparent text-center font-bold outline-none ${
-                    showMessage
-                      ? fillBlanks[blanks.blanks[i].id]?.toLowerCase().trim() === blanks.blanks[i].answer.toLowerCase()
-                        ? 'border-green-500 text-green-600'
-                        : 'border-red-500 text-red-600'
-                      : 'border-yellow-400'
-                  }`}
-                />
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-        {showMessage && !isCorrect && (
-          <div className="bg-yellow-50 p-4 rounded-xl">
-            <p className="text-yellow-800 font-medium">
-              💡 Đáp án đúng: {blanks.blanks.map((b: { id: string; answer: string }) => `"${b.answer}"`).join(', ')}
-            </p>
+        
+        {/* Quote with blanks */}
+        <div className="bg-gradient-to-br from-amber-50 to-yellow-100 p-8 rounded-2xl text-xl md:text-2xl leading-relaxed border-4 border-yellow-300 shadow-lg">
+          <div className="flex flex-wrap items-center justify-center gap-2 text-gray-800">
+            {parts.map((part: string, i: number) => (
+              <React.Fragment key={i}>
+                <span className="italic">{part}</span>
+                {i < parts.length - 1 && (
+                  <div className="relative inline-block">
+                    <button
+                      onClick={() => !showMessage && setActiveBlank(activeBlank === blanks.blanks[i].id ? null : blanks.blanks[i].id)}
+                      disabled={showMessage}
+                      className={`min-w-[120px] px-4 py-2 rounded-xl font-bold transition-all ${
+                        showMessage
+                          ? fillBlanks[blanks.blanks[i].id]?.toLowerCase().trim() === blanks.blanks[i].answer.toLowerCase()
+                            ? 'bg-green-500 text-white border-2 border-green-600 shadow-lg'
+                            : 'bg-red-500 text-white border-2 border-red-600 shadow-lg'
+                          : fillBlanks[blanks.blanks[i].id]
+                            ? 'bg-yellow-400 text-yellow-900 border-2 border-yellow-500 shadow-md hover:bg-yellow-300'
+                            : 'bg-white text-gray-400 border-2 border-dashed border-yellow-500 hover:bg-yellow-100'
+                      }`}
+                    >
+                      {fillBlanks[blanks.blanks[i].id] || '❓ Chọn...'}
+                      {showMessage && (
+                        <span className="ml-2">
+                          {fillBlanks[blanks.blanks[i].id]?.toLowerCase().trim() === blanks.blanks[i].answer.toLowerCase() ? '✅' : '❌'}
+                        </span>
+                      )}
+                    </button>
+                    
+                    {/* Dropdown options */}
+                    {activeBlank === blanks.blanks[i].id && blanks.blanks[i].options && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        className="absolute z-50 mt-2 left-1/2 -translate-x-1/2 bg-white rounded-xl shadow-2xl border-2 border-yellow-400 overflow-hidden min-w-[150px]"
+                      >
+                        {blanks.blanks[i].options?.map((option: string, optIdx: number) => (
+                          <button
+                            key={optIdx}
+                            onClick={() => {
+                              setFillBlanks(prev => ({
+                                ...prev,
+                                [blanks.blanks[i].id]: option
+                              }));
+                              setActiveBlank(null);
+                            }}
+                            className={`w-full px-4 py-3 text-left font-medium transition-all hover:bg-yellow-100 ${
+                              fillBlanks[blanks.blanks[i].id] === option 
+                                ? 'bg-yellow-200 text-yellow-800' 
+                                : 'text-gray-700'
+                            }`}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
           </div>
+        </div>
+        
+        {/* Result message */}
+        {showMessage && !isCorrect && (
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-yellow-100 border-2 border-yellow-400 p-4 rounded-xl"
+          >
+            <p className="text-yellow-800 font-medium text-center">
+              💡 Đáp án đúng: {blanks.blanks.map((b: { id: string; answer: string }) => `"${b.answer}"`).join(' và ')}
+            </p>
+          </motion.div>
+        )}
+        
+        {/* Click outside to close dropdown */}
+        {activeBlank && (
+          <div 
+            className="fixed inset-0 z-40" 
+            onClick={() => setActiveBlank(null)}
+          />
         )}
       </div>
     );
@@ -1341,13 +1443,13 @@ const JourneyGame: React.FC = () => {
     const balanceGame = scenario.balanceGame!;
     
     // Count correct and wrong weights
-    const correctWeights = balanceGame.weights.filter(w => w.isCorrect === true);
-    const wrongWeights = balanceGame.weights.filter(w => w.isCorrect === false);
+    const correctWeights = balanceGame.weights.filter((w: BalanceWeight) => w.isCorrect === true);
+    const wrongWeights = balanceGame.weights.filter((w: BalanceWeight) => w.isCorrect === false);
     const totalCorrect = correctWeights.length;
     
     // Count placed weights
-    const placedCorrect = correctWeights.filter(w => balanceWeights.includes(w.id)).length;
-    const placedWrong = wrongWeights.filter(w => balanceWeights.includes(w.id)).length;
+    const placedCorrect = correctWeights.filter((w: BalanceWeight) => balanceWeights.includes(w.id)).length;
+    const placedWrong = wrongWeights.filter((w: BalanceWeight) => balanceWeights.includes(w.id)).length;
     
     // Calculate tilt angle
     const balanceRatio = placedCorrect / totalCorrect;
@@ -1506,7 +1608,7 @@ const JourneyGame: React.FC = () => {
                   <span className="font-bold text-blue-800 text-sm">{balanceGame.rightSide.name}</span>
                   <div className="flex flex-wrap gap-0.5 justify-center mt-1 max-w-full overflow-hidden">
                     {balanceWeights.slice(0, 6).map(wId => {
-                      const weight = balanceGame.weights.find(w => w.id === wId);
+                      const weight = balanceGame.weights.find((w: BalanceWeight) => w.id === wId);
                       return weight ? (
                         <span key={wId} className="text-sm" title={weight.text}>{weight.icon}</span>
                       ) : null;
@@ -1597,19 +1699,19 @@ const JourneyGame: React.FC = () => {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               <div className="bg-green-100 p-3 rounded-lg">
-                <div className="text-2xl font-bold text-green-600">{correctWeights.filter(w => balanceWeights.includes(w.id)).length}</div>
+                <div className="text-2xl font-bold text-green-600">{correctWeights.filter((w: BalanceWeight) => balanceWeights.includes(w.id)).length}</div>
                 <div className="text-xs text-green-700">Đúng đã chọn</div>
               </div>
               <div className="bg-yellow-100 p-3 rounded-lg">
-                <div className="text-2xl font-bold text-yellow-600">{correctWeights.filter(w => !balanceWeights.includes(w.id)).length}</div>
+                <div className="text-2xl font-bold text-yellow-600">{correctWeights.filter((w: BalanceWeight) => !balanceWeights.includes(w.id)).length}</div>
                 <div className="text-xs text-yellow-700">Đúng bị bỏ sót</div>
               </div>
               <div className="bg-red-100 p-3 rounded-lg">
-                <div className="text-2xl font-bold text-red-600">{wrongWeights.filter(w => balanceWeights.includes(w.id)).length}</div>
+                <div className="text-2xl font-bold text-red-600">{wrongWeights.filter((w: BalanceWeight) => balanceWeights.includes(w.id)).length}</div>
                 <div className="text-xs text-red-700">Bẫy đã chọn</div>
               </div>
               <div className="bg-gray-200 p-3 rounded-lg">
-                <div className="text-2xl font-bold text-gray-600">{wrongWeights.filter(w => !balanceWeights.includes(w.id)).length}</div>
+                <div className="text-2xl font-bold text-gray-600">{wrongWeights.filter((w: BalanceWeight) => !balanceWeights.includes(w.id)).length}</div>
                 <div className="text-xs text-gray-700">Bẫy đã tránh</div>
               </div>
             </div>
@@ -1725,7 +1827,7 @@ const JourneyGame: React.FC = () => {
                 }`}
               >
                 <div className="flex items-start gap-4">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
                     isCorrect ? 'bg-green-500' : 'bg-yellow-500'
                   }`}>
                     {isCorrect ? (
@@ -1734,17 +1836,33 @@ const JourneyGame: React.FC = () => {
                       <Sparkles className="w-6 h-6 text-white" />
                     )}
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h4 className={`font-bold text-lg mb-2 ${
                       isCorrect ? 'text-green-800' : 'text-yellow-800'
                     }`}>
                       {isCorrect ? '🎉 Tuyệt vời!' : '💡 Bài học rút ra:'}
                     </h4>
-                    <p className={`text-lg ${
+                    <p className={`text-lg mb-4 ${
                       isCorrect ? 'text-green-700' : 'text-yellow-700'
                     }`}>
                       {scenario.message}
                     </p>
+                    
+                    {/* Story Conclusion - Kết luận chặng */}
+                    {currentStage.storyConclusion && (
+                      <div className="bg-white/50 rounded-xl p-4 mb-3 border-l-4 border-yellow-500">
+                        <p className="text-sm font-medium text-gray-700 mb-1">📚 Chiêm nghiệm:</p>
+                        <p className="text-gray-800 italic">{currentStage.storyConclusion}</p>
+                      </div>
+                    )}
+                    
+                    {/* Practice Hint - Gợi ý rèn luyện */}
+                    {currentStage.practiceHint && (
+                      <div className="bg-gradient-to-r from-yellow-200 to-yellow-100 rounded-xl p-4 border border-yellow-300">
+                        <p className="text-sm font-bold text-yellow-800 mb-1">🌟 Gợi ý rèn luyện:</p>
+                        <p className="text-yellow-900">{currentStage.practiceHint}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -1905,9 +2023,25 @@ const JourneyGame: React.FC = () => {
               {reward.name}
             </h2>
 
-            <p className="text-xl text-yellow-100/90 max-w-2xl mx-auto leading-relaxed mb-8">
+            <p className="text-xl text-yellow-100/90 max-w-2xl mx-auto leading-relaxed mb-6">
               {reward.message}
             </p>
+
+            {/* Meaning & Practice Hint - if available in new reward format */}
+            {'meaning' in reward && (
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto mb-6 border border-yellow-400/30">
+                <div className="mb-4">
+                  <p className="text-yellow-400 font-bold text-sm mb-2">💎 Ý NGHĨA:</p>
+                  <p className="text-white/90 text-lg">{(reward as any).meaning}</p>
+                </div>
+                {'practiceHint' in reward && (
+                  <div className="bg-yellow-400/20 rounded-lg p-4">
+                    <p className="text-yellow-400 font-bold text-sm mb-2">🌟 GỢI Ý RÈN LUYỆN:</p>
+                    <p className="text-yellow-100">{(reward as any).practiceHint}</p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Score card with Vietnamese styling */}
             <div 
