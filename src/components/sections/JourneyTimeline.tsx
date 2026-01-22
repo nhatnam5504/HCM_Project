@@ -49,13 +49,14 @@ const JourneyTimeline: React.FC = () => {
   ];
 
   const destinations = [
-    { name: "Bến Nhà Rồng", flag: "🇻🇳", year: "5/6/1911" },
-    { name: "Marseille", flag: "🇫🇷", year: "1911" },
-    { name: "Bắc Phi", flag: "🌍", year: "1911-1912" },
-    { name: "New York", flag: "🇺🇸", year: "1912-1913" },
-    { name: "Boston", flag: "🇺🇸", year: "1913" },
-    { name: "London", flag: "🇬🇧", year: "1913-1917" },
-    { name: "Paris", flag: "🇫🇷", year: "1917" },
+    { name: "Bến Nhà Rồng", flag: "vn", year: "5/6/1911" },
+    { name: "Marseille", flag: "fr", year: "1911" },
+    { name: "Dakar", flag: "sn", year: "1911" },
+    { name: "Algeria", flag: "dz", year: "1911-1912" },
+    { name: "New York", flag: "us", year: "1912-1913" },
+    { name: "Boston", flag: "us", year: "1913" },
+    { name: "London", flag: "gb", year: "1913-1917" },
+    { name: "Paris", flag: "fr", year: "1917" },
   ];
 
   return (
@@ -169,7 +170,7 @@ const JourneyTimeline: React.FC = () => {
               }}
             >
               <div className="text-center">
-                <div className="text-3xl mb-2">{dest.flag}</div>
+                <span className={`fi fi-${dest.flag} text-3xl mb-2`}></span>
                 <div className="font-bold">{dest.name}</div>
                 <div className="text-sm opacity-70">{dest.year}</div>
               </div>
