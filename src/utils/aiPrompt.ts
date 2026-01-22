@@ -84,7 +84,7 @@ SECURITY & PRIVACY:
 5. QUYẾT TẮC:
    - Trả lời **RÕRÀNG, NGẮN GỌN, LOGIC**
    - Dùng **VÍ DỤ CỤ THỂ** từ tài liệu
-   - **TRÁNH** suy đoán ngoài nội dung
+   // Lịch sử Đảng // Commented out to fix syntax error
    - Luôn dẫn chứng từ giáo trình
 
 6. KHI THÔNG TIN KHÔNG CÓ TRONG TÀI LIỆU:

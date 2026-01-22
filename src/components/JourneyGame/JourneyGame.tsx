@@ -65,6 +65,7 @@ const JourneyGame: React.FC = () => {
   const [balanceWeights, setBalanceWeights] = useState<string[]>([]); // IDs of weights placed on scale
   const [timeLeft, setTimeLeft] = useState<number>(60); // Timer for balance game (60 seconds)
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
+  const [activeBlank, setActiveBlank] = useState<string | null>(null); // For fill-blank game dropdown
 
   const currentStage = gameStages[gameState.currentStageIndex];
 
@@ -79,29 +80,29 @@ const JourneyGame: React.FC = () => {
   const renderGameTimer = (gameMessage: string) => {
     if (showMessage) return null;
     return (
-      <div className="relative mb-6">
-        <div className={`flex items-center justify-between p-4 rounded-2xl shadow-lg ${
+      <div className="relative mb-4 sm:mb-6">
+        <div className={`flex items-center justify-between p-2 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl shadow-lg ${
           timeLeft <= 10 
             ? 'bg-red-600 animate-pulse' 
             : timeLeft <= 30 
             ? 'bg-orange-500' 
             : 'bg-gradient-to-r from-green-600 to-green-500'
         }`}>
-          <div className="flex items-center gap-3 text-white">
-            <span className="text-3xl">⏱️</span>
-            <span className="text-2xl font-bold">{formatTime(timeLeft)}</span>
+          <div className="flex items-center gap-2 sm:gap-3 text-white">
+            <span className="text-xl sm:text-2xl md:text-3xl">⏱️</span>
+            <span className="text-lg sm:text-xl md:text-2xl font-bold">{formatTime(timeLeft)}</span>
           </div>
-          <div className="text-white text-sm font-medium">
+          <div className="text-white text-xs sm:text-sm font-medium text-right">
             {timeLeft <= 10 ? '⚠️ Sắp hết giờ!' : timeLeft <= 30 ? '🏃 Nhanh lên!' : gameMessage}
           </div>
         </div>
         {/* Timer progress bar */}
-        <div className="w-full bg-gray-300 rounded-full h-2 mt-2 overflow-hidden">
+        <div className="w-full bg-gray-300 rounded-full h-1.5 sm:h-2 mt-1 sm:mt-2 overflow-hidden">
           <motion.div
             initial={{ width: '100%' }}
             animate={{ width: `${(timeLeft / 60) * 100}%` }}
             transition={{ duration: 0.5 }}
-            className={`h-2 rounded-full ${
+            className={`h-1.5 sm:h-2 rounded-full ${
               timeLeft <= 10 ? 'bg-red-500' : timeLeft <= 30 ? 'bg-orange-400' : 'bg-green-400'
             }`}
           />
@@ -124,6 +125,7 @@ const JourneyGame: React.FC = () => {
     setIsTimerRunning(false);
     setIsCorrect(null);
     setShowMessage(false);
+    setActiveBlank(null);
   }, []);
 
   // Initialize ordering items when scenario changes
@@ -441,7 +443,7 @@ const JourneyGame: React.FC = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 tracking-wide"
+          className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold text-white mb-2 tracking-wide px-2"
           style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
         >
           THEO DẤU CHÂN BÁC
@@ -451,11 +453,11 @@ const JourneyGame: React.FC = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="flex items-center justify-center gap-4 mb-4"
+          className="flex items-center justify-center gap-2 sm:gap-4 mb-4 px-2"
         >
-          <div className="h-px w-16 bg-gradient-to-r from-transparent to-yellow-400" />
-          <span className="text-yellow-400 text-lg font-medium tracking-[0.3em]">Hành Trình Tìm Đường Cứu Nước</span>
-          <div className="h-px w-16 bg-gradient-to-l from-transparent to-yellow-400" />
+          <div className="h-px w-8 sm:w-16 bg-gradient-to-r from-transparent to-yellow-400" />
+          <span className="text-yellow-400 text-xs sm:text-sm md:text-lg font-medium tracking-[0.1em] sm:tracking-[0.3em] text-center">Hành Trình Tìm Đường Cứu Nước</span>
+          <div className="h-px w-8 sm:w-16 bg-gradient-to-l from-transparent to-yellow-400" />
         </motion.div>
 
         <motion.div
@@ -471,7 +473,7 @@ const JourneyGame: React.FC = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-xl md:text-2xl text-yellow-300 font-medium mb-8"
+          className="text-base sm:text-lg md:text-2xl text-yellow-300 font-medium mb-6 sm:mb-8 px-2"
         >
           30 năm bôn ba — Một con đường cách mạng
         </motion.p>
@@ -480,9 +482,9 @@ const JourneyGame: React.FC = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="max-w-2xl mx-auto mb-6 lg:mb-10 bg-white/10 backdrop-blur-sm rounded-2xl p-4 lg:p-6 border border-yellow-400/30"
+          className="max-w-2xl mx-auto mb-4 sm:mb-6 lg:mb-10 bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 border border-yellow-400/30 mx-2 sm:mx-auto"
         >
-          <p className="text-sm lg:text-lg text-white/90 italic leading-relaxed">
+          <p className="text-xs sm:text-sm lg:text-lg text-white/90 italic leading-relaxed">
             "Ngày 5/6/1911, từ bến cảng Nhà Rồng, người thanh niên Nguyễn Tất Thành bước lên con tàu Amiral Latouche Tréville, 
             bắt đầu hành trình 30 năm tìm đường cứu nước. Mỗi chặng đường để lại bài học quý về tư duy, lao động và lối sống. 
             Hãy cùng trải nghiệm và chiêm nghiệm!"
@@ -601,25 +603,25 @@ const JourneyGame: React.FC = () => {
           className="text-center"
         >
           <motion.div 
-            className="text-8xl mb-6"
+            className="text-5xl sm:text-6xl md:text-8xl mb-4 sm:mb-6"
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             {currentStage.flag}
           </motion.div>
           
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px w-12 bg-yellow-400" />
-            <span className="text-yellow-400 text-lg font-bold tracking-[0.2em]">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="h-px w-8 sm:w-12 bg-yellow-400" />
+            <span className="text-yellow-400 text-sm sm:text-lg font-bold tracking-[0.1em] sm:tracking-[0.2em]">
               CHẶNG {gameState.currentStageIndex + 1}
             </span>
-            <div className="h-px w-12 bg-yellow-400" />
+            <div className="h-px w-8 sm:w-12 bg-yellow-400" />
           </div>
           
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-2 sm:mb-4 px-2" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
             {currentStage.countryVi.toUpperCase()}
           </h2>
-          <p className="text-2xl text-yellow-200 mb-6">{currentStage.period}</p>
+          <p className="text-lg sm:text-xl md:text-2xl text-yellow-200 mb-4 sm:mb-6">{currentStage.period}</p>
           
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="bg-yellow-400/20 backdrop-blur-sm px-8 py-4 rounded-xl border border-yellow-400/50">
@@ -749,10 +751,10 @@ const JourneyGame: React.FC = () => {
         {renderGameTimer('📝 Chọn đáp án đúng!')}
         
         {/* Question Card */}
-        <div className="bg-gradient-to-r from-red-800 to-red-700 p-6 rounded-2xl border-l-4 border-yellow-400 shadow-xl">
-          <div className="flex items-start gap-4">
-            <span className="text-4xl">❓</span>
-            <p className="text-xl md:text-2xl font-medium text-white leading-relaxed">{scenario.question}</p>
+        <div className="bg-gradient-to-r from-red-800 to-red-700 p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl border-l-4 border-yellow-400 shadow-xl">
+          <div className="flex items-start gap-2 sm:gap-4">
+            <span className="text-2xl sm:text-3xl md:text-4xl flex-shrink-0">❓</span>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-white leading-relaxed">{scenario.question}</p>
           </div>
         </div>
 
@@ -806,35 +808,35 @@ const JourneyGame: React.FC = () => {
             return (
               <motion.button
                 key={option.id}
-                whileHover={!showMessage ? { scale: 1.02, x: 8 } : {}}
+                whileHover={!showMessage ? { scale: 1.02, x: 4 } : {}}
                 whileTap={!showMessage ? { scale: 0.98 } : {}}
                 onClick={() => !showMessage && setSelectedOption(option.id)}
                 disabled={showMessage}
-                className={`w-full text-left p-5 md:p-6 rounded-2xl border-3 ${borderColor} ${bgColor} ${shadow} ${ring} transition-all duration-200`}
+                className={`w-full text-left p-3 sm:p-4 md:p-5 lg:p-6 rounded-xl sm:rounded-2xl border-2 sm:border-3 ${borderColor} ${bgColor} ${shadow} ${ring} transition-all duration-200`}
               >
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-2 sm:gap-3 md:gap-4">
                   {/* Option Label (A, B, C...) */}
-                  <div className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl ${labelBg} flex items-center justify-center font-bold text-xl md:text-2xl ${labelText} shadow-md`}>
+                  <div className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-lg sm:rounded-xl ${labelBg} flex items-center justify-center font-bold text-sm sm:text-base md:text-xl lg:text-2xl ${labelText} shadow-md`}>
                     {optionLabels[index] || option.id.toUpperCase()}
                   </div>
                   
                   {/* Option Text */}
-                  <div className="flex-1 pt-1">
-                    <p className={`text-lg md:text-xl font-medium ${textColor} leading-relaxed`}>
+                  <div className="flex-1 pt-0.5 sm:pt-1">
+                    <p className={`text-sm sm:text-base md:text-lg lg:text-xl font-medium ${textColor} leading-relaxed`}>
                       {option.text}
                     </p>
                   </div>
                   
                   {/* Result Icon */}
                   {showMessage && (
-                    <div className="flex-shrink-0 pt-1">
+                    <div className="flex-shrink-0 pt-0.5 sm:pt-1">
                       {isCorrectAnswer ? (
-                        <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xl">✓</span>
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-green-500 rounded-full flex items-center justify-center">
+                          <span className="text-white text-sm sm:text-base md:text-xl">✓</span>
                         </div>
                       ) : isSelected ? (
-                        <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xl">✗</span>
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-red-500 rounded-full flex items-center justify-center">
+                          <span className="text-white text-sm sm:text-base md:text-xl">✗</span>
                         </div>
                       ) : null}
                     </div>
@@ -921,24 +923,24 @@ const JourneyGame: React.FC = () => {
     };
 
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Timer */}
         {renderGameTimer('🗂️ Phân loại các mục!')}
         
         {/* Question Header */}
-        <div className="bg-gradient-to-r from-red-800 to-red-700 p-5 rounded-2xl border-l-4 border-yellow-400 shadow-lg">
-          <p className="text-xl font-medium text-white">{scenario.question}</p>
+        <div className="bg-gradient-to-r from-red-800 to-red-700 p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border-l-4 border-yellow-400 shadow-lg">
+          <p className="text-base sm:text-lg md:text-xl font-medium text-white">{scenario.question}</p>
         </div>
 
         {/* Instructions */}
-        <div className="bg-yellow-100 border-2 border-yellow-400 rounded-xl p-4 text-center">
-          <p className="text-yellow-800 font-medium">
+        <div className="bg-yellow-100 border-2 border-yellow-400 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 text-center">
+          <p className="text-yellow-800 font-medium text-xs sm:text-sm md:text-base">
             🖱️ <strong>Cách chơi:</strong> KÉO THẢ thẻ vào cột phân loại, hoặc NHẤN CHỌN thẻ rồi NHẤN vào cột
           </p>
         </div>
         
         {/* Two Categories Side by Side */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {scenario.categories?.map((category: Category, catIndex: number) => (
             <motion.div
               key={category.id}
@@ -1096,19 +1098,19 @@ const JourneyGame: React.FC = () => {
     const scenario = gameState.currentScenario!;
     
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Timer */}
         {renderGameTimer('🔢 Sắp xếp theo thứ tự đúng!')}
         
-        <div className="bg-gradient-to-r from-red-800 to-red-700 p-4 rounded-xl mb-4 border-l-4 border-yellow-400">
-          <p className="text-xl font-medium text-white">{scenario.question}</p>
+        <div className="bg-gradient-to-r from-red-800 to-red-700 p-3 sm:p-4 rounded-xl mb-3 sm:mb-4 border-l-4 border-yellow-400">
+          <p className="text-base sm:text-lg md:text-xl font-medium text-white">{scenario.question}</p>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           {orderedItems.map((item, index) => (
             <motion.div
               key={item.id}
               layout
-              className={`p-4 rounded-xl border-2 flex items-center gap-4 ${
+              className={`p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border-2 flex items-center gap-2 sm:gap-3 md:gap-4 ${
                 showMessage
                   ? scenario.orderItems![index].correctOrder === index + 1
                     ? 'bg-green-100 border-green-400'
@@ -1116,26 +1118,26 @@ const JourneyGame: React.FC = () => {
                   : 'bg-white border-red-200 hover:border-yellow-400'
               }`}
             >
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-0.5 sm:gap-1">
                 <button
                   onClick={() => index > 0 && !showMessage && moveItem(index, index - 1)}
                   disabled={index === 0 || showMessage}
-                  className="p-1.5 hover:bg-red-100 rounded disabled:opacity-30 text-red-600"
+                  className="p-1 sm:p-1.5 hover:bg-red-100 rounded disabled:opacity-30 text-red-600 text-xs sm:text-sm"
                 >
                   ▲
                 </button>
                 <button
                   onClick={() => index < orderedItems.length - 1 && !showMessage && moveItem(index, index + 1)}
                   disabled={index === orderedItems.length - 1 || showMessage}
-                  className="p-1.5 hover:bg-red-100 rounded disabled:opacity-30 text-red-600"
+                  className="p-1 sm:p-1.5 hover:bg-red-100 rounded disabled:opacity-30 text-red-600 text-xs sm:text-sm"
                 >
                   ▼
                 </button>
               </div>
-              <span className="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center font-bold text-yellow-400 shadow-md border-2 border-yellow-400">
+              <span className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center font-bold text-yellow-400 shadow-md border-2 border-yellow-400 text-sm sm:text-base flex-shrink-0">
                 {index + 1}
               </span>
-              <span className="text-lg font-medium text-gray-800">{item.text}</span>
+              <span className="text-sm sm:text-base md:text-lg font-medium text-gray-800">{item.text}</span>
             </motion.div>
           ))}
         </div>
@@ -1151,21 +1153,18 @@ const JourneyGame: React.FC = () => {
     // Parse the text and replace blanks with dropdown selects
     const parts = blanks.text.split('___');
     
-    // Get the current blank being selected (for showing options)
-    const [activeBlank, setActiveBlank] = React.useState<string | null>(null);
-    
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Timer */}
         {renderGameTimer('✏️ Chọn từ đúng vào chỗ trống!')}
         
-        <div className="bg-gradient-to-r from-red-800 to-red-700 p-4 rounded-xl mb-4 border-l-4 border-yellow-400">
-          <p className="text-xl font-medium text-white">{scenario.question}</p>
+        <div className="bg-gradient-to-r from-red-800 to-red-700 p-3 sm:p-4 rounded-xl mb-3 sm:mb-4 border-l-4 border-yellow-400">
+          <p className="text-base sm:text-lg md:text-xl font-medium text-white">{scenario.question}</p>
         </div>
         
         {/* Quote with blanks */}
-        <div className="bg-gradient-to-br from-amber-50 to-yellow-100 p-8 rounded-2xl text-xl md:text-2xl leading-relaxed border-4 border-yellow-300 shadow-lg">
-          <div className="flex flex-wrap items-center justify-center gap-2 text-gray-800">
+        <div className="bg-gradient-to-br from-amber-50 to-yellow-100 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed border-2 sm:border-4 border-yellow-300 shadow-lg">
+          <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2 text-gray-800">
             {parts.map((part: string, i: number) => (
               <React.Fragment key={i}>
                 <span className="italic">{part}</span>
@@ -1174,7 +1173,7 @@ const JourneyGame: React.FC = () => {
                     <button
                       onClick={() => !showMessage && setActiveBlank(activeBlank === blanks.blanks[i].id ? null : blanks.blanks[i].id)}
                       disabled={showMessage}
-                      className={`min-w-[120px] px-4 py-2 rounded-xl font-bold transition-all ${
+                      className={`min-w-[80px] sm:min-w-[100px] md:min-w-[120px] px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl font-bold transition-all text-xs sm:text-sm md:text-base ${
                         showMessage
                           ? fillBlanks[blanks.blanks[i].id]?.toLowerCase().trim() === blanks.blanks[i].answer.toLowerCase()
                             ? 'bg-green-500 text-white border-2 border-green-600 shadow-lg'
@@ -1271,24 +1270,24 @@ const JourneyGame: React.FC = () => {
     };
 
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Timer */}
         {renderGameTimer('🔗 Nối các cặp tương ứng!')}
         
         {/* Question Header */}
-        <div className="bg-gradient-to-r from-red-800 to-red-700 p-5 rounded-2xl border-l-4 border-yellow-400 shadow-lg">
-          <p className="text-xl font-medium text-white">{scenario.question}</p>
+        <div className="bg-gradient-to-r from-red-800 to-red-700 p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border-l-4 border-yellow-400 shadow-lg">
+          <p className="text-base sm:text-lg md:text-xl font-medium text-white">{scenario.question}</p>
         </div>
 
         {/* Instructions */}
-        <div className="bg-yellow-100 border-2 border-yellow-400 rounded-xl p-4 text-center">
-          <p className="text-yellow-800 font-medium">
+        <div className="bg-yellow-100 border-2 border-yellow-400 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 text-center">
+          <p className="text-yellow-800 font-medium text-xs sm:text-sm md:text-base">
             🔗 <strong>Cách chơi:</strong> Nhấn vào một văn kiện/tờ báo bên trái, sau đó nhấn vào mục đích tương ứng bên phải
           </p>
         </div>
 
         {/* Matching Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
           {/* Left column - Văn kiện/Tờ báo */}
           <div className="space-y-4">
             <div className="bg-gradient-to-r from-red-700 to-red-600 text-white font-bold text-center py-3 rounded-xl shadow-md">
@@ -1493,24 +1492,24 @@ const JourneyGame: React.FC = () => {
     };
 
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Timer */}
         {renderGameTimer('⚖️ Cân bằng lý luận & thực tiễn')}
 
         {/* Question Header with warning */}
-        <div className="bg-gradient-to-r from-red-800 to-red-700 p-5 rounded-2xl border-l-4 border-yellow-400 shadow-lg">
-          <p className="text-xl font-medium text-white">{scenario.question}</p>
+        <div className="bg-gradient-to-r from-red-800 to-red-700 p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border-l-4 border-yellow-400 shadow-lg">
+          <p className="text-base sm:text-lg md:text-xl font-medium text-white">{scenario.question}</p>
         </div>
 
         {/* Difficulty hint */}
-        <div className="bg-amber-100 border-2 border-amber-400 rounded-xl p-4 text-center">
-          <p className="text-amber-800 font-medium">
-            🎯 <strong>Gợi ý:</strong> Có {correctWeights.length} hành động ĐÚNG và {wrongWeights.length} hành động SAI (bẫy). Hãy cẩn thận!
+        <div className="bg-amber-100 border-2 border-amber-400 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 text-center">
+          <p className="text-amber-800 font-medium text-xs sm:text-sm md:text-base">
+            🎯 <strong>Gợi ý:</strong> Có {correctWeights.length} hành động ĐÚNGvà {wrongWeights.length} hành động SAI (bẫy). Hãy cẩn thận!
           </p>
         </div>
 
         {/* Balance Scale Visual */}
-        <div className="relative bg-gradient-to-b from-amber-100 to-amber-200 rounded-3xl p-6 min-h-[320px] overflow-hidden border-4 border-amber-300">
+        <div className="relative bg-gradient-to-b from-amber-100 to-amber-200 rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 min-h-[220px] sm:min-h-[280px] md:min-h-[320px] overflow-hidden border-2 sm:border-4 border-amber-300">
           {/* Background decoration */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-1/3 left-1/3 text-9xl">⚖️</div>
@@ -1644,7 +1643,7 @@ const JourneyGame: React.FC = () => {
             </span>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
             {balanceGame.weights.map((weight: BalanceWeight) => {
               const isPlaced = balanceWeights.includes(weight.id);
               const status = getWeightStatus(weight);
@@ -1764,25 +1763,25 @@ const JourneyGame: React.FC = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen py-8 px-4"
+        className="min-h-screen py-4 sm:py-6 md:py-8 px-2 sm:px-4"
         style={{ background: 'linear-gradient(180deg, #FEF3C7 0%, #FFFBEB 50%, #FEF3C7 100%)' }}
       >
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="bg-gradient-to-r from-red-800 to-red-900 rounded-2xl shadow-xl p-6 mb-6 border-b-4 border-yellow-400">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-yellow-400 flex items-center justify-center text-3xl shadow-lg">
+          <div className="bg-gradient-to-r from-red-800 to-red-900 rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 border-b-4 border-yellow-400">
+            <div className="flex items-center justify-between mb-3 sm:mb-4 flex-wrap gap-2">
+              <div className="flex items-center gap-2 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-yellow-400 flex items-center justify-center text-xl sm:text-2xl md:text-3xl shadow-lg flex-shrink-0">
                   {currentStage.flag}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2 className="text-base sm:text-lg md:text-2xl font-bold text-white leading-tight">
                     Chặng {gameState.currentStageIndex + 1}: {currentStage.countryVi}
                   </h2>
-                  <p className="text-yellow-200">{currentStage.period}</p>
+                  <p className="text-yellow-200 text-xs sm:text-sm md:text-base">{currentStage.period}</p>
                 </div>
               </div>
-              <div className="hidden md:flex items-center gap-3 bg-yellow-400/20 px-4 py-2 rounded-full border border-yellow-400/50">
+              <div className="hidden lg:flex items-center gap-3 bg-yellow-400/20 px-4 py-2 rounded-full border border-yellow-400/50">
                 <span className="text-2xl">{currentStage.symbol}</span>
                 <span className="font-medium text-yellow-200">{currentStage.symbolName}</span>
               </div>
@@ -1806,12 +1805,12 @@ const JourneyGame: React.FC = () => {
           </div>
 
           {/* Scenario Intro */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-red-700">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
-                <BookOpen className="w-6 h-6 text-red-700" />
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 border-l-4 border-red-700">
+            <div className="flex items-start gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-red-700" />
               </div>
-              <p className="text-lg text-gray-700 leading-relaxed italic">
+              <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed italic">
                 {scenario.intro}
               </p>
             </div>
@@ -1880,13 +1879,13 @@ const JourneyGame: React.FC = () => {
           </AnimatePresence>
 
           {/* Actions */}
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-3 sm:gap-4">
             {!showMessage ? (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={checkAnswer}
-                className="px-8 py-4 bg-red-700 hover:bg-red-800 text-white font-bold text-lg rounded-full shadow-lg border-4 border-red-600"
+                className="px-5 sm:px-6 md:px-8 py-3 sm:py-4 bg-red-700 hover:bg-red-800 text-white font-bold text-sm sm:text-base md:text-lg rounded-full shadow-lg border-2 sm:border-4 border-red-600"
               >
                 ✓ XÁC NHẬN
               </motion.button>
@@ -1895,18 +1894,19 @@ const JourneyGame: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={nextStage}
-                className="px-8 py-4 bg-yellow-400 hover:bg-yellow-300 text-red-900 font-bold text-lg rounded-full shadow-lg border-4 border-yellow-300"
+                className="px-5 sm:px-6 md:px-8 py-3 sm:py-4 bg-yellow-400 hover:bg-yellow-300 text-red-900 font-bold text-sm sm:text-base md:text-lg rounded-full shadow-lg border-2 sm:border-4 border-yellow-300"
               >
                 <span className="flex items-center gap-2">
                   {gameState.currentStageIndex < gameStages.length - 1 ? (
                     <>
-                      CHẶNG TIẾP THEO
-                      <ArrowRight className="w-5 h-5" />
+                      <span className="hidden sm:inline">CHẶNG TIẾP THEO</span>
+                      <span className="sm:hidden">TIẾP</span>
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </>
                   ) : (
                     <>
                       NHẬN QUÀ
-                      <Gift className="w-5 h-5" />
+                      <Gift className="w-4 h-4 sm:w-5 sm:h-5" />
                     </>
                   )}
                 </span>
@@ -2029,11 +2029,11 @@ const JourneyGame: React.FC = () => {
               <span className="text-yellow-400 text-2xl">★</span>
             </div>
 
-            <h2 className="text-5xl font-bold text-white mb-6 drop-shadow-lg">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 drop-shadow-lg px-2">
               {reward.name}
             </h2>
 
-            <p className="text-xl text-yellow-100/90 max-w-2xl mx-auto leading-relaxed mb-6">
+            <p className="text-base sm:text-lg md:text-xl text-yellow-100/90 max-w-2xl mx-auto leading-relaxed mb-4 sm:mb-6 px-4">
               {reward.message}
             </p>
 
@@ -2055,33 +2055,33 @@ const JourneyGame: React.FC = () => {
 
             {/* Score card with Vietnamese styling */}
             <div 
-              className="rounded-xl p-6 max-w-md mx-auto mb-8 border-2 border-yellow-400/50"
+              className="rounded-xl p-4 sm:p-6 max-w-md mx-4 sm:mx-auto mb-6 sm:mb-8 border-2 border-yellow-400/50"
               style={{
                 background: 'linear-gradient(135deg, rgba(139, 0, 0, 0.8) 0%, rgba(178, 34, 34, 0.8) 100%)',
                 backdropFilter: 'blur(10px)',
               }}
             >
               <div className="flex items-center justify-center gap-2 mb-2">
-                <span className="text-yellow-400 text-xl">★</span>
-                <div className="text-yellow-400 text-4xl font-bold">
+                <span className="text-yellow-400 text-lg sm:text-xl">★</span>
+                <div className="text-yellow-400 text-2xl sm:text-3xl md:text-4xl font-bold">
                   {gameState.score} điểm
                 </div>
-                <span className="text-yellow-400 text-xl">★</span>
+                <span className="text-yellow-400 text-lg sm:text-xl">★</span>
               </div>
-              <p className="text-yellow-100/80">
+              <p className="text-yellow-100/80 text-sm sm:text-base">
                 Hoàn thành {gameState.completedStages.length}/{gameStages.length} chặng hành trình
               </p>
             </div>
 
-            <div className="flex justify-center gap-4 flex-wrap">
+            <div className="flex justify-center gap-3 sm:gap-4 flex-wrap px-4">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={restartGame}
-                className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-bold text-lg rounded-full border-2 border-yellow-400/50 hover:bg-white/30 hover:border-yellow-400 transition-all"
+                className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-white/20 backdrop-blur-sm text-white font-bold text-sm sm:text-base md:text-lg rounded-full border-2 border-yellow-400/50 hover:bg-white/30 hover:border-yellow-400 transition-all"
               >
                 <span className="flex items-center gap-2">
-                  <RotateCcw className="w-5 h-5" />
+                  <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
                   CHƠI LẠI
                 </span>
               </motion.button>
@@ -2090,10 +2090,10 @@ const JourneyGame: React.FC = () => {
                 href="/"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-yellow-400 text-red-900 font-bold text-lg rounded-full shadow-lg hover:bg-yellow-300 transition-colors border-2 border-yellow-500"
+                className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-yellow-400 text-red-900 font-bold text-sm sm:text-base md:text-lg rounded-full shadow-lg hover:bg-yellow-300 transition-colors border-2 border-yellow-500"
               >
                 <span className="flex items-center gap-2">
-                  <Home className="w-5 h-5" />
+                  <Home className="w-4 h-4 sm:w-5 sm:h-5" />
                   VỀ TRANG CHỦ
                 </span>
               </motion.a>
