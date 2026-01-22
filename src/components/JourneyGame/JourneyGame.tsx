@@ -383,7 +383,7 @@ const JourneyGame: React.FC = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative overflow-y-auto py-4 lg:py-8"
       style={{ background: 'linear-gradient(135deg, #8B0000 0%, #B22222 30%, #DC143C 50%, #B22222 70%, #8B0000 100%)' }}
     >
       {/* Vietnamese Star Pattern Background */}
@@ -427,12 +427,12 @@ const JourneyGame: React.FC = () => {
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', duration: 1 }}
-          className="mb-8"
+          className="mb-4 lg:mb-8"
         >
           <div className="relative inline-block">
             <div className="absolute inset-0 bg-yellow-400 blur-xl opacity-50 rounded-full scale-150" />
-            <div className="relative w-36 h-36 flex items-center justify-center">
-              <span className="text-8xl text-yellow-400 drop-shadow-2xl">★</span>
+            <div className="relative w-20 h-20 lg:w-36 lg:h-36 flex items-center justify-center">
+              <span className="text-5xl lg:text-8xl text-yellow-400 drop-shadow-2xl">★</span>
             </div>
           </div>
         </motion.div>
@@ -441,7 +441,7 @@ const JourneyGame: React.FC = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-wide"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 tracking-wide"
           style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
         >
           THEO DẤU CHÂN BÁC
@@ -480,9 +480,9 @@ const JourneyGame: React.FC = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="max-w-2xl mx-auto mb-10 bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-yellow-400/30"
+          className="max-w-2xl mx-auto mb-6 lg:mb-10 bg-white/10 backdrop-blur-sm rounded-2xl p-4 lg:p-6 border border-yellow-400/30"
         >
-          <p className="text-lg text-white/90 italic leading-relaxed">
+          <p className="text-sm lg:text-lg text-white/90 italic leading-relaxed">
             "Ngày 5/6/1911, từ bến cảng Nhà Rồng, người thanh niên Nguyễn Tất Thành bước lên con tàu Amiral Latouche Tréville, 
             bắt đầu hành trình 30 năm tìm đường cứu nước. Mỗi chặng đường để lại bài học quý về tư duy, lao động và lối sống. 
             Hãy cùng trải nghiệm và chiêm nghiệm!"
@@ -494,13 +494,13 @@ const JourneyGame: React.FC = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.9 }}
-          className="mb-10"
+          className="mb-6 lg:mb-10"
         >
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center flex-wrap gap-y-2">
             {gameStages.map((stage: GameStage, index: number) => (
               <React.Fragment key={stage.id}>
                 <div className="flex flex-col items-center">
-                  <div className="w-14 h-14 rounded-full bg-yellow-400/20 border-2 border-yellow-400 flex items-center justify-center text-2xl shadow-lg">
+                  <div className="w-10 h-10 lg:w-14 lg:h-14 rounded-full bg-yellow-400/20 border-2 border-yellow-400 flex items-center justify-center text-lg lg:text-2xl shadow-lg">
                     {stage.flag}
                   </div>
                   <span className="text-white/80 text-xs mt-2 font-medium">{stage.countryVi}</span>
@@ -520,10 +520,10 @@ const JourneyGame: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={startGame}
-          className="px-10 py-4 bg-yellow-400 text-red-900 font-bold text-xl rounded-full shadow-xl hover:bg-yellow-300 transition-all border-4 border-yellow-300"
+          className="px-6 py-3 lg:px-10 lg:py-4 bg-yellow-400 text-red-900 font-bold text-base lg:text-xl rounded-full shadow-xl hover:bg-yellow-300 transition-all border-4 border-yellow-300"
         >
-          <span className="flex items-center gap-3">
-            <Ship className="w-6 h-6" />
+          <span className="flex items-center gap-2 lg:gap-3">
+            <Ship className="w-5 h-5 lg:w-6 lg:h-6" />
             BẮT ĐẦU HÀNH TRÌNH
           </span>
         </motion.button>
