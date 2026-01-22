@@ -16,35 +16,35 @@ const AIUsage: React.FC = () => {
     const aiTools: AITool[] = [
         {
             name: 'ChatGPT-4 (OpenAI)',
-            purpose: 'Nghiên cứu nội dung lịch sử và cấu trúc bài',
-            prompt: 'Phân tích nguyên nhân và hậu quả của cải cách giá-lương-tiền 1985 theo giáo trình Lịch sử Đảng CSVN',
-            output: 'AI cung cấp outline 4 phần: Bối cảnh, Nội dung, Tác động, Bài học với các điểm chính',
-            humanEdit: 'Đối chiếu với giáo trình trang 251-285, bổ sung dẫn chứng cụ thể về lạm phát 453%, điều chỉnh ngôn ngữ học thuật',
-            verification: 'Giáo trình Lịch sử Đảng CSVN (NXB Chính trị Quốc gia 2021), trang 251-260, 260-285'
+            purpose: 'Nghiên cứu nội dung lịch sử về hành trình tìm đường cứu nước',
+            prompt: 'Phân tích chi tiết hành trình 30 năm tìm đường cứu nước của Chủ tịch Hồ Chí Minh từ 1911-1941, các mốc quan trọng và ý nghĩa lịch sử',
+            output: 'AI cung cấp outline các giai đoạn: Ra đi 1911, Bôn ba 1911-1917, Giác ngộ 1917-1920, Chuẩn bị 1921-1929, Thành lập Đảng 1930, Trở về 1941',
+            humanEdit: 'Đối chiếu với giáo trình Lịch sử Đảng CSVN, bổ sung ngày tháng chính xác (5/6/1911, 3/2/1930, 28/1/1941), điều chỉnh ngôn ngữ trang trọng phù hợp chủ đề',
+            verification: 'Giáo trình Lịch sử Đảng CSVN (NXB Chính trị Quốc gia), Hồ Chí Minh Toàn tập, Nghị quyết các Đại hội Đảng'
         },
         {
             name: 'GitHub Copilot',
-            purpose: 'Hỗ trợ code React components và animations',
-            prompt: 'Tạo Hero section với GSAP floating elements và Framer Motion cho landing page',
-            output: 'Code template React với animations cơ bản',
-            humanEdit: 'Tùy chỉnh màu sắc theo theme đỏ-vàng (cờ VN), thay đổi nội dung text, điều chỉnh timing animations',
-            verification: 'Test thực tế trên browser, kiểm tra performance, responsive design'
+            purpose: 'Hỗ trợ code React components và animations cho website',
+            prompt: 'Tạo Hero section với GSAP animations, Timeline component với Framer Motion cho website lịch sử',
+            output: 'Code template React với animations cơ bản cho timeline, cards, hero section',
+            humanEdit: 'Tùy chỉnh màu sắc theo theme đỏ-vàng (cờ Việt Nam), thiết kế 6 section theo các giai đoạn lịch sử, điều chỉnh responsive design',
+            verification: 'Test thực tế trên browser, kiểm tra performance, responsive trên mobile/tablet/desktop'
         },
         {
-            name: 'Claude Sonnet 4.5',
-            purpose: 'Thiết kế câu hỏi quiz và kiểm tra logic',
-            prompt: 'Tạo 5 câu hỏi trắc nghiệm về Đổi mới 1986 với giải thích chi tiết',
-            output: 'Bộ câu hỏi với 4 lựa chọn, đáp án và giải thích',
-            humanEdit: 'Đối chiếu đáp án với giáo trình, điều chỉnh độ khó, thêm context lịch sử',
-            verification: 'Cross-check với Nghị quyết Đại hội VI, tài liệu chính thống của Đảng'
+            name: 'Claude (Anthropic)',
+            purpose: 'Thiết kế câu hỏi quiz và kiểm tra nội dung lịch sử',
+            prompt: 'Tạo câu hỏi trắc nghiệm về hành trình tìm đường cứu nước của Bác Hồ, từ 1911 đến 1941 với giải thích chi tiết',
+            output: 'Bộ câu hỏi với 4 lựa chọn, đáp án và giải thích về các mốc lịch sử quan trọng',
+            humanEdit: 'Đối chiếu đáp án với tài liệu chính thống, điều chỉnh độ khó phù hợp học sinh sinh viên, thêm context và trích dẫn',
+            verification: 'Cross-check với Hồ Chí Minh Toàn tập, Văn kiện Đảng, Giáo trình chính thống'
         },
         {
-            name: 'Midjourney / DALL-E',
-            purpose: 'Concept cho visual elements (không sử dụng cuối cùng)',
-            prompt: 'Vietnamese flag colors, historical timeline, reform concept',
-            output: 'Các ý tưởng về màu sắc, layout, icon',
-            humanEdit: 'Chỉ sử dụng emoji Unicode thay vì AI-generated images để đảm bảo tính minh bạch',
-            verification: 'N/A - Không sử dụng AI-generated images trong sản phẩm cuối'
+            name: 'Cursor AI',
+            purpose: 'Hỗ trợ debug code và tối ưu hóa hiệu suất website',
+            prompt: 'Tối ưu hóa React components, sửa lỗi TypeScript, cải thiện animations performance',
+            output: 'Suggestions về code optimization, bug fixes, performance improvements',
+            humanEdit: 'Review từng suggestion, chỉ áp dụng những thay đổi phù hợp với thiết kế tổng thể, đảm bảo không ảnh hưởng đến UX',
+            verification: 'Lighthouse performance audit, manual testing trên các trình duyệt khác nhau'
         }
     ];
 
@@ -82,11 +82,11 @@ const AIUsage: React.FC = () => {
                     </motion.span>
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                         <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                            AI Usage Report
+                            AI Hỗ Trợ
                         </span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Sử dụng AI có trách nhiệm, minh bạch, sáng tạo và liêm chính học thuật
+                        Sử dụng AI có trách nhiệm, minh bạch và liêm chính học thuật trong việc xây dựng website về hành trình tìm đường cứu nước của Bác Hồ
                     </p>
                 </motion.div>
 
@@ -226,7 +226,7 @@ const AIUsage: React.FC = () => {
                                 whileHover={{ scale: 1.02 }}
                             >
                                 <span className="text-2xl">✓</span>
-                                <p>Tôi cam kết <strong>không để AI làm thay hoàn toàn</strong> sản phẩm này.</p>
+                                <p>Chúng tôi cam kết <strong>không để AI làm thay hoàn toàn</strong> sản phẩm này.</p>
                             </motion.div>
 
                             <motion.div
@@ -234,7 +234,7 @@ const AIUsage: React.FC = () => {
                                 whileHover={{ scale: 1.02 }}
                             >
                                 <span className="text-2xl">✓</span>
-                                <p>Tôi đã <strong>kiểm chứng mọi thông tin</strong> với giáo trình chính thống và tài liệu của Đảng.</p>
+                                <p>Chúng tôi đã <strong>kiểm chứng mọi thông tin lịch sử</strong> với giáo trình chính thống và tài liệu của Đảng về Chủ tịch Hồ Chí Minh.</p>
                             </motion.div>
 
                             <motion.div
@@ -242,7 +242,7 @@ const AIUsage: React.FC = () => {
                                 whileHover={{ scale: 1.02 }}
                             >
                                 <span className="text-2xl">✓</span>
-                                <p>Tôi <strong>chịu trách nhiệm hoàn toàn</strong> về nội dung học thuật trong sản phẩm.</p>
+                                <p>Chúng tôi <strong>chịu trách nhiệm hoàn toàn</strong> về nội dung học thuật trong sản phẩm.</p>
                             </motion.div>
 
                             <motion.div
@@ -250,16 +250,38 @@ const AIUsage: React.FC = () => {
                                 whileHover={{ scale: 1.02 }}
                             >
                                 <span className="text-2xl">✓</span>
-                                <p>AI chỉ đóng vai trò <strong>hỗ trợ công cụ</strong> (animations, layout, quiz), không thay thế tư duy phản biện.</p>
+                                <p>AI chỉ đóng vai trò <strong>hỗ trợ công cụ</strong> (code, animations, layout), không thay thế tư duy phản biện và nghiên cứu lịch sử.</p>
                             </motion.div>
                         </div>
 
+                        {/* Team Members */}
                         <motion.div
-                            className="mt-8 p-6 bg-white text-gray-900 rounded-xl text-center"
+                            className="mt-8 p-6 bg-white text-gray-900 rounded-xl"
                             whileHover={{ scale: 1.02 }}
                         >
-                            <p className="text-xl font-bold mb-2">Nhóm 9 Hoàng Minh Khang, Hoàng Quốc An, Nguyễn Việt</p>
-                            <p className="text-sm text-gray-600 mt-4">Ngày cam kết: 11/12/2025</p>
+                            <h4 className="text-xl font-bold mb-4 text-center text-red-600">👥 Thành Viên Nhóm</h4>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                                <div className="text-center p-3 bg-gradient-to-br from-red-50 to-yellow-50 rounded-xl">
+                                    <div className="text-3xl mb-2">👨‍💻</div>
+                                    <p className="font-bold text-gray-900">Nhật Nam</p>
+                                </div>
+                                <div className="text-center p-3 bg-gradient-to-br from-red-50 to-yellow-50 rounded-xl">
+                                    <div className="text-3xl mb-2">👨‍💻</div>
+                                    <p className="font-bold text-gray-900">Thành Tâm</p>
+                                </div>
+                                <div className="text-center p-3 bg-gradient-to-br from-red-50 to-yellow-50 rounded-xl">
+                                    <div className="text-3xl mb-2">👨‍💻</div>
+                                    <p className="font-bold text-gray-900">Thanh Trường</p>
+                                </div>
+                                <div className="text-center p-3 bg-gradient-to-br from-red-50 to-yellow-50 rounded-xl">
+                                    <div className="text-3xl mb-2">👩‍💻</div>
+                                    <p className="font-bold text-gray-900">Anh Thư</p>
+                                </div>
+                            </div>
+                            <div className="text-center">
+                                <p className="text-lg font-semibold text-gray-700">Chủ đề: Hành Trình 30 Năm Tìm Đường Cứu Nước của Chủ Tịch Hồ Chí Minh (1911-1941)</p>
+                                <p className="text-sm text-gray-500 mt-2">Ngày cam kết: 22/01/2026</p>
+                            </div>
                         </motion.div>
                     </div>
                 </motion.div>

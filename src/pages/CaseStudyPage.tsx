@@ -22,79 +22,98 @@ const CaseStudyPage: React.FC = () => {
   const caseStudies: CaseStudy[] = [
     {
       id: 1,
-      title: 'Khủng Hoảng Kinh Tế 1975-1985',
-      period: '1975 - 1985',
+      title: 'Quyết Định Ra Đi Tìm Đường Cứu Nước',
+      period: '1911',
       challenge:
-        'Sau thống nhất, nền kinh tế Việt Nam rơi vào khủng hoảng nghiêm trọng với lạm phát cao, thiếu hụt lương thực, và cơ chế kế hoạch hóa tập trung bộc lộ nhiều bất cập.',
+        'Đầu thế kỷ XX, Việt Nam chìm trong đêm đen nô lệ. Các phong trào yêu nước (Cần Vương, Duy Tân, Đông Du, Yên Thế) đều thất bại. Dân tộc lâm vào khủng hoảng về đường lối cứu nước - không biết đi theo con đường nào.',
       solution:
-        'Đảng quyết định thực hiện cải cách giá-lương-tiền (1985) và chuẩn bị cho đổi mới toàn diện. Điều chỉnh chính sách kinh tế, cho phép thành phần kinh tế tư nhân phát triển.',
+        'Ngày 5/6/1911, chàng thanh niên Nguyễn Tất Thành (21 tuổi) quyết định ra đi từ Bến Nhà Rồng, làm phụ bếp trên tàu Amiral Latouche-Tréville với mục đích "muốn đi ra nước ngoài, xem nước Pháp và các nước khác... rồi sẽ trở về giúp đồng bào".',
       result:
-        'Lạm phát giảm dần, sản xuất hàng hóa tăng, đời sống người dân cải thiện. Tạo nền tảng cho Đổi Mới 1986.',
+        'Mở đầu hành trình 30 năm (1911-1941) qua 3 đại dương, 4 châu lục, hơn 30 quốc gia. Khác biệt với các nhà yêu nước tiền bối: Người đi sang Phương Tây - nơi có nền văn minh hiện đại và cũng là nơi xuất phát của chủ nghĩa thực dân.',
       lessons: [
-        'Cần linh hoạt trong chính sách kinh tế',
-        'Kế hoạch hóa tập trung cứng nhắc không phù hợp',
-        'Phải tôn trọng quy luật thị trường',
-        'Cải cách phải mạnh dạn và quyết liệt',
+        'Dám đột phá tư duy, không đi theo lối mòn',
+        'Muốn hiểu kẻ thù phải đến tận nơi kẻ thù',
+        'Cần kết hợp lý tưởng cao đẹp với hành động thực tiễn',
+        'Thanh niên có vai trò tiên phong trong cách mạng',
       ],
-      icon: '💰',
+      icon: '🚢',
       color: 'from-red-500 to-orange-500',
     },
     {
       id: 2,
-      title: 'Đổi Mới 1986 - Bước Ngoặt Lịch Sử',
-      period: '1986 - 1990',
+      title: 'Giác Ngộ Chủ Nghĩa Mác-Lênin',
+      period: '1917 - 1920',
       challenge:
-        'Nền kinh tế trì trệ, bao cấp lạc hậu, người dân thiếu đói, đất nước tụt hậu so với khu vực. Nguy cơ khủng hoảng toàn diện.',
+        'Sau nhiều năm bôn ba qua Pháp, Mỹ, Anh..., Nguyễn Ái Quốc nhận thấy: cách mạng tư sản không giải phóng triệt để người lao động. Câu hỏi "cứu nước bằng con đường nào?" vẫn chưa có lời giải đáp.',
       solution:
-        'Đại hội VI (1986) quyết định đổi mới toàn diện: chuyển sang kinh tế thị trường định hướng XHCN, phát triển nhiều thành phần kinh tế, mở cửa hội nhập.',
+        'Tháng 7/1920, đọc "Luận cương về vấn đề dân tộc và thuộc địa" của Lênin - Người tìm thấy con đường cứu nước. Tháng 12/1920, bỏ phiếu gia nhập Quốc tế III, tham gia sáng lập Đảng Cộng sản Pháp tại Đại hội Tours.',
       result:
-        'GDP tăng trưởng trung bình 6-7%/năm. Xuất khẩu gạo tăng mạnh. Thu hút FDI. Đời sống người dân cải thiện rõ rệt.',
+        'Từ người yêu nước trở thành người Cộng sản. Xác định con đường cứu nước đúng đắn: Cách mạng vô sản - độc lập dân tộc gắn liền với chủ nghĩa xã hội, gắn cách mạng Việt Nam với cách mạng thế giới.',
       lessons: [
-        'Đổi mới tư duy là then chốt',
-        'Kinh tế thị trường có thể kết hợp với XHCN',
-        'Hội nhập quốc tế là tất yếu',
-        'Cải cách phải đồng bộ và toàn diện',
+        'Nghiên cứu lý luận là nền tảng cho hành động cách mạng',
+        'Cần đứng trên lập trường giai cấp công nhân',
+        'Cách mạng thuộc địa là bộ phận của cách mạng thế giới',
+        'Độc lập dân tộc phải gắn với giải phóng giai cấp',
       ],
-      icon: '🚀',
+      icon: '📖',
       color: 'from-yellow-500 to-red-600',
     },
     {
       id: 3,
-      title: 'Hội Nhập WTO 2006',
-      period: '2001 - 2007',
+      title: 'Chuẩn Bị Về Tư Tưởng, Tổ Chức, Cán Bộ',
+      period: '1921 - 1929',
       challenge:
-        'Để gia nhập WTO, Việt Nam phải đáp ứng hàng trăm cam kết, cải cách thể chế, mở cửa thị trường - nhiều lo ngại về tác động tiêu cực.',
+        'Đã tìm thấy con đường cứu nước, nhưng cách mạng Việt Nam thiếu 3 yếu tố then chốt: đường lối lý luận (tư tưởng), tổ chức cách mạng (đảng), và đội ngũ cán bộ nòng cốt.',
       solution:
-        'Đảng lãnh đạo cải cách pháp luật, hiện đại hóa hệ thống quản lý, đào tạo nguồn nhân lực, đàm phán khéo léo để bảo vệ lợi ích quốc gia.',
+        'Hoạt động tại Pháp, Liên Xô, Trung Quốc. Thành lập Hội Việt Nam Cách mạng Thanh niên (6/1925). Mở lớp huấn luyện cán bộ. Xuất bản "Đường Kách mệnh" (1927). Ra báo "Thanh niên".',
       result:
-        'Chính thức gia nhập WTO (2007). Kim ngạch xuất khẩu tăng gấp 3 lần sau 10 năm. FDI tăng mạnh. Vị thế quốc tế nâng cao.',
+        'Đào tạo hàng trăm cán bộ nòng cốt (Trần Phú, Lê Hồng Phong, Hồ Tùng Mậu...). Truyền bá chủ nghĩa Mác-Lênin vào Việt Nam. Xuất hiện 3 tổ chức cộng sản năm 1929 - đòi hỏi cấp bách phải thống nhất.',
       lessons: [
-        'Hội nhập là cơ hội không phải thách thức',
-        'Cần chuẩn bị kỹ lưỡng trước khi mở cửa',
-        'Phải biết kết hợp lợi ích quốc gia và quốc tế',
-        'Thể chế tốt thu hút đầu tư',
+        'Chuẩn bị kỹ lưỡng là điều kiện tiên quyết cho thắng lợi',
+        'Đào tạo cán bộ là "gốc của mọi công việc"',
+        'Lý luận phải gắn với thực tiễn Việt Nam',
+        'Báo chí là vũ khí sắc bén của cách mạng',
       ],
-      icon: '🌐',
+      icon: '🎓',
       color: 'from-blue-500 to-green-500',
     },
     {
       id: 4,
-      title: 'Khủng Hoảng Tài Chính Toàn Cầu 2008',
-      period: '2008 - 2010',
+      title: 'Thành Lập Đảng Cộng Sản Việt Nam',
+      period: '3/2/1930',
       challenge:
-        'Khủng hoảng tài chính toàn cầu làm xuất khẩu giảm, FDI sụt giảm, nhiều doanh nghiệp phá sản, thất nghiệp tăng cao.',
+        'Năm 1929, ở Việt Nam xuất hiện 3 tổ chức cộng sản hoạt động riêng rẽ (Đông Dương CS Đảng, An Nam CS Đảng, Đông Dương CS Liên đoàn). Sự chia rẽ đe dọa phong trào cách mạng.',
       solution:
-        'Chính phủ nhanh chóng triển khai gói kích cầu 120.000 tỷ đồng, hỗ trợ DN, đẩy mạnh đầu tư công, ổn định kinh tế vĩ mô.',
+        'Nguyễn Ái Quốc được Quốc tế Cộng sản giao nhiệm vụ thống nhất. Từ 6/1-7/2/1930, Người chủ trì Hội nghị hợp nhất tại Cửu Long (Hồng Kông), thành lập Đảng Cộng sản Việt Nam.',
       result:
-        'Việt Nam là một trong số ít quốc gia duy trì tăng trưởng dương trong khủng hoảng (5.3% năm 2009). Nhanh chóng phục hồi.',
+        'Đảng ra đời với Cương lĩnh chính trị đầu tiên (Chính cương vắn tắt, Sách lược vắn tắt). CHẤM DỨT CUỘC KHỦNG HOẢNG ĐƯỜNG LỐI KÉO DÀI GẦN MỘT THẾ KỶ. Tạo nhân tố quyết định cho mọi thắng lợi.',
       lessons: [
-        'Phản ứng nhanh là then chốt',
-        'Vai trò của Nhà nước trong khủng hoảng',
-        'Nền kinh tế đa dạng giúp chống chịu tốt',
-        'Hợp tác quốc tế rất quan trọng',
+        'Đoàn kết, thống nhất là sức mạnh vô địch',
+        'Đảng là nhân tố quyết định thắng lợi của cách mạng',
+        'Cương lĩnh đúng đắn là kim chỉ nam cho hành động',
+        'Lãnh tụ có vai trò quyết định trong thời điểm then chốt',
       ],
-      icon: '📈',
-      color: 'from-purple-500 to-pink-500',
+      icon: '🚩',
+      color: 'from-red-600 to-red-800',
+    },
+    {
+      id: 5,
+      title: 'Trở Về Tổ Quốc - Hoàn Thành Sứ Mệnh',
+      period: '28/1/1941',
+      challenge:
+        'Thế chiến II bùng nổ (1939), Pháp đầu hàng Đức (1940), Nhật xâm nhập Đông Dương. Tình hình thế giới và trong nước biến chuyển nhanh - thời cơ cách mạng đang đến gần, cần người lãnh đạo trực tiếp.',
+      solution:
+        'Sau 30 năm xa Tổ quốc, ngày 28/1/1941, Nguyễn Ái Quốc (lấy tên Già Thu) vượt biên giới trở về nước tại Pác Bó, Cao Bằng. Tháng 5/1941, chủ trì Hội nghị TW 8, thành lập Mặt trận Việt Minh.',
+      result:
+        'Hoàn thành hành trình 30 năm tìm đường cứu nước. Trực tiếp lãnh đạo cách mạng, chuẩn bị lực lượng. Dẫn đến thắng lợi vĩ đại: Cách mạng Tháng Tám 1945, khai sinh nước Việt Nam Dân chủ Cộng hòa.',
+      lessons: [
+        'Nắm bắt thời cơ là nghệ thuật của cách mạng',
+        'Lãnh tụ phải gắn bó với nhân dân, với Tổ quốc',
+        'Kết hợp sức mạnh dân tộc với sức mạnh thời đại',
+        'Kiên trì mục tiêu, linh hoạt phương pháp',
+      ],
+      icon: '🏠',
+      color: 'from-green-500 to-emerald-600',
     },
   ];
 
@@ -134,11 +153,11 @@ const CaseStudyPage: React.FC = () => {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
             Case Study{' '}
             <span className="bg-gradient-to-r from-red-600 to-yellow-600 bg-clip-text text-transparent">
-              Lịch Sử
+              Hành Trình Cứu Nước
             </span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Phân tích chuyên sâu các thời điểm then chốt trong quá trình đổi mới của Đảng và đất nước
+            Phân tích chuyên sâu 5 bước ngoặt then chốt trong hành trình 30 năm tìm đường cứu nước của Chủ tịch Hồ Chí Minh (1911-1941)
           </p>
         </div>
 
@@ -200,28 +219,36 @@ const CaseStudyPage: React.FC = () => {
           <h2 className="text-3xl font-bold text-center mb-8">
             Tổng Kết{' '}
             <span className="bg-gradient-to-r from-red-600 to-yellow-600 bg-clip-text text-transparent">
-              Kinh Nghiệm Lãnh Đạo
+              Hành Trình 30 Năm
             </span>
           </h2>
           <div className="grid md:grid-cols-2 gap-6 text-gray-700">
             <div className="bg-white p-6 rounded-xl shadow-md">
-              <h3 className="font-bold text-lg mb-3 text-red-600">🎯 Điểm Chung</h3>
+              <h3 className="font-bold text-lg mb-3 text-red-600">🎯 Ý Nghĩa Lịch Sử</h3>
               <ul className="space-y-2">
-                <li>• Dám đổi mới, dám nghĩ, dám làm</li>
-                <li>• Lấy dân làm gốc, vì lợi ích nhân dân</li>
-                <li>• Kết hợp sức mạnh dân tộc với thời đại</li>
-                <li>• Kiên định mục tiêu, linh hoạt phương pháp</li>
+                <li>• Tìm ra con đường cứu nước đúng đắn cho dân tộc</li>
+                <li>• Giải quyết cuộc khủng hoảng đường lối kéo dài gần 100 năm</li>
+                <li>• Sáng lập Đảng Cộng sản Việt Nam - nhân tố quyết định</li>
+                <li>• Để lại di sản tư tưởng Hồ Chí Minh bất diệt</li>
               </ul>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md">
-              <h3 className="font-bold text-lg mb-3 text-yellow-600">💪 Yếu Tố Thành Công</h3>
+              <h3 className="font-bold text-lg mb-3 text-yellow-600">💪 Bài Học Cho Hôm Nay</h3>
               <ul className="space-y-2">
-                <li>• Lãnh đạo sáng suốt của Đảng</li>
-                <li>• Đồng lòng của toàn dân tộc</li>
-                <li>• Hội nhập và học hỏi quốc tế</li>
-                <li>• Cải cách đồng bộ, toàn diện</li>
+                <li>• Dám đổi mới tư duy, không đi theo lối mòn</li>
+                <li>• Kết hợp sức mạnh dân tộc với sức mạnh thời đại</li>
+                <li>• Kiên trì mục tiêu, linh hoạt phương pháp</li>
+                <li>• Thanh niên phải là lực lượng tiên phong</li>
               </ul>
             </div>
+          </div>
+          
+          {/* Quote */}
+          <div className="mt-8 text-center p-6 bg-gradient-to-r from-red-600 to-yellow-600 rounded-xl text-white">
+            <p className="text-2xl italic mb-4">
+              "Tự do cho đồng bào tôi, độc lập cho Tổ quốc tôi, đấy là tất cả những điều tôi muốn, đấy là tất cả những điều tôi hiểu."
+            </p>
+            <p className="font-bold text-lg">— Nguyễn Ái Quốc, 1923</p>
           </div>
         </div>
       </div>
