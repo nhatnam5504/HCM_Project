@@ -636,8 +636,112 @@ const pathQuestions: PathQuestion[] = [
 ];
 
 // ===== GHÉP THẺ VỚI HÌNH ẢNH (HA-1 đến HA-8) =====
-// ===== GHÉP THẺ VỚI HÌNH ẢNH (Đã xóa theo yêu cầu) =====
-const imageMatchQuestions: ImageMatchQuestion[] = [];
+const imageMatchQuestions: ImageMatchQuestion[] = [
+  {
+    id: 'HA-1',
+    type: 'GHEP_HINH',
+    title: 'Anh – Kỷ luật',
+    context: '🇬🇧 Anh',
+    pairs: [
+      { image: '⏰', label: 'Đồng hồ', meaning: 'Kỷ luật thời gian', isCorrect: true },
+      { image: '🧰', label: 'Công cụ', meaning: 'Tôn trọng lao động', isCorrect: true },
+      { image: '💎', label: 'Đồ xa xỉ', meaning: 'Hưởng thụ', isCorrect: false },
+      { image: '🎩', label: 'Sang trọng', meaning: 'Phô trương', isCorrect: false },
+    ],
+    correctPairsCount: 2,
+  },
+  {
+    id: 'HA-2',
+    type: 'GHEP_HINH',
+    title: 'Anh – Môi trường rèn luyện',
+    context: '🇬🇧 Anh',
+    pairs: [
+      { image: '🏨', label: 'Khách sạn Carlton', meaning: 'Môi trường rèn luyện', isCorrect: true },
+      { image: '👨‍🍳', label: 'Phụ bếp', meaning: 'Lao động chân chính', isCorrect: true },
+      { image: '💎', label: 'Xa xỉ', meaning: 'Hưởng thụ', isCorrect: false },
+      { image: '🎰', label: 'Cờ bạc', meaning: 'Tiêu khiển', isCorrect: false },
+    ],
+    correctPairsCount: 2,
+  },
+  {
+    id: 'HA-3',
+    type: 'GHEP_HINH',
+    title: 'Pháp – Đấu tranh tư tưởng',
+    context: '🇫🇷 Pháp',
+    pairs: [
+      { image: '📰', label: 'Báo chí', meaning: 'Đấu tranh tư tưởng', isCorrect: true },
+      { image: '✍️', label: 'Bút viết', meaning: 'Vũ khí của trí thức', isCorrect: true },
+      { image: '🔫', label: 'Vũ khí', meaning: 'Bạo lực', isCorrect: false },
+      { image: '💣', label: 'Bom', meaning: 'Khủng bố', isCorrect: false },
+    ],
+    correctPairsCount: 2,
+  },
+  {
+    id: 'HA-4',
+    type: 'GHEP_HINH',
+    title: 'Pháp – Yêu sách',
+    context: '🇫🇷 Pháp',
+    pairs: [
+      { image: '📄', label: 'Yêu sách', meaning: 'Đưa VN ra quốc tế', isCorrect: true },
+      { image: '🌍', label: 'Thế giới', meaning: 'Tầm nhìn quốc tế', isCorrect: true },
+      { image: '🏆', label: 'Danh hiệu', meaning: 'Vinh quang cá nhân', isCorrect: false },
+      { image: '👑', label: 'Vương miện', meaning: 'Quyền lực', isCorrect: false },
+    ],
+    correctPairsCount: 2,
+  },
+  {
+    id: 'HA-5',
+    type: 'GHEP_HINH',
+    title: 'Quốc tế – Kim chỉ nam',
+    context: '🌍 Quốc tế',
+    pairs: [
+      { image: '📘', label: 'Sách lý luận', meaning: 'Kim chỉ nam hành động', isCorrect: true },
+      { image: '🧭', label: 'La bàn', meaning: 'Định hướng', isCorrect: true },
+      { image: '🎖️', label: 'Danh vọng', meaning: 'Vinh quang cá nhân', isCorrect: false },
+      { image: '💰', label: 'Tiền bạc', meaning: 'Vật chất', isCorrect: false },
+    ],
+    correctPairsCount: 2,
+  },
+  {
+    id: 'HA-6',
+    type: 'GHEP_HINH',
+    title: 'Quốc tế – Tư duy toàn cầu',
+    context: '🌍 Quốc tế',
+    pairs: [
+      { image: '🌍', label: 'Bản đồ thế giới', meaning: 'Tư duy quốc tế', isCorrect: true },
+      { image: '✈️', label: 'Máy bay', meaning: 'Hành trình tìm đường', isCorrect: true },
+      { image: '🏠', label: 'An phận', meaning: 'Ở yên một chỗ', isCorrect: false },
+      { image: '🛋️', label: 'Thoải mái', meaning: 'Hưởng thụ', isCorrect: false },
+    ],
+    correctPairsCount: 2,
+  },
+  {
+    id: 'HA-7',
+    type: 'GHEP_HINH',
+    title: 'Tổng hợp – Đấu tranh bằng trí tuệ',
+    context: '🌍 Tổng hợp',
+    pairs: [
+      { image: '✍️', label: 'Bút', meaning: 'Đấu tranh bằng trí tuệ', isCorrect: true },
+      { image: '📚', label: 'Sách vở', meaning: 'Tri thức', isCorrect: true },
+      { image: '⚔️', label: 'Gươm', meaning: 'Bạo lực', isCorrect: false },
+      { image: '🗡️', label: 'Kiếm', meaning: 'Chiến tranh', isCorrect: false },
+    ],
+    correctPairsCount: 2,
+  },
+  {
+    id: 'HA-8',
+    type: 'GHEP_HINH',
+    title: 'Tổng hợp – Hành trang giản dị',
+    context: '🌍 Tổng hợp',
+    pairs: [
+      { image: '🎒', label: 'Hành trang giản dị', meaning: 'Chuẩn bị lâu dài', isCorrect: true },
+      { image: '👣', label: 'Dấu chân', meaning: 'Hành trình gian khổ', isCorrect: true },
+      { image: '🎩', label: 'Hưởng thụ', meaning: 'Xa hoa', isCorrect: false },
+      { image: '💼', label: 'Cặp da sang', meaning: 'Phô trương', isCorrect: false },
+    ],
+    correctPairsCount: 2,
+  },
+];
 
 // Tất cả câu hỏi
 export const allQuestions: Question[] = [
