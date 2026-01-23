@@ -51,7 +51,7 @@ const TEAM_BG_COLORS: Record<TeamId, string> = {
 
 const INITIAL_PRIZE_COUNT = 8;
 const WIN_THRESHOLD = 20;
-const MAX_DRAWS = 4;
+const MAX_DRAWS = 5; // Cho phép rút đến lần 5 (85% nổ) theo yêu cầu
 
 // ===== HELPER FUNCTIONS =====
 function getExplosionRate(drawCount: number, modifier: number): { point: number; explosion: number } {
@@ -117,6 +117,11 @@ const MatchingQuestionComponent: React.FC<{
   const [selectedResult, setSelectedResult] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
+  // Shuffle options independently to prevent alignment guessing
+  const shuffledActions = useMemo(() => [...question.actions].sort(() => Math.random() - 0.5), [question.id]);
+  const shuffledGoals = useMemo(() => [...question.goals].sort(() => Math.random() - 0.5), [question.id]);
+  const shuffledResults = useMemo(() => [...question.results].sort(() => Math.random() - 0.5), [question.id]);
+
   const handleSubmit = () => {
     if (!selectedAction || !selectedGoal || !selectedResult) return;
     setSubmitted(true);
@@ -143,16 +148,15 @@ const MatchingQuestionComponent: React.FC<{
         {/* Actions */}
         <div className="space-y-2">
           <h4 className="font-semibold text-center text-gray-700 mb-3">🎯 Hành động</h4>
-          {question.actions.map((action) => (
+          {shuffledActions.map((action) => (
             <button
               key={action}
               onClick={() => !submitted && setSelectedAction(action)}
               disabled={submitted}
-              className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${
-                selectedAction === action
+              className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${selectedAction === action
                   ? 'border-red-500 bg-red-50 text-red-800 font-bold'
                   : 'border-gray-300 hover:border-red-400 bg-white text-gray-800'
-              } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
+                } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
             >
               {action}
             </button>
@@ -162,16 +166,15 @@ const MatchingQuestionComponent: React.FC<{
         {/* Goals */}
         <div className="space-y-2">
           <h4 className="font-semibold text-center text-gray-700 mb-3">🎯 Mục đích</h4>
-          {question.goals.map((goal) => (
+          {shuffledGoals.map((goal) => (
             <button
               key={goal}
               onClick={() => !submitted && setSelectedGoal(goal)}
               disabled={submitted}
-              className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${
-                selectedGoal === goal
+              className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${selectedGoal === goal
                   ? 'border-yellow-500 bg-yellow-50 text-yellow-800 font-bold'
                   : 'border-gray-300 hover:border-yellow-400 bg-white text-gray-800'
-              } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
+                } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
             >
               {goal}
             </button>
@@ -181,16 +184,15 @@ const MatchingQuestionComponent: React.FC<{
         {/* Results */}
         <div className="space-y-2">
           <h4 className="font-semibold text-center text-gray-700 mb-3">✨ Kết quả</h4>
-          {question.results.map((result) => (
+          {shuffledResults.map((result) => (
             <button
               key={result}
               onClick={() => !submitted && setSelectedResult(result)}
               disabled={submitted}
-              className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${
-                selectedResult === result
+              className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${selectedResult === result
                   ? 'border-green-500 bg-green-50 text-green-800 font-bold'
                   : 'border-gray-300 hover:border-green-400 bg-white text-gray-800'
-              } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
+                } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
             >
               {result}
             </button>
@@ -226,11 +228,10 @@ const MatchingQuestionComponent: React.FC<{
         <button
           onClick={handleSubmit}
           disabled={!isComplete}
-          className={`w-full py-3 rounded-xl font-bold text-lg transition-all ${
-            isComplete
+          className={`w-full py-3 rounded-xl font-bold text-lg transition-all ${isComplete
               ? 'bg-gradient-to-r from-red-600 to-yellow-600 text-white hover:shadow-lg'
               : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-          }`}
+            }`}
         >
           Xác nhận
         </button>
@@ -296,13 +297,12 @@ const MultipleChoiceQuestionComponent: React.FC<{
         {question.questions.map((_, idx) => (
           <div
             key={idx}
-            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
-              idx < answers.length
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${idx < answers.length
                 ? 'bg-green-500 text-white'
                 : idx === currentIndex
-                ? 'bg-yellow-500 text-white animate-pulse'
-                : 'bg-gray-200 text-gray-500'
-            }`}
+                  ? 'bg-yellow-500 text-white animate-pulse'
+                  : 'bg-gray-200 text-gray-500'
+              }`}
           >
             {idx + 1}
           </div>
@@ -419,11 +419,10 @@ const PathQuestionComponent: React.FC<{
                   key={card}
                   onClick={() => toggleCard(card)}
                   disabled={submitted}
-                  className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${
-                    isSelected
+                  className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${isSelected
                       ? 'border-purple-500 bg-purple-100 text-purple-800 font-bold'
                       : 'border-gray-300 hover:border-purple-400 bg-white text-gray-800'
-                  } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
+                    } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
                 >
                   {isSelected ? '✓ ' : '+ '}
                   {card}
@@ -486,11 +485,10 @@ const PathQuestionComponent: React.FC<{
         <button
           onClick={handleSubmit}
           disabled={selectedCards.length === 0}
-          className={`w-full py-3 rounded-xl font-bold text-lg transition-all ${
-            selectedCards.length > 0
+          className={`w-full py-3 rounded-xl font-bold text-lg transition-all ${selectedCards.length > 0
               ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg'
               : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-          }`}
+            }`}
         >
           Xác nhận trình tự
         </button>
@@ -564,11 +562,10 @@ const ImageMatchQuestionComponent: React.FC<{
             {question.pairs.map((pair) => (
               <div
                 key={pair.label}
-                className={`p-4 rounded-xl border-2 text-center transition-all ${
-                  matches[pair.label]
+                className={`p-4 rounded-xl border-2 text-center transition-all ${matches[pair.label]
                     ? 'border-orange-500 bg-orange-50'
                     : 'border-gray-200 bg-white'
-                }`}
+                  }`}
               >
                 <div className="text-4xl mb-2">{pair.image}</div>
                 <p className="text-sm font-medium text-gray-700">{pair.label}</p>
@@ -589,11 +586,10 @@ const ImageMatchQuestionComponent: React.FC<{
               return (
                 <div
                   key={meaning}
-                  className={`p-3 rounded-lg border-2 transition-all ${
-                    isUsed
+                  className={`p-3 rounded-lg border-2 transition-all ${isUsed
                       ? 'border-gray-300 bg-gray-100 text-gray-500'
                       : 'border-gray-300 bg-white'
-                  }`}
+                    }`}
                 >
                   <p className="text-base font-medium text-gray-800">{meaning}</p>
                   {!isUsed && !submitted && (
@@ -629,11 +625,10 @@ const ImageMatchQuestionComponent: React.FC<{
           <button
             onClick={handleSubmit}
             disabled={!isComplete}
-            className={`flex-1 py-3 rounded-xl font-bold text-lg transition-all ${
-              isComplete
+            className={`flex-1 py-3 rounded-xl font-bold text-lg transition-all ${isComplete
                 ? 'bg-gradient-to-r from-orange-600 to-red-600 text-white hover:shadow-lg'
                 : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-            }`}
+              }`}
           >
             Xác nhận ({Object.keys(matches).length}/{question.correctPairsCount})
           </button>
@@ -695,11 +690,10 @@ const BackupQuestionModal: React.FC<{
               key={idx}
               onClick={() => !submitted && setSelected(idx)}
               disabled={submitted}
-              className={`w-full p-4 rounded-xl border-2 text-left text-base font-medium transition-all ${
-                selected === idx
+              className={`w-full p-4 rounded-xl border-2 text-left text-base font-medium transition-all ${selected === idx
                   ? 'border-yellow-500 bg-yellow-50 text-yellow-800 font-bold'
                   : 'border-gray-300 bg-white hover:border-yellow-400 text-gray-800'
-              } ${submitted ? 'cursor-not-allowed' : ''}`}
+                } ${submitted ? 'cursor-not-allowed' : ''}`}
             >
               <span className="inline-block w-8 h-8 rounded-full bg-blue-100 text-blue-800 text-center leading-8 mr-3 font-bold">
                 {String.fromCharCode(65 + idx)}
@@ -713,11 +707,10 @@ const BackupQuestionModal: React.FC<{
           <button
             onClick={handleSubmit}
             disabled={selected === null}
-            className={`w-full py-4 rounded-xl font-bold text-lg transition-all ${
-              selected !== null
+            className={`w-full py-4 rounded-xl font-bold text-lg transition-all ${selected !== null
                 ? 'bg-gradient-to-r from-yellow-600 to-red-600 text-white hover:shadow-lg'
                 : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-            }`}
+              }`}
           >
             Xác nhận câu trả lời
           </button>
@@ -753,11 +746,10 @@ const CardDrawAnimation: React.FC<{
         initial={{ scale: 0, rotateY: 180 }}
         animate={{ scale: 1, rotateY: 0 }}
         transition={{ type: 'spring', duration: 0.8 }}
-        className={`w-64 h-96 rounded-2xl flex flex-col items-center justify-center shadow-2xl ${
-          card.type === 'EXPLOSION'
+        className={`w-64 h-96 rounded-2xl flex flex-col items-center justify-center shadow-2xl ${card.type === 'EXPLOSION'
             ? 'bg-gradient-to-br from-red-600 to-orange-600'
             : 'bg-gradient-to-br from-green-500 to-emerald-600'
-        }`}
+          }`}
       >
         {card.type === 'EXPLOSION' ? (
           <>
@@ -825,9 +817,9 @@ const MiniGamePage: React.FC = () => {
 
   const currentExplosionRate = gameState.currentTurn
     ? getExplosionRate(
-        gameState.currentTurn.drawCount + 1,
-        gameState.teams[gameState.currentTurn.currentTeamId].explosionModifier
-      )
+      gameState.currentTurn.drawCount + 1,
+      gameState.teams[gameState.currentTurn.currentTeamId].explosionModifier
+    )
     : null;
 
   // Start new turn
@@ -930,7 +922,20 @@ const MiniGamePage: React.FC = () => {
 
     if (lastDrawnCard.type === 'EXPLOSION') {
       // Check for backup opportunity
-      if (gameState.currentTurn.turnPoints >= 16) {
+      const pointsBeforeExplosion = gameState.currentTurn.turnPoints;
+      if (pointsBeforeExplosion >= 16) {
+        // Lưu điểm trước khi nổ vào state để dùng khi backup
+        setGameState((prev) => {
+          if (!prev.currentTurn) return prev;
+          return {
+            ...prev,
+            currentTurn: {
+              ...prev.currentTurn,
+              isBackupMode: true,
+              turnPoints: pointsBeforeExplosion, // Giữ điểm để tính 50% khi backup
+            },
+          };
+        });
         setBackupQuestion(getRandomBackupQuestion());
         setShowBackupQuestion(true);
       } else {
@@ -1004,7 +1009,9 @@ const MiniGamePage: React.FC = () => {
       setShowBackupQuestion(false);
 
       if (correct) {
-        const keptPoints = Math.floor(gameState.currentTurn!.turnPoints / 2);
+        // Điểm trước khi nổ đã được lưu trong turnPoints khi vào backup mode
+        const pointsBeforeExplosion = gameState.currentTurn!.turnPoints;
+        const keptPoints = Math.floor(pointsBeforeExplosion / 2);
         setGameState((prev) => {
           if (!prev.currentTurn) return prev;
           const modifier = getModifierForNextTurn(keptPoints);
@@ -1021,7 +1028,7 @@ const MiniGamePage: React.FC = () => {
             },
             currentTurn: {
               ...prev.currentTurn,
-              turnPoints: keptPoints,
+              turnPoints: 0, // Đã nổ nên điểm lượt = 0, nhưng giữ được keptPoints vào totalScore
               turnEnded: true,
               turnResult: 'BACKUP_SUCCESS',
             },
@@ -1361,20 +1368,18 @@ const MiniGamePage: React.FC = () => {
               {sortedTeams.map((team, idx) => (
                 <div
                   key={team.id}
-                  className={`flex items-center gap-4 p-4 rounded-xl ${
-                    idx === 0 ? 'bg-yellow-100 border-2 border-yellow-400' : 'bg-gray-50'
-                  }`}
+                  className={`flex items-center gap-4 p-4 rounded-xl ${idx === 0 ? 'bg-yellow-100 border-2 border-yellow-400' : 'bg-gray-50'
+                    }`}
                 >
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
-                      idx === 0
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${idx === 0
                         ? 'bg-yellow-500'
                         : idx === 1
-                        ? 'bg-gray-400'
-                        : idx === 2
-                        ? 'bg-orange-400'
-                        : 'bg-gray-300'
-                    }`}
+                          ? 'bg-gray-400'
+                          : idx === 2
+                            ? 'bg-orange-400'
+                            : 'bg-gray-300'
+                      }`}
                   >
                     {idx + 1}
                   </div>
@@ -1443,11 +1448,10 @@ const MiniGamePage: React.FC = () => {
               <motion.div
                 key={teamId}
                 animate={{ scale: isCurrentTeam ? 1.02 : 1 }}
-                className={`p-4 rounded-xl border-2 transition-all ${
-                  isCurrentTeam
+                className={`p-4 rounded-xl border-2 transition-all ${isCurrentTeam
                     ? `${TEAM_BG_COLORS[teamId]} ring-2 ring-offset-2 ring-yellow-400`
                     : 'bg-white border-gray-200'
-                }`}
+                  }`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-bold text-gray-800">{team.name}</span>
@@ -1515,11 +1519,10 @@ const MiniGamePage: React.FC = () => {
                       key={q.id}
                       onClick={() => !q.used && selectQuestion(q.id)}
                       disabled={q.used}
-                      className={`aspect-square rounded-lg font-bold text-lg transition-all ${
-                        q.used
+                      className={`aspect-square rounded-lg font-bold text-lg transition-all ${q.used
                           ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                           : 'bg-gradient-to-br from-red-600 to-orange-500 text-white hover:shadow-lg hover:scale-105 drop-shadow-md'
-                      }`}
+                        }`}
                     >
                       {q.letter}
                     </button>
@@ -1564,11 +1567,10 @@ const MiniGamePage: React.FC = () => {
                   {gameState.currentTurn.drawnCards.map((card, idx) => (
                     <span
                       key={idx}
-                      className={`px-3 py-1 rounded-lg text-sm font-medium ${
-                        card.type === 'EXPLOSION'
+                      className={`px-3 py-1 rounded-lg text-sm font-medium ${card.type === 'EXPLOSION'
                           ? 'bg-red-100 text-red-700'
                           : 'bg-green-100 text-green-700'
-                      }`}
+                        }`}
                     >
                       {card.type === 'EXPLOSION' ? '💣 Nổ' : `⭐ +${card.points}`}
                     </span>
@@ -1643,11 +1645,10 @@ const MiniGamePage: React.FC = () => {
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.9 }}
-              className={`rounded-2xl p-8 max-w-md w-full text-center ${
-                resultMessage.isSuccess
+              className={`rounded-2xl p-8 max-w-md w-full text-center ${resultMessage.isSuccess
                   ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-400'
                   : 'bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-400'
-              }`}
+                }`}
             >
               <div className="text-5xl mb-4">
                 {resultMessage.isSuccess ? '🎉' : '😢'}

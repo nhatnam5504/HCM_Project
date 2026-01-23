@@ -66,9 +66,9 @@ const JourneyTimeline: React.FC = () => {
     >
       {/* Warm sepia/parchment background for the journey */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#2a1810] via-[#3d2517] to-[#2a1810]" />
-      
+
       {/* Vintage map pattern overlay */}
-      <div 
+      <div
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `
@@ -89,17 +89,17 @@ const JourneyTimeline: React.FC = () => {
           `
         }}
       />
-      
+
       {/* Ship silhouettes */}
       <div className="absolute top-20 right-20 text-[100px] text-yellow-500/10 select-none pointer-events-none">🚢</div>
       <div className="absolute bottom-40 left-10 text-[80px] text-yellow-500/10 select-none pointer-events-none">⚓</div>
-      
+
       {/* Compass rose watermark */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[400px] text-yellow-500/5 select-none pointer-events-none">✦</div>
-      
+
       {/* World map suggestion */}
       <div className="absolute top-1/3 left-1/4 text-[150px] text-yellow-600/5 select-none pointer-events-none">🌍</div>
-      
+
       {/* Gold border decorations */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-800 via-yellow-500 to-red-800" />
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-800 via-yellow-500 to-red-800" />
@@ -141,7 +141,7 @@ const JourneyTimeline: React.FC = () => {
             <strong style={{ color: "var(--vietnam-red)" }}>
               "Tự do cho đồng bào tôi, độc lập cho Tổ quốc tôi"
             </strong>
-            , chàng thanh niên 21 tuổi đã làm phụ bếp trên tàu buôn, bắt đầu hành trình 
+            , chàng thanh niên 21 tuổi đã làm phụ bếp trên tàu buôn, bắt đầu hành trình
             qua ba đại dương, bốn châu lục.
           </p>
         </motion.div>
@@ -164,8 +164,8 @@ const JourneyTimeline: React.FC = () => {
               whileHover={{ scale: 1.1, y: -10 }}
               className="px-6 py-4 rounded-xl shadow-lg border-2 cursor-pointer"
               style={{
-                backgroundColor: index === 0 ? "var(--vietnam-red)" : "var(--vietnam-white)",
-                color: index === 0 ? "var(--vietnam-white)" : "var(--ink-black)",
+                backgroundColor: "var(--vietnam-white)",
+                color: "var(--ink-black)",
                 borderColor: "var(--vietnam-gold)",
               }}
             >
@@ -176,7 +176,7 @@ const JourneyTimeline: React.FC = () => {
               </div>
             </motion.div>
           ))}
-          
+
           {/* Animated connecting line */}
           <motion.div
             className="hidden lg:flex items-center gap-2 absolute top-24 left-1/2 -translate-x-1/2 text-4xl"

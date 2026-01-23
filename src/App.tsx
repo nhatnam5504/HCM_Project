@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/layout/ScrollToTop";
-import FloatingChatBot from "./components/ChatBot/FloatingChatBot";
+
 import HomePage from "./pages/HomePage";
 import QuizPage from "./pages/QuizPage";
 import QuizAdminPage from "./pages/QuizAdminPage";
 import CaseStudyPage from "./pages/CaseStudyPage";
 import LibraryPage from "./pages/LibraryPage";
 import MiniGamePage from "./pages/MiniGamePage";
+import HCMStrategyPage from "./pages/HCMStrategyPage";
 import AIUsagePage from "./pages/AIUsagePage";
 import YNghiaPage from "./pages/YNghiaPage";
 import VideoExplanationPage from "./pages/VideoExplanationPage";
@@ -104,8 +105,7 @@ const App: React.FC = () => {
         style={{ visibility: showContent ? "visible" : "hidden" }}
       >
         <Router>
-          {/* Global Floating ChatBot - Available on all routes */}
-          <FloatingChatBot />
+
 
           <Routes>
             {/* Library page with its own layout (no header/footer wrapper) */}
@@ -129,6 +129,7 @@ const App: React.FC = () => {
                         <Route path="/quiz-admin" element={<QuizAdminPage />} />
                         <Route path="/case-study" element={<CaseStudyPage />} />
                         <Route path="/minigame" element={<MiniGamePage />} />
+                        <Route path="/hcm-strategy" element={<HCMStrategyPage />} />
                         <Route path="/y-nghia" element={<YNghiaPage />} />
                         <Route
                           path="/video-giai-thich"

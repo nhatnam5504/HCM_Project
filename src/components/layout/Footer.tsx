@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { Star, Ship, MapPin, Flag, BookOpen } from "lucide-react";
+import { Star, Ship, MapPin, Flag, BookOpen, Home, Library, Gamepad2, Sparkles } from "lucide-react";
 
 const footerLinks = [
   {
     title: "Hành Trình Lịch Sử",
+    icon: Ship,
     links: [
-      { name: "Trang Chủ", href: "/" },
+      { name: "Trang Chủ", href: "/", icon: Home },
       { name: "Bối Cảnh Lịch Sử", href: "/#historical-context" },
       { name: "Hành Trình Bôn Ba", href: "/#journey" },
       { name: "Giác Ngộ Lý Tưởng", href: "/#awakening" },
@@ -13,6 +14,7 @@ const footerLinks = [
   },
   {
     title: "Nội Dung Chính",
+    icon: BookOpen,
     links: [
       { name: "Thành Lập Đảng", href: "/#preparation" },
       { name: "Trở Về Tổ Quốc", href: "/#return-homeland" },
@@ -21,21 +23,23 @@ const footerLinks = [
     ],
   },
   {
-    title: "Tương Tác",
+    title: "Tương Tác & Game",
+    icon: Gamepad2,
     links: [
-      { name: "Thư Viện Hình Ảnh", href: "/thu-vien" },
+      { name: "Thư Viện Hình Ảnh", href: "/thu-vien", icon: Library },
       { name: "Quiz Kiến Thức", href: "/quiz" },
+      { name: "Mini Game Mèo Nổ", href: "/minigame" },
+      { name: "Game Chiến Lược", href: "/hcm-strategy", icon: Sparkles },
       { name: "AI Hỗ Trợ", href: "/ai-ho-tro" },
-      { name: "Mini Game", href: "/minigame" },
     ],
   },
 ];
 
 const features = [
-  { icon: Ship, label: "Ra Đi 1911" },
-  { icon: BookOpen, label: "Giác Ngộ" },
-  { icon: Flag, label: "Lập Đảng" },
-  { icon: MapPin, label: "Trở Về 1941" },
+  { icon: Ship, label: "Ra Đi 1911", color: "from-blue-500 to-cyan-500" },
+  { icon: BookOpen, label: "Giác Ngộ", color: "from-purple-500 to-pink-500" },
+  { icon: Flag, label: "Lập Đảng", color: "from-red-500 to-orange-500" },
+  { icon: MapPin, label: "Trở Về 1941", color: "from-green-500 to-emerald-500" },
 ];
 
 export default function Footer() {
@@ -105,65 +109,82 @@ export default function Footer() {
                 </span>
               </div>
             </Link>
-            <p className="text-white/90 text-sm leading-relaxed mb-4">
+            <p className="text-white/90 text-sm leading-relaxed mb-6">
               Khám phá hành trình 30 năm bôn ba tìm đường cứu nước của Chủ tịch 
               Hồ Chí Minh - từ Bến Nhà Rồng (5/6/1911) đến ngày trở về Tổ quốc 
               tại Pác Bó, Cao Bằng (28/1/1941).
             </p>
-            <div className="flex gap-3">
+            <div className="grid grid-cols-2 gap-3">
               {features.map((feature) => (
                 <div
                   key={feature.label}
-                  className="flex flex-col items-center gap-1"
+                  className="flex flex-col items-center gap-2 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-[#FFD700]/20"
                 >
                   <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center"
-                    style={{ backgroundColor: "rgba(172, 7, 5, 0.5)" }}
+                    className={`w-12 h-12 rounded-lg flex items-center justify-center bg-gradient-to-br ${feature.color} shadow-lg`}
                   >
-                    <feature.icon className="w-5 h-5 text-[#FFD700]" />
+                    <feature.icon className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-xs text-white/80">{feature.label}</span>
+                  <span className="text-xs text-white/90 font-medium text-center">
+                    {feature.label}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Links Sections */}
-          {footerLinks.map((section) => (
-            <div key={section.title}>
-              <h3 className="font-bold text-[#FFD700] mb-4 text-sm uppercase tracking-widest">
-                {section.title}
-              </h3>
-              <ul className="space-y-2">
-                {section.links.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      to={link.href}
-                      className="text-[#FFD700] hover:text-white transition-colors text-sm font-medium"
-                      style={{ color: "#FFD700" }}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {footerLinks.map((section) => {
+            const SectionIcon = section.icon;
+            return (
+              <div key={section.title}>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="p-2 rounded-lg bg-[#FFD700]/20">
+                    <SectionIcon className="w-4 h-4 text-[#FFD700]" />
+                  </div>
+                  <h3 className="font-bold text-[#FFD700] text-sm uppercase tracking-widest">
+                    {section.title}
+                  </h3>
+                </div>
+                <ul className="space-y-2.5">
+                  {section.links.map((link) => {
+                    const LinkIcon = link.icon;
+                    return (
+                      <li key={link.name}>
+                        <Link
+                          to={link.href}
+                          className="flex items-center gap-2 text-[#FFD700] hover:text-white transition-all text-sm font-medium group"
+                          style={{ color: "#FFD700" }}
+                        >
+                          {LinkIcon && (
+                            <LinkIcon className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 transition-opacity" />
+                          )}
+                          <span className="group-hover:translate-x-1 transition-transform inline-block">
+                            {link.name}
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="border-t border-[#FFD700]/20 relative z-10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/90 text-sm text-center md:text-left">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex flex-row justify-between items-center gap-3 overflow-hidden">
+            <p className="text-white/90 text-[10px] md:text-xs text-left whitespace-nowrap flex-shrink-0">
               © 2026 Hành Trình 30 Năm Tìm Đường Cứu Nước (1911-1941) - Chủ Tịch Hồ Chí Minh
             </p>
-            <div className="flex items-center gap-2">
-              <span className="text-white/80 text-xs">
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <span className="text-white/80 text-[9px] md:text-[10px] whitespace-nowrap">
                 Nhật Nam • Thành Tâm • Thanh Trường • Anh Thư
               </span>
-              <span className="text-[#FFD700]">⭐</span>
+              <span className="text-[#FFD700] text-xs">⭐</span>
             </div>
           </div>
         </div>

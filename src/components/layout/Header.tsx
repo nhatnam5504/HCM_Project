@@ -28,6 +28,7 @@ const navigation: NavItem[] = [
   },
   { name: "🎮 Game Hành Trình", href: "/quiz" },
   { name: "Mini Game", href: "/minigame" },
+  { name: "🗺️ Game Chiến Lược", href: "/hcm-strategy" },
   { name: "AI Hỗ Trợ", href: "/ai-ho-tro" },
   { name: "Case Study", href: "/case-study" },
 ];

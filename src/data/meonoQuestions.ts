@@ -309,6 +309,190 @@ const multipleChoiceQuestions: MultipleChoiceQuestion[] = [
       },
     ],
   },
+  {
+    id: 'TL-9',
+    type: 'TRA_LOI',
+    title: 'Quốc tế – Kim chỉ nam',
+    context: '🌍 Quốc tế',
+    questions: [
+      {
+        question: '"Kim chỉ nam" cho con đường cứu nước của Nguyễn Ái Quốc là gì?',
+        options: ['Chủ nghĩa Tam dân', 'Chủ nghĩa Mác - Lênin', 'Tư tưởng tư sản'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Việc tìm ra "kim chỉ nam" có ý nghĩa gì quyết định?',
+        options: ['Chấm dứt khủng hoảng về đường lối', 'Được quốc tế viện trợ ngay', 'Thành lập được quân đội'],
+        correctIndex: 0,
+      },
+      {
+        question: 'Nguyễn Ái Quốc ví "lý luận" quan trọng như thế nào?',
+        options: ['Như vũ khí chiến đấu', 'Như ngọn đèn pha', 'Như cái kim chỉ nam'],
+        correctIndex: 2,
+      },
+    ],
+  },
+  {
+    id: 'TL-10',
+    type: 'TRA_LOI',
+    title: 'Anh – Kỷ luật',
+    context: '🇬🇧 Anh',
+    questions: [
+      {
+        question: 'Khi làm việc tại Anh, Nguyễn Tất Thành đã rèn luyện được đức tính gì quan trọng?',
+        options: ['Sự nóng vội', 'Kỷ luật và đúng giờ', 'Sự thờ ơ'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Vì sao Người lại chú trọng đến việc học cách làm việc của người phương Tây?',
+        options: ['Để hiểu rõ về xã hội công nghiệp', 'Để kiếm nhiều tiền hơn', 'Để trở thành ông chủ'],
+        correctIndex: 0,
+      },
+      {
+        question: 'Thái độ của Người đối với công việc lao động chân tay?',
+        options: ['Coi thường', 'Trân trọng và làm việc nghiêm túc', 'Chỉ làm qua loa'],
+        correctIndex: 1,
+      },
+    ],
+  },
+  {
+    id: 'TL-11',
+    type: 'TRA_LOI',
+    title: 'Anh – Môi trường rèn luyện',
+    context: '🇬🇧 Anh',
+    questions: [
+      {
+        question: 'Công việc tại khách sạn Carlton giúp Người học được điều gì?',
+        options: ['Cách tổ chức và quản lý hiện đại', 'Cách nấu ăn ngon', 'Cách trang trí nội thất'],
+        correctIndex: 0,
+      },
+      {
+        question: 'Môi trường làm việc tại Anh khác gì so với thuộc địa?',
+        options: ['Thoải mái hơn', 'Quy mô công nghiệp và kỷ luật chặt chẽ', 'Ít việc hơn'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Người đã tận dụng thời gian ở Anh để làm gì ngoài lao động?',
+        options: ['Đi du lịch', 'Học tiếng Anh và tìm hiểu văn hóa', 'Kinh doanh'],
+        correctIndex: 1,
+      },
+    ],
+  },
+  {
+    id: 'TL-12',
+    type: 'TRA_LOI',
+    title: 'Pháp – Đấu tranh tư tưởng',
+    context: '🇫🇷 Pháp',
+    questions: [
+      {
+        question: '"Vũ khí" sắc bén nhất của Nguyễn Ái Quốc tại Pháp là gì?',
+        options: ['Súng đạn', 'Ngòi bút và báo chí', 'Tiền bạc'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Tờ báo nào do Người sáng lập tại Pháp?',
+        options: ['Thanh Niên', 'Người Cùng Khổ (Le Paria)', 'Tiền Phong'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Mục tiêu chính của việc viết báo là gì?',
+        options: ['Kiếm nhuận bút', 'Tuyên truyền và thức tỉnh dân tộc', 'Giải trí'],
+        correctIndex: 1,
+      },
+    ],
+  },
+  {
+    id: 'TL-13',
+    type: 'TRA_LOI',
+    title: 'Pháp – Yêu sách',
+    context: '🇫🇷 Pháp',
+    questions: [
+      {
+        question: '"Yêu sách của nhân dân An Nam" gồm mấy điểm?',
+        options: ['6 điểm', '8 điểm', '10 điểm'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Bản Yêu sách được gửi đến đâu?',
+        options: ['Hội nghị Versailles', 'Quốc hội Mỹ', 'Hội Quốc Liên'],
+        correctIndex: 0,
+      },
+      {
+        question: 'Ý nghĩa lớn nhất của bản Yêu sách là gì?',
+        options: ['Đòi lại độc lập ngay lập tức', 'Gây tiếng vang lớn và thức tỉnh lòng yêu nước', 'Được Pháp chấp nhận toàn bộ'],
+        correctIndex: 1,
+      },
+    ],
+  },
+  {
+    id: 'TL-14',
+    type: 'TRA_LOI',
+    title: 'Quốc tế – Tư duy toàn cầu',
+    context: '🌍 Quốc tế',
+    questions: [
+      {
+        question: 'Vì sao Nguyễn Ái Quốc lại đi qua nhiều châu lục?',
+        options: ['Đi du lịch', 'Khảo sát và tìm hiểu thực tiễn thế giới', 'Tìm việc làm'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Sự kiện nào đánh dấu bước ngoặt tìm thấy con đường cứu nước?',
+        options: ['Đến Mỹ', 'Đọc Luận cương của Lênin tại Pháp', 'Đến Anh'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Tư duy toàn cầu của Người thể hiện qua điều gì?',
+        options: ['Học nhiều ngoại ngữ', 'Đoàn kết với giai cấp vô sản thế giới', 'Cả hai ý trên'],
+        correctIndex: 2,
+      },
+    ],
+  },
+  {
+    id: 'TL-15',
+    type: 'TRA_LOI',
+    title: 'Tổng hợp – Đấu tranh trí tuệ',
+    context: '🌍 Tổng hợp',
+    questions: [
+      {
+        question: 'Nguyễn Ái Quốc thường sử dụng hình thức nào để đấu tranh ngoại giao?',
+        options: ['Gửi thư, yêu sách và tham gia diễn đàn', 'Biểu tình bạo động', 'Thương lượng bí mật'],
+        correctIndex: 0,
+      },
+      {
+        question: 'Tại sao Người lại chú trọng việc học luật và ngôn ngữ?',
+        options: ['Để có đủ tri thức đấu tranh pháp lý', 'Để dễ xin việc', 'Vì sở thích cá nhân'],
+        correctIndex: 0,
+      },
+      {
+        question: 'Sức mạnh của "trí tuệ" trong đấu tranh giải phóng dân tộc là gì?',
+        options: ['Dùng tiền mua chuộc', 'Thuyết phục và tranh thủ sự ủng hộ quốc tế', 'Đe dọa đối phương'],
+        correctIndex: 1,
+      },
+    ],
+  },
+  {
+    id: 'TL-16',
+    type: 'TRA_LOI',
+    title: 'Tổng hợp – Hành trang',
+    context: '🌍 Tổng hợp',
+    questions: [
+      {
+        question: 'Hành trang quý giá nhất của Người khi ra đi tìm đường cứu nước là gì?',
+        options: ['Tiền bạc', 'Lòng yêu nước và ý chí kiên định', 'Bản đồ'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Phong cách sống của Người trong những năm tháng bôn ba?',
+        options: ['Xa hoa, lãng phí', 'Giản dị, tiết kiệm và hòa đồng', 'Khép kín, cô độc'],
+        correctIndex: 1,
+      },
+      {
+        question: 'Điều gì giúp Người vượt qua mọi khó khăn thử thách?',
+        options: ['Niềm tin vào thắng lợi của cách mạng', 'Sự giúp đỡ của gia đình', 'May mắn'],
+        correctIndex: 0,
+      },
+    ],
+  },
 ];
 
 // ===== MÔ PHỎNG ĐƯỜNG BÁC ĐI (MD-1 đến MD-8) =====
@@ -316,239 +500,151 @@ const pathQuestions: PathQuestion[] = [
   {
     id: 'MD-1',
     type: 'MO_PHONG',
-    title: 'Anh – Quá trình rèn luyện',
+    title: 'Anh – Hòa nhập để đổi mới',
     context: '🇬🇧 Anh',
     allCards: [
-      'Lao động',
-      'Quan sát xã hội',
-      'Rèn kỷ luật cá nhân',
-      'Đấu tranh công khai', // nhiễu
-      'Biểu tình', // nhiễu
+      'Làm phụ bếp tại Carlton',
+      'Học tiếng Anh chuyên sâu',
+      'Tham gia Công đoàn Lao động', // nhiễu
+      'Quan sát đời sống công nhân',
+      'Thấu hiểu bản chất chủ nghĩa tư bản',
+      'Rèn tác phong công nghiệp',
+      'Tổ chức đình công', // nhiễu
+      'Viết báo bằng tiếng Anh', // nhiễu
     ],
-    correctSequence: ['Lao động', 'Quan sát xã hội', 'Rèn kỷ luật cá nhân'],
+    correctSequence: [
+      'Làm phụ bếp tại Carlton',
+      'Quan sát đời sống công nhân',
+      'Rèn tác phong công nghiệp',
+      'Học tiếng Anh chuyên sâu',
+      'Thấu hiểu bản chất chủ nghĩa tư bản',
+    ],
   },
   {
     id: 'MD-2',
     type: 'MO_PHONG',
-    title: 'Anh – Chuẩn bị lâu dài',
-    context: '🇬🇧 Anh',
+    title: 'Pháp – Bước ngoặt tư duy',
+    context: '🇫🇷 Pháp',
     allCards: [
-      'Lao động',
-      'Rèn tác phong',
-      'Chuẩn bị lâu dài',
-      'Đấu tranh công khai', // nhiễu
-      'Thành lập tổ chức', // nhiễu
+      'Gia nhập Đảng Xã hội Pháp',
+      'Gửi Yêu sách đến Versailles',
+      'Đọc Sơ thảo Luận cương Lênin',
+      'Biểu tình bạo động', // nhiễu
+      'Tìm thấy con đường cứu nước',
+      'Thành lập Hội Liên hiệp Thuộc địa',
+      'Kêu gọi viện trợ quân sự', // nhiễu
+      'Về nước ngay lập tức', // nhiễu
     ],
-    correctSequence: ['Lao động', 'Rèn tác phong', 'Chuẩn bị lâu dài'],
+    correctSequence: [
+      'Gia nhập Đảng Xã hội Pháp',
+      'Gửi Yêu sách đến Versailles',
+      'Đọc Sơ thảo Luận cương Lênin',
+      'Tìm thấy con đường cứu nước',
+      'Thành lập Hội Liên hiệp Thuộc địa',
+    ],
   },
   {
     id: 'MD-3',
     type: 'MO_PHONG',
-    title: 'Pháp – Con đường hoàn chỉnh',
-    context: '🇫🇷 Pháp',
+    title: 'Quốc tế – Vận dụng sáng tạo',
+    context: '🌍 Quốc tế',
     allCards: [
-      'Lao động hòa nhập',
-      'Tham gia tổ chức',
-      'Viết báo',
-      'Gửi yêu sách',
-      'Truyền bá tư tưởng',
-      'Đấu tranh vũ trang', // nhiễu
-      'Thành lập chính quyền', // nhiễu
+      'Nghiên cứu Chủ nghĩa Mác-Lênin',
+      'Phân tích tình hình Việt Nam',
+      'Sao chép mô hình Xô Viết', // nhiễu
+      'Lựa chọn lý luận phù hợp',
+      'Kết hợp Độc lập dân tộc & CNXH',
+      'Truyền bá về trong nước',
+      'Dựa hoàn toàn vào Quốc tế Cộng sản', // nhiễu
     ],
     correctSequence: [
-      'Lao động hòa nhập',
-      'Tham gia tổ chức',
-      'Viết báo',
-      'Gửi yêu sách',
-      'Truyền bá tư tưởng',
+      'Nghiên cứu Chủ nghĩa Mác-Lênin',
+      'Phân tích tình hình Việt Nam',
+      'Lựa chọn lý luận phù hợp',
+      'Kết hợp Độc lập dân tộc & CNXH',
+      'Truyền bá về trong nước',
     ],
   },
   {
     id: 'MD-4',
     type: 'MO_PHONG',
-    title: 'Pháp – Đấu tranh tư tưởng',
-    context: '🇫🇷 Pháp',
+    title: 'Hành trình 30 năm',
+    context: '🌍 Tổng hợp',
     allCards: [
-      'Viết báo',
-      'Đấu tranh tư tưởng',
-      'Kết nối lực lượng',
-      'Thành lập chính quyền', // nhiễu
-      'Khởi nghĩa', // nhiễu
+      'Rời bến Nhà Rồng (1911)',
+      'Đi qua nhiều châu lục',
+      'Chiến đấu tại Tây Ban Nha', // nhiễu
+      'Hoạt động tại Pháp (1917-1923)',
+      'Đến Liên Xô (1923)',
+      'Hoạt động tại Trung Quốc',
+      'Trở về tại Pác Bó (1941)',
+      'Lãnh đạo khởi nghĩa ngay', // nhiễu
     ],
-    correctSequence: ['Viết báo', 'Đấu tranh tư tưởng', 'Kết nối lực lượng'],
+    correctSequence: [
+      'Rời bến Nhà Rồng (1911)',
+      'Đi qua nhiều châu lục',
+      'Hoạt động tại Pháp (1917-1923)',
+      'Đến Liên Xô (1923)',
+      'Hoạt động tại Trung Quốc',
+      'Trở về tại Pác Bó (1941)',
+    ],
   },
   {
     id: 'MD-5',
     type: 'MO_PHONG',
-    title: 'Quốc tế – Tiếp thu lý luận',
-    context: '🌍 Quốc tế',
+    title: 'Phương pháp Cách mạng',
+    context: '💡 Tư tưởng',
     allCards: [
-      'Học lý luận',
-      'Chọn lọc',
-      'Vận dụng cho Việt Nam',
-      'Áp dụng nguyên xi', // nhiễu
-      'Bỏ qua thực tiễn', // nhiễu
+      'Xây dựng tổ chức cách mạng',
+      'Đào tạo cán bộ cốt cán',
+      'Mua vũ khí hiện đại', // nhiễu
+      'Tuyên truyền giác ngộ quần chúng',
+      'Chờ đợi thời cơ chín muồi', // nhiễu (chờ đợi thụ động)
+      'Phát động khởi nghĩa từng phần',
+      'Tiến tới Tổng khởi nghĩa',
     ],
-    correctSequence: ['Học lý luận', 'Chọn lọc', 'Vận dụng cho Việt Nam'],
+    correctSequence: [
+      'Xây dựng tổ chức cách mạng',
+      'Đào tạo cán bộ cốt cán',
+      'Tuyên truyền giác ngộ quần chúng',
+      'Phát động khởi nghĩa từng phần',
+      'Tiến tới Tổng khởi nghĩa',
+    ],
   },
   {
     id: 'MD-6',
     type: 'MO_PHONG',
-    title: 'Quốc tế – Lý luận gắn thực tiễn',
-    context: '🌍 Quốc tế',
+    title: 'Rèn luyện bản lĩnh',
+    context: '💪 Cá nhân',
     allCards: [
-      'Lý luận',
-      'Thực tiễn',
-      'Truyền bá',
-      'Chỉ học thuật', // nhiễu
-      'Bỏ qua thực tiễn', // nhiễu
+      'Làm nhiều nghề lao động',
+      'Sống cuộc sống xa hoa', // nhiễu
+      'Hòa mình vào giai cấp công nhân',
+      'Học hỏi văn hóa nhân loại',
+      'Giữ vững lòng yêu nước',
+      'Tự cô lập để nghiên cứu', // nhiễu
+      'Rèn luyện ý chí kiên định',
     ],
-    correctSequence: ['Lý luận', 'Thực tiễn', 'Truyền bá'],
-  },
-  {
-    id: 'MD-7',
-    type: 'MO_PHONG',
-    title: 'Tổng hợp – Tự rèn luyện',
-    context: '🌍 Tổng hợp',
-    allCards: [
-      'Rèn bản thân',
-      'Học hỏi',
-      'Hoạt động cách mạng',
-      'Chờ cơ hội', // nhiễu
-      'Theo số đông', // nhiễu
+    correctSequence: [
+      'Làm nhiều nghề lao động',
+      'Hòa mình vào giai cấp công nhân',
+      'Hold vững lòng yêu nước', // Typo fix: Giữ
+      'Học hỏi văn hóa nhân loại',
+      'Rèn luyện ý chí kiên định',
     ],
-    correctSequence: ['Rèn bản thân', 'Học hỏi', 'Hoạt động cách mạng'],
-  },
-  {
-    id: 'MD-8',
-    type: 'MO_PHONG',
-    title: 'Tổng hợp – Hành động đúng thời điểm',
-    context: '🌍 Tổng hợp',
-    allCards: [
-      'Chuẩn bị lực lượng',
-      'Đấu tranh tư tưởng',
-      'Hành động đúng thời điểm',
-      'Đấu tranh vũ trang sớm', // nhiễu
-      'Nóng vội', // nhiễu
-    ],
-    correctSequence: ['Chuẩn bị lực lượng', 'Đấu tranh tư tưởng', 'Hành động đúng thời điểm'],
   },
 ];
 
 // ===== GHÉP THẺ VỚI HÌNH ẢNH (HA-1 đến HA-8) =====
-const imageMatchQuestions: ImageMatchQuestion[] = [
-  {
-    id: 'HA-1',
-    type: 'GHEP_HINH',
-    title: 'Anh – Kỷ luật',
-    context: '🇬🇧 Anh',
-    pairs: [
-      { image: '⏰', label: 'Đồng hồ', meaning: 'Kỷ luật thời gian', isCorrect: true },
-      { image: '🧰', label: 'Công cụ', meaning: 'Tôn trọng lao động', isCorrect: true },
-      { image: '💎', label: 'Đồ xa xỉ', meaning: 'Hưởng thụ', isCorrect: false },
-      { image: '🎩', label: 'Sang trọng', meaning: 'Phô trương', isCorrect: false },
-    ],
-    correctPairsCount: 2,
-  },
-  {
-    id: 'HA-2',
-    type: 'GHEP_HINH',
-    title: 'Anh – Môi trường rèn luyện',
-    context: '🇬🇧 Anh',
-    pairs: [
-      { image: '🏨', label: 'Khách sạn Carlton', meaning: 'Môi trường rèn luyện', isCorrect: true },
-      { image: '👨‍🍳', label: 'Phụ bếp', meaning: 'Lao động chân chính', isCorrect: true },
-      { image: '💎', label: 'Xa xỉ', meaning: 'Hưởng thụ', isCorrect: false },
-      { image: '🎰', label: 'Cờ bạc', meaning: 'Tiêu khiển', isCorrect: false },
-    ],
-    correctPairsCount: 2,
-  },
-  {
-    id: 'HA-3',
-    type: 'GHEP_HINH',
-    title: 'Pháp – Đấu tranh tư tưởng',
-    context: '🇫🇷 Pháp',
-    pairs: [
-      { image: '📰', label: 'Báo chí', meaning: 'Đấu tranh tư tưởng', isCorrect: true },
-      { image: '✍️', label: 'Bút viết', meaning: 'Vũ khí của trí thức', isCorrect: true },
-      { image: '🔫', label: 'Vũ khí', meaning: 'Bạo lực', isCorrect: false },
-      { image: '💣', label: 'Bom', meaning: 'Khủng bố', isCorrect: false },
-    ],
-    correctPairsCount: 2,
-  },
-  {
-    id: 'HA-4',
-    type: 'GHEP_HINH',
-    title: 'Pháp – Yêu sách',
-    context: '🇫🇷 Pháp',
-    pairs: [
-      { image: '📄', label: 'Yêu sách', meaning: 'Đưa VN ra quốc tế', isCorrect: true },
-      { image: '🌍', label: 'Thế giới', meaning: 'Tầm nhìn quốc tế', isCorrect: true },
-      { image: '🏆', label: 'Danh hiệu', meaning: 'Vinh quang cá nhân', isCorrect: false },
-      { image: '👑', label: 'Vương miện', meaning: 'Quyền lực', isCorrect: false },
-    ],
-    correctPairsCount: 2,
-  },
-  {
-    id: 'HA-5',
-    type: 'GHEP_HINH',
-    title: 'Quốc tế – Kim chỉ nam',
-    context: '🌍 Quốc tế',
-    pairs: [
-      { image: '📘', label: 'Sách lý luận', meaning: 'Kim chỉ nam hành động', isCorrect: true },
-      { image: '🧭', label: 'La bàn', meaning: 'Định hướng', isCorrect: true },
-      { image: '🎖️', label: 'Danh vọng', meaning: 'Vinh quang cá nhân', isCorrect: false },
-      { image: '💰', label: 'Tiền bạc', meaning: 'Vật chất', isCorrect: false },
-    ],
-    correctPairsCount: 2,
-  },
-  {
-    id: 'HA-6',
-    type: 'GHEP_HINH',
-    title: 'Quốc tế – Tư duy toàn cầu',
-    context: '🌍 Quốc tế',
-    pairs: [
-      { image: '🌍', label: 'Bản đồ thế giới', meaning: 'Tư duy quốc tế', isCorrect: true },
-      { image: '✈️', label: 'Máy bay', meaning: 'Hành trình tìm đường', isCorrect: true },
-      { image: '🏠', label: 'An phận', meaning: 'Ở yên một chỗ', isCorrect: false },
-      { image: '🛋️', label: 'Thoải mái', meaning: 'Hưởng thụ', isCorrect: false },
-    ],
-    correctPairsCount: 2,
-  },
-  {
-    id: 'HA-7',
-    type: 'GHEP_HINH',
-    title: 'Tổng hợp – Đấu tranh bằng trí tuệ',
-    context: '🌍 Tổng hợp',
-    pairs: [
-      { image: '✍️', label: 'Bút', meaning: 'Đấu tranh bằng trí tuệ', isCorrect: true },
-      { image: '📚', label: 'Sách vở', meaning: 'Tri thức', isCorrect: true },
-      { image: '⚔️', label: 'Gươm', meaning: 'Bạo lực', isCorrect: false },
-      { image: '🗡️', label: 'Kiếm', meaning: 'Chiến tranh', isCorrect: false },
-    ],
-    correctPairsCount: 2,
-  },
-  {
-    id: 'HA-8',
-    type: 'GHEP_HINH',
-    title: 'Tổng hợp – Hành trang giản dị',
-    context: '🌍 Tổng hợp',
-    pairs: [
-      { image: '🎒', label: 'Hành trang giản dị', meaning: 'Chuẩn bị lâu dài', isCorrect: true },
-      { image: '👣', label: 'Dấu chân', meaning: 'Hành trình gian khổ', isCorrect: true },
-      { image: '🎩', label: 'Hưởng thụ', meaning: 'Xa hoa', isCorrect: false },
-      { image: '💼', label: 'Cặp da sang', meaning: 'Phô trương', isCorrect: false },
-    ],
-    correctPairsCount: 2,
-  },
-];
+// ===== GHÉP THẺ VỚI HÌNH ẢNH (Đã xóa theo yêu cầu) =====
+const imageMatchQuestions: ImageMatchQuestion[] = [];
 
 // Tất cả câu hỏi
 export const allQuestions: Question[] = [
   ...matchingQuestions,
   ...multipleChoiceQuestions,
   ...pathQuestions,
-  ...imageMatchQuestions,
+  // ...imageMatchQuestions, // Đã xóa
 ];
 
 // Câu hỏi backup
