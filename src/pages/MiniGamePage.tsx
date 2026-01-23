@@ -51,7 +51,7 @@ const TEAM_BG_COLORS: Record<TeamId, string> = {
 
 const INITIAL_PRIZE_COUNT = 8;
 const WIN_THRESHOLD = 20;
-const MAX_DRAWS = 4;
+const MAX_DRAWS = 5; // Cho phép rút đến lần 5 (85% nổ) theo yêu cầu
 
 // ===== HELPER FUNCTIONS =====
 function getExplosionRate(drawCount: number, modifier: number): { point: number; explosion: number } {
@@ -930,7 +930,20 @@ const MiniGamePage: React.FC = () => {
 
     if (lastDrawnCard.type === 'EXPLOSION') {
       // Check for backup opportunity
-      if (gameState.currentTurn.turnPoints >= 16) {
+      const pointsBeforeExplosion = gameState.currentTurn.turnPoints;
+      if (pointsBeforeExplosion >= 16) {
+        // Lưu điểm trước khi nổ vào state để dùng khi backup
+        setGameState((prev) => {
+          if (!prev.currentTurn) return prev;
+          return {
+            ...prev,
+            currentTurn: {
+              ...prev.currentTurn,
+              isBackupMode: true,
+              turnPoints: pointsBeforeExplosion, // Giữ điểm để tính 50% khi backup
+            },
+          };
+        });
         setBackupQuestion(getRandomBackupQuestion());
         setShowBackupQuestion(true);
       } else {
@@ -1004,7 +1017,9 @@ const MiniGamePage: React.FC = () => {
       setShowBackupQuestion(false);
 
       if (correct) {
-        const keptPoints = Math.floor(gameState.currentTurn!.turnPoints / 2);
+        // Điểm trước khi nổ đã được lưu trong turnPoints khi vào backup mode
+        const pointsBeforeExplosion = gameState.currentTurn!.turnPoints;
+        const keptPoints = Math.floor(pointsBeforeExplosion / 2);
         setGameState((prev) => {
           if (!prev.currentTurn) return prev;
           const modifier = getModifierForNextTurn(keptPoints);
@@ -1021,7 +1036,7 @@ const MiniGamePage: React.FC = () => {
             },
             currentTurn: {
               ...prev.currentTurn,
-              turnPoints: keptPoints,
+              turnPoints: 0, // Đã nổ nên điểm lượt = 0, nhưng giữ được keptPoints vào totalScore
               turnEnded: true,
               turnResult: 'BACKUP_SUCCESS',
             },

@@ -445,10 +445,13 @@ const imageMatchQuestions: ImageMatchQuestion[] = [
     pairs: [
       { image: '⏰', label: 'Đồng hồ', meaning: 'Kỷ luật thời gian', isCorrect: true },
       { image: '🧰', label: 'Công cụ', meaning: 'Tôn trọng lao động', isCorrect: true },
+      { image: '👔', label: 'Đồng phục', meaning: 'Kỷ luật tổ chức', isCorrect: true },
+      { image: '📋', label: 'Danh sách công việc', meaning: 'Lập kế hoạch', isCorrect: true },
       { image: '💎', label: 'Đồ xa xỉ', meaning: 'Hưởng thụ', isCorrect: false },
       { image: '🎩', label: 'Sang trọng', meaning: 'Phô trương', isCorrect: false },
+      { image: '🍷', label: 'Rượu', meaning: 'Tiêu khiển', isCorrect: false },
     ],
-    correctPairsCount: 2,
+    correctPairsCount: 4,
   },
   {
     id: 'HA-2',
@@ -458,10 +461,13 @@ const imageMatchQuestions: ImageMatchQuestion[] = [
     pairs: [
       { image: '🏨', label: 'Khách sạn Carlton', meaning: 'Môi trường rèn luyện', isCorrect: true },
       { image: '👨‍🍳', label: 'Phụ bếp', meaning: 'Lao động chân chính', isCorrect: true },
+      { image: '🤝', label: 'Hợp tác', meaning: 'Học hỏi từ đồng nghiệp', isCorrect: true },
+      { image: '📚', label: 'Quan sát', meaning: 'Học cách làm việc', isCorrect: true },
       { image: '💎', label: 'Xa xỉ', meaning: 'Hưởng thụ', isCorrect: false },
       { image: '🎰', label: 'Cờ bạc', meaning: 'Tiêu khiển', isCorrect: false },
+      { image: '🎪', label: 'Giải trí', meaning: 'Lãng phí thời gian', isCorrect: false },
     ],
-    correctPairsCount: 2,
+    correctPairsCount: 4,
   },
   {
     id: 'HA-3',
@@ -471,10 +477,13 @@ const imageMatchQuestions: ImageMatchQuestion[] = [
     pairs: [
       { image: '📰', label: 'Báo chí', meaning: 'Đấu tranh tư tưởng', isCorrect: true },
       { image: '✍️', label: 'Bút viết', meaning: 'Vũ khí của trí thức', isCorrect: true },
+      { image: '📢', label: 'Diễn đàn', meaning: 'Lan tỏa tư tưởng', isCorrect: true },
+      { image: '🌐', label: 'Quốc tế', meaning: 'Tầm nhìn toàn cầu', isCorrect: true },
       { image: '🔫', label: 'Vũ khí', meaning: 'Bạo lực', isCorrect: false },
       { image: '💣', label: 'Bom', meaning: 'Khủng bố', isCorrect: false },
+      { image: '⚔️', label: 'Gươm', meaning: 'Chiến tranh', isCorrect: false },
     ],
-    correctPairsCount: 2,
+    correctPairsCount: 4,
   },
   {
     id: 'HA-4',
@@ -484,10 +493,13 @@ const imageMatchQuestions: ImageMatchQuestion[] = [
     pairs: [
       { image: '📄', label: 'Yêu sách', meaning: 'Đưa VN ra quốc tế', isCorrect: true },
       { image: '🌍', label: 'Thế giới', meaning: 'Tầm nhìn quốc tế', isCorrect: true },
+      { image: '🤝', label: 'Đàm phán', meaning: 'Đấu tranh hòa bình', isCorrect: true },
+      { image: '📢', label: 'Tiếng nói', meaning: 'Quyền lợi dân tộc', isCorrect: true },
       { image: '🏆', label: 'Danh hiệu', meaning: 'Vinh quang cá nhân', isCorrect: false },
       { image: '👑', label: 'Vương miện', meaning: 'Quyền lực', isCorrect: false },
+      { image: '💎', label: 'Vàng bạc', meaning: 'Vật chất', isCorrect: false },
     ],
-    correctPairsCount: 2,
+    correctPairsCount: 4,
   },
   {
     id: 'HA-5',
@@ -497,10 +509,13 @@ const imageMatchQuestions: ImageMatchQuestion[] = [
     pairs: [
       { image: '📘', label: 'Sách lý luận', meaning: 'Kim chỉ nam hành động', isCorrect: true },
       { image: '🧭', label: 'La bàn', meaning: 'Định hướng', isCorrect: true },
+      { image: '💡', label: 'Ánh sáng', meaning: 'Soi đường', isCorrect: true },
+      { image: '🎯', label: 'Mục tiêu', meaning: 'Con đường đúng đắn', isCorrect: true },
       { image: '🎖️', label: 'Danh vọng', meaning: 'Vinh quang cá nhân', isCorrect: false },
       { image: '💰', label: 'Tiền bạc', meaning: 'Vật chất', isCorrect: false },
+      { image: '👑', label: 'Quyền lực', meaning: 'Thống trị', isCorrect: false },
     ],
-    correctPairsCount: 2,
+    correctPairsCount: 4,
   },
   {
     id: 'HA-6',
@@ -510,10 +525,13 @@ const imageMatchQuestions: ImageMatchQuestion[] = [
     pairs: [
       { image: '🌍', label: 'Bản đồ thế giới', meaning: 'Tư duy quốc tế', isCorrect: true },
       { image: '✈️', label: 'Máy bay', meaning: 'Hành trình tìm đường', isCorrect: true },
+      { image: '🤝', label: 'Đoàn kết', meaning: 'Liên kết quốc tế', isCorrect: true },
+      { image: '📚', label: 'Học hỏi', meaning: 'Tiếp thu tinh hoa', isCorrect: true },
       { image: '🏠', label: 'An phận', meaning: 'Ở yên một chỗ', isCorrect: false },
       { image: '🛋️', label: 'Thoải mái', meaning: 'Hưởng thụ', isCorrect: false },
+      { image: '🚪', label: 'Đóng cửa', meaning: 'Tự cô lập', isCorrect: false },
     ],
-    correctPairsCount: 2,
+    correctPairsCount: 4,
   },
   {
     id: 'HA-7',
@@ -523,10 +541,13 @@ const imageMatchQuestions: ImageMatchQuestion[] = [
     pairs: [
       { image: '✍️', label: 'Bút', meaning: 'Đấu tranh bằng trí tuệ', isCorrect: true },
       { image: '📚', label: 'Sách vở', meaning: 'Tri thức', isCorrect: true },
+      { image: '💭', label: 'Tư duy', meaning: 'Suy nghĩ sâu sắc', isCorrect: true },
+      { image: '🎓', label: 'Học tập', meaning: 'Nâng cao hiểu biết', isCorrect: true },
       { image: '⚔️', label: 'Gươm', meaning: 'Bạo lực', isCorrect: false },
       { image: '🗡️', label: 'Kiếm', meaning: 'Chiến tranh', isCorrect: false },
+      { image: '💣', label: 'Bom', meaning: 'Khủng bố', isCorrect: false },
     ],
-    correctPairsCount: 2,
+    correctPairsCount: 4,
   },
   {
     id: 'HA-8',
@@ -536,10 +557,13 @@ const imageMatchQuestions: ImageMatchQuestion[] = [
     pairs: [
       { image: '🎒', label: 'Hành trang giản dị', meaning: 'Chuẩn bị lâu dài', isCorrect: true },
       { image: '👣', label: 'Dấu chân', meaning: 'Hành trình gian khổ', isCorrect: true },
+      { image: '💪', label: 'Kiên trì', meaning: 'Ý chí bền bỉ', isCorrect: true },
+      { image: '🌟', label: 'Mục tiêu', meaning: 'Lý tưởng cao cả', isCorrect: true },
       { image: '🎩', label: 'Hưởng thụ', meaning: 'Xa hoa', isCorrect: false },
       { image: '💼', label: 'Cặp da sang', meaning: 'Phô trương', isCorrect: false },
+      { image: '💎', label: 'Đồ xa xỉ', meaning: 'Vật chất', isCorrect: false },
     ],
-    correctPairsCount: 2,
+    correctPairsCount: 4,
   },
 ];
 

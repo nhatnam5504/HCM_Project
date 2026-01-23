@@ -10,6 +10,7 @@ import QuizAdminPage from "./pages/QuizAdminPage";
 import CaseStudyPage from "./pages/CaseStudyPage";
 import LibraryPage from "./pages/LibraryPage";
 import MiniGamePage from "./pages/MiniGamePage";
+import HCMStrategyPage from "./pages/HCMStrategyPage";
 import AIUsagePage from "./pages/AIUsagePage";
 import YNghiaPage from "./pages/YNghiaPage";
 import VideoExplanationPage from "./pages/VideoExplanationPage";
@@ -129,6 +130,7 @@ const App: React.FC = () => {
                         <Route path="/quiz-admin" element={<QuizAdminPage />} />
                         <Route path="/case-study" element={<CaseStudyPage />} />
                         <Route path="/minigame" element={<MiniGamePage />} />
+                        <Route path="/hcm-strategy" element={<HCMStrategyPage />} />
                         <Route path="/y-nghia" element={<YNghiaPage />} />
                         <Route
                           path="/video-giai-thich"
