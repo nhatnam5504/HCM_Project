@@ -34,7 +34,7 @@ Kết quả, Việt Nam nhận được sự giúp đỡ to lớn về chính tr
       src: "https://i.ibb.co/SDvsHmz0/ae8080ce0a7550c9538ababaf43a33e1bac-ho-voi-nuoc-duc.jpg",
       alt: "Những năm 1980, khi công nhân Việt Nam sang lao động tại Cộng hòa Dân chủ Đức, hình ảnh Chủ tịch Hồ Chí Minh đã trở thành sợi dây gắn kết đặc biệt giữa người Việt và người Đức, bởi chỉ cần nhắc đến tên Bác là nhận được sự trân trọng, thân thiện và giúp đỡ chân thành, thể hiện qua việc nhiều người Đức hiểu biết, kính trọng Bác, nhiều đội thiếu niên, khu phố, công trình mang tên Hồ Chí Minh, bắt nguồn từ tình hữu nghị Việt Nam – Đức được Người đặt nền móng trong chuyến thăm năm 1957 và từ tấm gương đạo đức, nhân cách lớn lao của Bác được bạn bè quốc tế yêu mến.",
     },
-    { 
+    {
       src: "https://i.ibb.co/1tdmDrms/b1-hinh-anh-bac-ho.jpg",
       alt: "Sự kiện Chủ tịch Hồ Chí Minh giao lưu với thiếu nhi nước ngoài thể hiện rõ tình yêu thương con người và phong cách ngoại giao nhân dân của Người. Qua những cuộc gặp gỡ thân mật, giản dị, Bác gửi gắm thông điệp đoàn kết, hữu nghị và hòa bình giữa các dân tộc, góp phần xây dựng hình ảnh Việt Nam nhân ái, yêu chuộng hòa bình và thắt chặt tình hữu nghị quốc tế ngay từ thế hệ trẻ.",
     },
@@ -72,22 +72,20 @@ Kết quả, Việt Nam nhận được sự giúp đỡ to lớn về chính tr
         </span>
         <div className="flex gap-2 bg-[rgba(139,26,26,0.9)] p-1 rounded-full border-2 border-[#FFD700]/40 shadow-[0_0_20px_rgba(255,215,0,0.2)] backdrop-blur-md">
           <button
-            className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${
-              mode === "dome"
+            className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${mode === "dome"
                 ? "bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-[#8B1A1A] shadow-[0_4px_12px_rgba(255,215,0,0.5)]"
                 : "bg-transparent text-[#FFD700] hover:bg-[rgba(255,215,0,0.1)]"
-            }`}
+              }`}
             onClick={() => setMode("dome")}
           >
             <FaCube className="text-sm" />
             <span>Tròn</span>
           </button>
           <button
-            className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${
-              mode === "circular"
+            className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${mode === "circular"
                 ? "bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-[#8B1A1A] shadow-[0_4px_12px_rgba(255,215,0,0.5)]"
                 : "bg-transparent text-[#FFD700] hover:bg-[rgba(255,215,0,0.1)]"
-            }`}
+              }`}
             onClick={() => setMode("circular")}
           >
             <FaImages className="text-sm" />
