@@ -28,7 +28,7 @@ const footerLinks = [
     links: [
       { name: "Thư Viện Hình Ảnh", href: "/thu-vien", icon: Library },
       { name: "Quiz Kiến Thức", href: "/quiz" },
-      { name: "Mini Game Mèo Nổ", href: "/minigame" },
+      { name: "Game Nhóm", href: "/minigame" },
       { name: "Game Chiến Lược", href: "/hcm-strategy", icon: Sparkles },
       { name: "AI Hỗ Trợ", href: "/ai-ho-tro" },
     ],
@@ -110,8 +110,8 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-white/90 text-sm leading-relaxed mb-6">
-              Khám phá hành trình 30 năm bôn ba tìm đường cứu nước của Chủ tịch 
-              Hồ Chí Minh - từ Bến Nhà Rồng (5/6/1911) đến ngày trở về Tổ quốc 
+              Khám phá hành trình 30 năm bôn ba tìm đường cứu nước của Chủ tịch
+              Hồ Chí Minh - từ Bến Nhà Rồng (5/6/1911) đến ngày trở về Tổ quốc
               tại Pác Bó, Cao Bằng (28/1/1941).
             </p>
             <div className="grid grid-cols-2 gap-3">

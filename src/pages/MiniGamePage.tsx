@@ -35,18 +35,19 @@ import {
 } from '../data/meonoQuestions';
 
 // ===== CONSTANTS =====
+// Vietnam flag inspired colors - đỏ-vàng chủ đạo
 const TEAM_COLORS: Record<TeamId, string> = {
-  A: 'from-red-500 to-red-600',
-  B: 'from-blue-500 to-blue-600',
-  C: 'from-green-500 to-green-600',
-  D: 'from-purple-500 to-purple-600',
+  A: 'from-[#ac0705] to-[#d32f2f]',      // Đỏ đậm
+  B: 'from-[#8b1a1a] to-[#ac0705]',      // Đỏ burgundy  
+  C: 'from-[#b8860b] to-[#ffd700]',      // Vàng gold
+  D: 'from-[#0f1c3f] to-[#1e3a5f]',      // Navy (phụ)
 };
 
 const TEAM_BG_COLORS: Record<TeamId, string> = {
-  A: 'bg-red-100 border-red-400',
-  B: 'bg-blue-100 border-blue-400',
-  C: 'bg-green-100 border-green-400',
-  D: 'bg-purple-100 border-purple-400',
+  A: 'bg-red-50 border-[#ac0705]',
+  B: 'bg-red-50 border-[#8b1a1a]',
+  C: 'bg-yellow-50 border-[#ffd700]',
+  D: 'bg-blue-50 border-[#0f1c3f]',
 };
 
 const INITIAL_PRIZE_COUNT = 8;
@@ -154,8 +155,8 @@ const MatchingQuestionComponent: React.FC<{
               onClick={() => !submitted && setSelectedAction(action)}
               disabled={submitted}
               className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${selectedAction === action
-                  ? 'border-red-500 bg-red-50 text-red-800 font-bold'
-                  : 'border-gray-300 hover:border-red-400 bg-white text-gray-800'
+                ? 'border-red-500 bg-red-50 text-red-800 font-bold'
+                : 'border-gray-300 hover:border-red-400 bg-white text-gray-800'
                 } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
             >
               {action}
@@ -172,8 +173,8 @@ const MatchingQuestionComponent: React.FC<{
               onClick={() => !submitted && setSelectedGoal(goal)}
               disabled={submitted}
               className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${selectedGoal === goal
-                  ? 'border-yellow-500 bg-yellow-50 text-yellow-800 font-bold'
-                  : 'border-gray-300 hover:border-yellow-400 bg-white text-gray-800'
+                ? 'border-yellow-500 bg-yellow-50 text-yellow-800 font-bold'
+                : 'border-gray-300 hover:border-yellow-400 bg-white text-gray-800'
                 } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
             >
               {goal}
@@ -190,8 +191,8 @@ const MatchingQuestionComponent: React.FC<{
               onClick={() => !submitted && setSelectedResult(result)}
               disabled={submitted}
               className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${selectedResult === result
-                  ? 'border-green-500 bg-green-50 text-green-800 font-bold'
-                  : 'border-gray-300 hover:border-green-400 bg-white text-gray-800'
+                ? 'border-green-500 bg-green-50 text-green-800 font-bold'
+                : 'border-gray-300 hover:border-green-400 bg-white text-gray-800'
                 } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
             >
               {result}
@@ -229,8 +230,8 @@ const MatchingQuestionComponent: React.FC<{
           onClick={handleSubmit}
           disabled={!isComplete}
           className={`w-full py-3 rounded-xl font-bold text-lg transition-all ${isComplete
-              ? 'bg-gradient-to-r from-red-600 to-yellow-600 text-white hover:shadow-lg'
-              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+            ? 'bg-gradient-to-r from-red-600 to-yellow-600 text-white hover:shadow-lg'
+            : 'bg-gray-200 text-gray-500 cursor-not-allowed'
             }`}
         >
           Xác nhận
@@ -298,10 +299,10 @@ const MultipleChoiceQuestionComponent: React.FC<{
           <div
             key={idx}
             className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${idx < answers.length
-                ? 'bg-green-500 text-white'
-                : idx === currentIndex
-                  ? 'bg-yellow-500 text-white animate-pulse'
-                  : 'bg-gray-200 text-gray-500'
+              ? 'bg-green-500 text-white'
+              : idx === currentIndex
+                ? 'bg-yellow-500 text-white animate-pulse'
+                : 'bg-gray-200 text-gray-500'
               }`}
           >
             {idx + 1}
@@ -420,8 +421,8 @@ const PathQuestionComponent: React.FC<{
                   onClick={() => toggleCard(card)}
                   disabled={submitted}
                   className={`w-full p-3 rounded-lg border-2 transition-all text-base font-medium ${isSelected
-                      ? 'border-purple-500 bg-purple-100 text-purple-800 font-bold'
-                      : 'border-gray-300 hover:border-purple-400 bg-white text-gray-800'
+                    ? 'border-purple-500 bg-purple-100 text-purple-800 font-bold'
+                    : 'border-gray-300 hover:border-purple-400 bg-white text-gray-800'
                     } ${submitted ? 'cursor-not-allowed opacity-70' : ''}`}
                 >
                   {isSelected ? '✓ ' : '+ '}
@@ -486,8 +487,8 @@ const PathQuestionComponent: React.FC<{
           onClick={handleSubmit}
           disabled={selectedCards.length === 0}
           className={`w-full py-3 rounded-xl font-bold text-lg transition-all ${selectedCards.length > 0
-              ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg'
-              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg'
+            : 'bg-gray-200 text-gray-500 cursor-not-allowed'
             }`}
         >
           Xác nhận trình tự
@@ -563,8 +564,8 @@ const ImageMatchQuestionComponent: React.FC<{
               <div
                 key={pair.label}
                 className={`p-4 rounded-xl border-2 text-center transition-all ${matches[pair.label]
-                    ? 'border-orange-500 bg-orange-50'
-                    : 'border-gray-200 bg-white'
+                  ? 'border-orange-500 bg-orange-50'
+                  : 'border-gray-200 bg-white'
                   }`}
               >
                 <div className="text-4xl mb-2">{pair.image}</div>
@@ -587,8 +588,8 @@ const ImageMatchQuestionComponent: React.FC<{
                 <div
                   key={meaning}
                   className={`p-3 rounded-lg border-2 transition-all ${isUsed
-                      ? 'border-gray-300 bg-gray-100 text-gray-500'
-                      : 'border-gray-300 bg-white'
+                    ? 'border-gray-300 bg-gray-100 text-gray-500'
+                    : 'border-gray-300 bg-white'
                     }`}
                 >
                   <p className="text-base font-medium text-gray-800">{meaning}</p>
@@ -626,8 +627,8 @@ const ImageMatchQuestionComponent: React.FC<{
             onClick={handleSubmit}
             disabled={!isComplete}
             className={`flex-1 py-3 rounded-xl font-bold text-lg transition-all ${isComplete
-                ? 'bg-gradient-to-r from-orange-600 to-red-600 text-white hover:shadow-lg'
-                : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+              ? 'bg-gradient-to-r from-orange-600 to-red-600 text-white hover:shadow-lg'
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
               }`}
           >
             Xác nhận ({Object.keys(matches).length}/{question.correctPairsCount})
@@ -672,15 +673,15 @@ const BackupQuestionModal: React.FC<{
       <motion.div
         initial={{ scale: 0.9 }}
         animate={{ scale: 1 }}
-        className="bg-gradient-to-br from-yellow-50 to-red-50 rounded-2xl max-w-2xl w-full p-6 border-4 border-yellow-400"
+        className="bg-gradient-to-br from-[#fafafa] to-[#ffd700]/20 rounded-2xl max-w-2xl w-full p-6 border-4 border-[#ffd700]"
       >
         <div className="text-center mb-6">
-          <div className="text-6xl mb-3">🛟</div>
-          <h2 className="text-2xl font-bold text-gray-800">CÂU HỎI BACKUP</h2>
+          <div className="text-6xl mb-3">�️</div>
+          <h2 className="text-2xl font-bold text-[#8b1a1a]">LÁ CHẮN TƯ TƯỢNG</h2>
           <p className="text-gray-600">Trả lời đúng để giữ 50% điểm!</p>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border-2 border-gray-200 mb-6">
+        <div className="bg-white p-6 rounded-xl border-2 border-[#ffd700]/50 mb-6">
           <p className="text-lg font-semibold text-gray-800">{question.question}</p>
         </div>
 
@@ -691,11 +692,11 @@ const BackupQuestionModal: React.FC<{
               onClick={() => !submitted && setSelected(idx)}
               disabled={submitted}
               className={`w-full p-4 rounded-xl border-2 text-left text-base font-medium transition-all ${selected === idx
-                  ? 'border-yellow-500 bg-yellow-50 text-yellow-800 font-bold'
-                  : 'border-gray-300 bg-white hover:border-yellow-400 text-gray-800'
+                ? 'border-[#ffd700] bg-[#ffd700]/20 text-[#8b1a1a] font-bold'
+                : 'border-gray-300 bg-white hover:border-[#ffd700] text-gray-800'
                 } ${submitted ? 'cursor-not-allowed' : ''}`}
             >
-              <span className="inline-block w-8 h-8 rounded-full bg-blue-100 text-blue-800 text-center leading-8 mr-3 font-bold">
+              <span className="inline-block w-8 h-8 rounded-full bg-[#ac0705]/10 text-[#ac0705] text-center leading-8 mr-3 font-bold">
                 {String.fromCharCode(65 + idx)}
               </span>
               {option}
@@ -708,8 +709,8 @@ const BackupQuestionModal: React.FC<{
             onClick={handleSubmit}
             disabled={selected === null}
             className={`w-full py-4 rounded-xl font-bold text-lg transition-all ${selected !== null
-                ? 'bg-gradient-to-r from-yellow-600 to-red-600 text-white hover:shadow-lg'
-                : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+              ? 'bg-gradient-to-r from-[#ac0705] to-[#ffd700] text-white hover:shadow-lg'
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
               }`}
           >
             Xác nhận câu trả lời
@@ -747,8 +748,8 @@ const CardDrawAnimation: React.FC<{
         animate={{ scale: 1, rotateY: 0 }}
         transition={{ type: 'spring', duration: 0.8 }}
         className={`w-64 h-96 rounded-2xl flex flex-col items-center justify-center shadow-2xl ${card.type === 'EXPLOSION'
-            ? 'bg-gradient-to-br from-red-600 to-orange-600'
-            : 'bg-gradient-to-br from-green-500 to-emerald-600'
+          ? 'bg-gradient-to-br from-[#0f1c3f] to-[#1e3a5f]'
+          : 'bg-gradient-to-br from-[#ffd700] to-[#b8860b]'
           }`}
       >
         {card.type === 'EXPLOSION' ? (
@@ -758,10 +759,10 @@ const CardDrawAnimation: React.FC<{
               transition={{ repeat: Infinity, duration: 0.5 }}
               className="text-8xl mb-4"
             >
-              💣
+              🌊
             </motion.div>
-            <p className="text-3xl font-bold text-white">NỔ!</p>
-            <p className="text-white/80 mt-2">Mất toàn bộ điểm lượt</p>
+            <p className="text-3xl font-bold text-white">THỬ THÁCH!</p>
+            <p className="text-white/80 mt-2">Sóng gió cản đường</p>
           </>
         ) : (
           <>
@@ -770,10 +771,10 @@ const CardDrawAnimation: React.FC<{
               transition={{ repeat: Infinity, duration: 0.5 }}
               className="text-8xl mb-4"
             >
-              ⭐
+              ✨
             </motion.div>
-            <p className="text-5xl font-bold text-white">+{card.points}</p>
-            <p className="text-white/80 mt-2">điểm</p>
+            <p className="text-5xl font-bold text-[#8b1a1a]">+{card.points}</p>
+            <p className="text-[#8b1a1a]/80 mt-2">điểm sáng</p>
           </>
         )}
       </motion.div>
@@ -972,8 +973,8 @@ const MiniGamePage: React.FC = () => {
           };
         });
         setResultMessage({
-          title: '💣 NỔ!',
-          message: 'Mất toàn bộ điểm của lượt này!',
+          title: '🌊 SÓNG GIÓ!',
+          message: 'Thử thách trên hành trình - mất điểm lượt này!',
           isSuccess: false,
         });
         setShowResultModal(true);
@@ -994,8 +995,8 @@ const MiniGamePage: React.FC = () => {
         };
       });
       setResultMessage({
-        title: `⭐ +${lastDrawnCard.points} điểm!`,
-        message: 'Tiếp tục rút hay dừng để bảo toàn?',
+        title: `✨ +${lastDrawnCard.points} điểm sáng!`,
+        message: 'Tiếp tục bước hay dừng để bảo toàn?',
         isSuccess: true,
       });
       setShowResultModal(true);
@@ -1045,7 +1046,7 @@ const MiniGamePage: React.FC = () => {
           };
         });
         setResultMessage({
-          title: '🛟 Cứu thành công!',
+          title: '�️ Bảo vệ thành công!',
           message: `Giữ được ${keptPoints} điểm (50%)`,
           isSuccess: true,
         });
@@ -1081,8 +1082,8 @@ const MiniGamePage: React.FC = () => {
           };
         });
         setResultMessage({
-          title: '❌ Không cứu được!',
-          message: 'Mất toàn bộ điểm của lượt này.',
+          title: '❌ Không vượt qua!',
+          message: 'Sóng gió đã cuốn đi điểm của lượt này.',
           isSuccess: false,
         });
       }
@@ -1233,7 +1234,7 @@ const MiniGamePage: React.FC = () => {
   // Instructions screen
   if (showInstructions) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 via-yellow-50 to-white py-10 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#8b1a1a] via-[#ac0705] to-[#d32f2f] py-10 px-4">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -1241,10 +1242,10 @@ const MiniGamePage: React.FC = () => {
             className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-yellow-400"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-red-600 to-yellow-600 p-6 text-white text-center">
-              <div className="text-6xl mb-4">🐱💣</div>
-              <h1 className="text-4xl font-bold mb-2">MÈO NỔ</h1>
-              <p className="text-xl opacity-90">Hành Trình Tư Tưởng Hồ Chí Minh</p>
+            <div className="bg-gradient-to-r from-[#ac0705] to-[#ffd700] p-6 text-white text-center">
+              <div className="text-6xl mb-4">⭐🏛️</div>
+              <h1 className="text-4xl font-bold mb-2">HÀNH TRÌNH BÁC HỒ</h1>
+              <p className="text-xl opacity-90">Khám Phá Tư Tưởng Hồ Chí Minh</p>
             </div>
 
             {/* Content */}
@@ -1271,30 +1272,30 @@ const MiniGamePage: React.FC = () => {
                   </ol>
                 </div>
 
-                <div className="bg-red-50 p-4 rounded-xl">
-                  <h4 className="font-bold text-red-800 mb-2">🎴 Thẻ Mèo Nổ</h4>
+                <div className="bg-red-50 p-4 rounded-xl border border-[#ac0705]/20">
+                  <h4 className="font-bold text-[#8b1a1a] mb-2">🎴 Thẻ Vận Mệnh</h4>
                   <ul className="text-sm text-gray-700 space-y-1">
-                    <li>⭐ Thẻ Điểm: +1 đến +5</li>
-                    <li>💣 Thẻ Nổ: Mất hết điểm lượt</li>
-                    <li>⚠️ Rút càng nhiều, nổ càng cao!</li>
+                    <li>✨ Thẻ Ánh Sáng: +1 đến +5</li>
+                    <li>🌊 Thẻ Sóng Gió: Thử thách hành trình</li>
+                    <li>⚠️ Rút càng nhiều, thử thách càng cao!</li>
                   </ul>
                 </div>
 
-                <div className="bg-green-50 p-4 rounded-xl">
-                  <h4 className="font-bold text-green-800 mb-2">🛟 Cơ hội Backup</h4>
+                <div className="bg-[#ffd700]/10 p-4 rounded-xl border border-[#ffd700]/30">
+                  <h4 className="font-bold text-[#8b1a1a] mb-2">�️ Lá Chắn Tư Tưởng</h4>
                   <ul className="text-sm text-gray-700 space-y-1">
-                    <li>≥16 điểm mà nổ → được backup</li>
+                    <li>≥16 điểm mà gặp sóng → được cứu</li>
                     <li>Đúng: giữ 50% điểm</li>
                     <li>Sai: mất hết</li>
                   </ul>
                 </div>
 
-                <div className="bg-purple-50 p-4 rounded-xl">
-                  <h4 className="font-bold text-purple-800 mb-2">📊 Tỷ lệ nổ</h4>
+                <div className="bg-[#0f1c3f]/5 p-4 rounded-xl border border-[#0f1c3f]/20">
+                  <h4 className="font-bold text-[#0f1c3f] mb-2">🌊 Tỷ lệ sóng gió</h4>
                   <ul className="text-sm text-gray-700 space-y-1">
                     <li>Lần 1: 15% | Lần 2: 30%</li>
                     <li>Lần 3: 50% | Lần 4: 70%</li>
-                    <li>Lần 5: 85% (gần như chắc nổ!)</li>
+                    <li>Lần 5: 85% (rất nhiều thử thách!)</li>
                   </ul>
                 </div>
               </div>
@@ -1322,16 +1323,15 @@ const MiniGamePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Start button */}
               <button
                 onClick={() => {
                   setShowInstructions(false);
                   startNewTurn('A');
                 }}
-                className="w-full py-4 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-xl font-bold text-xl hover:shadow-xl transition-all flex items-center justify-center gap-3"
+                className="w-full py-4 bg-gradient-to-r from-[#ac0705] to-[#ffd700] text-white rounded-xl font-bold text-xl hover:shadow-xl transition-all flex items-center justify-center gap-3"
               >
                 <Play className="w-6 h-6" />
-                Bắt đầu chơi!
+                Khởi hành!
               </button>
             </div>
           </motion.div>
@@ -1347,17 +1347,17 @@ const MiniGamePage: React.FC = () => {
     );
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 via-yellow-50 to-white py-10 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#8b1a1a] via-[#ac0705] to-[#d32f2f] py-10 px-4">
         <div className="max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-yellow-400"
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-[#ffd700]"
           >
-            <div className="bg-gradient-to-r from-red-600 to-yellow-600 p-6 text-white text-center">
+            <div className="bg-gradient-to-r from-[#ac0705] to-[#ffd700] p-6 text-white text-center">
               <Trophy className="w-16 h-16 mx-auto mb-4" />
-              <h1 className="text-3xl font-bold">Kết thúc trò chơi!</h1>
-              <p className="opacity-90">Đã hết quà</p>
+              <h1 className="text-3xl font-bold">Hoàn Thành Hành Trình!</h1>
+              <p className="opacity-90">Đã trao hết phần thưởng</p>
             </div>
 
             <div className="p-6 space-y-4">
@@ -1373,12 +1373,12 @@ const MiniGamePage: React.FC = () => {
                 >
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${idx === 0
-                        ? 'bg-yellow-500'
-                        : idx === 1
-                          ? 'bg-gray-400'
-                          : idx === 2
-                            ? 'bg-orange-400'
-                            : 'bg-gray-300'
+                      ? 'bg-yellow-500'
+                      : idx === 1
+                        ? 'bg-gray-400'
+                        : idx === 2
+                          ? 'bg-orange-400'
+                          : 'bg-gray-300'
                       }`}
                   >
                     {idx + 1}
@@ -1388,8 +1388,8 @@ const MiniGamePage: React.FC = () => {
                     <p className="text-sm text-gray-600">{team.totalScore} điểm</p>
                   </div>
                   {team.hasWonPrize && (
-                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
-                      🎁 Đã nhận quà
+                    <span className="px-3 py-1 bg-[#ffd700]/20 text-[#8b1a1a] rounded-full text-sm font-medium">
+                      � Đạt thành tích
                     </span>
                   )}
                 </div>
@@ -1397,10 +1397,10 @@ const MiniGamePage: React.FC = () => {
 
               <button
                 onClick={resetGame}
-                className="w-full py-4 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 mt-6"
+                className="w-full py-4 bg-gradient-to-r from-[#ac0705] to-[#ffd700] text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 mt-6"
               >
                 <RotateCcw className="w-5 h-5" />
-                Chơi lại
+                Hành trình mới
               </button>
             </div>
           </motion.div>
@@ -1411,22 +1411,22 @@ const MiniGamePage: React.FC = () => {
 
   // Main game UI
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-yellow-50 to-white py-6 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#8b1a1a] via-[#ac0705] to-[#d32f2f] py-6 px-4">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-4xl">🐱💣</span>
+            <span className="text-4xl">⭐🏛️</span>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">Mèo Nổ</h1>
-              <p className="text-sm text-gray-600">Hành Trình Tư Tưởng HCM</p>
+              <h1 className="text-2xl font-bold text-gray-800">Hành Trình Bác Hồ</h1>
+              <p className="text-sm text-gray-600">Khám Phá Tư Tưởng HCM</p>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-yellow-100 px-4 py-2 rounded-lg border border-yellow-300">
-              <Gift className="w-5 h-5 text-yellow-600" />
-              <span className="font-bold text-gray-800">{gameState.prizeCount} quà</span>
+            <div className="flex items-center gap-2 bg-[#ffd700]/20 px-4 py-2 rounded-lg border border-[#ffd700]">
+              <Trophy className="w-5 h-5 text-[#b8860b]" />
+              <span className="font-bold text-gray-800">{gameState.prizeCount} phần thưởng</span>
             </div>
             <button
               onClick={resetGame}
@@ -1449,8 +1449,8 @@ const MiniGamePage: React.FC = () => {
                 key={teamId}
                 animate={{ scale: isCurrentTeam ? 1.02 : 1 }}
                 className={`p-4 rounded-xl border-2 transition-all ${isCurrentTeam
-                    ? `${TEAM_BG_COLORS[teamId]} ring-2 ring-offset-2 ring-yellow-400`
-                    : 'bg-white border-gray-200'
+                  ? `${TEAM_BG_COLORS[teamId]} ring-2 ring-offset-2 ring-yellow-400`
+                  : 'bg-white border-gray-200'
                   }`}
               >
                 <div className="flex items-center justify-between mb-2">
@@ -1520,8 +1520,8 @@ const MiniGamePage: React.FC = () => {
                       onClick={() => !q.used && selectQuestion(q.id)}
                       disabled={q.used}
                       className={`aspect-square rounded-lg font-bold text-lg transition-all ${q.used
-                          ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                          : 'bg-gradient-to-br from-red-600 to-orange-500 text-white hover:shadow-lg hover:scale-105 drop-shadow-md'
+                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                        : 'bg-gradient-to-br from-red-600 to-orange-500 text-white hover:shadow-lg hover:scale-105 drop-shadow-md'
                         }`}
                     >
                       {q.letter}
@@ -1539,7 +1539,7 @@ const MiniGamePage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleStopTurn}
-                    className="px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+                    className="px-8 py-4 bg-gradient-to-r from-[#ffd700] to-[#b8860b] text-[#8b1a1a] rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
                   >
                     <Hand className="w-5 h-5" />
                     DỪNG ({gameState.currentTurn.turnPoints} điểm)
@@ -1550,10 +1550,10 @@ const MiniGamePage: React.FC = () => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={handleDrawCard}
-                      className="px-8 py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+                      className="px-8 py-4 bg-gradient-to-r from-[#0f1c3f] to-[#1e3a5f] text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
                     >
-                      <Bomb className="w-5 h-5" />
-                      RÚT THẺ ({currentExplosionRate?.explosion}% nổ)
+                      <ChevronRight className="w-5 h-5" />
+                      TIẾP TỤC ({currentExplosionRate?.explosion}% sóng gió)
                     </motion.button>
                   )}
                 </div>
@@ -1562,17 +1562,17 @@ const MiniGamePage: React.FC = () => {
             {/* Drawn cards history */}
             {gameState.currentTurn.drawnCards.length > 0 && (
               <div className="mt-6 pt-4 border-t border-gray-200">
-                <p className="text-sm text-gray-500 mb-2">Thẻ đã rút:</p>
+                <p className="text-sm text-gray-500 mb-2">Các bước đã qua:</p>
                 <div className="flex gap-2 flex-wrap">
                   {gameState.currentTurn.drawnCards.map((card, idx) => (
                     <span
                       key={idx}
                       className={`px-3 py-1 rounded-lg text-sm font-medium ${card.type === 'EXPLOSION'
-                          ? 'bg-red-100 text-red-700'
-                          : 'bg-green-100 text-green-700'
+                        ? 'bg-[#0f1c3f]/10 text-[#0f1c3f]'
+                        : 'bg-[#ffd700]/20 text-[#8b1a1a]'
                         }`}
                     >
-                      {card.type === 'EXPLOSION' ? '💣 Nổ' : `⭐ +${card.points}`}
+                      {card.type === 'EXPLOSION' ? '🌊 Sóng gió' : `✨ +${card.points}`}
                     </span>
                   ))}
                 </div>
@@ -1580,103 +1580,110 @@ const MiniGamePage: React.FC = () => {
             )}
           </div>
         )}
+
+        {/* Question Modal */}
+        <AnimatePresence>
+          {
+            showQuestionModal && currentQuestion && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4"
+              >
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6"
+                >
+                  <div className="flex justify-between items-center mb-6">
+                    <div>
+                      <span className="text-sm text-gray-500">Câu {currentQuestion.letter}</span>
+                      <h2 className="text-xl font-bold text-gray-800">
+                        {currentQuestion.question.title}
+                      </h2>
+                    </div>
+                    <span className="px-3 py-1 bg-gray-100 rounded-full text-sm font-medium">
+                      {currentQuestion.question.type === 'GHEP_CAU' && '🔗 Ghép câu'}
+                      {currentQuestion.question.type === 'TRA_LOI' && '❓ Trả lời'}
+                      {currentQuestion.question.type === 'MO_PHONG' && '🛤️ Mô phỏng'}
+                      {currentQuestion.question.type === 'GHEP_HINH' && '🖼️ Ghép hình'}
+                    </span>
+                  </div>
+
+                  {renderQuestion()}
+                </motion.div>
+              </motion.div>
+            )
+          }
+        </AnimatePresence >
+
+        {/* Card Draw Animation */}
+        <AnimatePresence>
+          {
+            showCardAnimation && lastDrawnCard && (
+              <CardDrawAnimation card={lastDrawnCard} onComplete={processDrawnCard} />
+            )
+          }
+        </AnimatePresence >
+
+        {/* Backup Question Modal */}
+        <AnimatePresence>
+          {
+            showBackupQuestion && backupQuestion && (
+              <BackupQuestionModal question={backupQuestion} onAnswer={handleBackupAnswer} />
+            )
+          }
+        </AnimatePresence >
+
+        {/* Result Modal */}
+        <AnimatePresence>
+          {
+            showResultModal && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              >
+                <motion.div
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0.9 }}
+                  className={`rounded-2xl p-8 max-w-md w-full text-center ${resultMessage.isSuccess
+                    ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-400'
+                    : 'bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-400'
+                    }`}
+                >
+                  <div className="text-5xl mb-4">
+                    {resultMessage.isSuccess ? '🎉' : '😢'}
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                    {resultMessage.title}
+                  </h3>
+                  <p className="text-gray-600 mb-6">{resultMessage.message}</p>
+
+                  {gameState.currentTurn?.turnEnded ? (
+                    <button
+                      onClick={endTurnAndContinue}
+                      className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
+                    >
+                      Tiếp tục → Nhóm tiếp theo
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setShowResultModal(false)}
+                      className="w-full py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
+                    >
+                      Đóng
+                    </button>
+                  )}
+                </motion.div>
+              </motion.div>
+            )}
+        </AnimatePresence>
       </div>
-
-      {/* Question Modal */}
-      <AnimatePresence>
-        {showQuestionModal && currentQuestion && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6"
-            >
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <span className="text-sm text-gray-500">Câu {currentQuestion.letter}</span>
-                  <h2 className="text-xl font-bold text-gray-800">
-                    {currentQuestion.question.title}
-                  </h2>
-                </div>
-                <span className="px-3 py-1 bg-gray-100 rounded-full text-sm font-medium">
-                  {currentQuestion.question.type === 'GHEP_CAU' && '🔗 Ghép câu'}
-                  {currentQuestion.question.type === 'TRA_LOI' && '❓ Trả lời'}
-                  {currentQuestion.question.type === 'MO_PHONG' && '🛤️ Mô phỏng'}
-                  {currentQuestion.question.type === 'GHEP_HINH' && '🖼️ Ghép hình'}
-                </span>
-              </div>
-
-              {renderQuestion()}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Card Draw Animation */}
-      <AnimatePresence>
-        {showCardAnimation && lastDrawnCard && (
-          <CardDrawAnimation card={lastDrawnCard} onComplete={processDrawnCard} />
-        )}
-      </AnimatePresence>
-
-      {/* Backup Question Modal */}
-      <AnimatePresence>
-        {showBackupQuestion && backupQuestion && (
-          <BackupQuestionModal question={backupQuestion} onAnswer={handleBackupAnswer} />
-        )}
-      </AnimatePresence>
-
-      {/* Result Modal */}
-      <AnimatePresence>
-        {showResultModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              className={`rounded-2xl p-8 max-w-md w-full text-center ${resultMessage.isSuccess
-                  ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-400'
-                  : 'bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-400'
-                }`}
-            >
-              <div className="text-5xl mb-4">
-                {resultMessage.isSuccess ? '🎉' : '😢'}
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                {resultMessage.title}
-              </h3>
-              <p className="text-gray-600 mb-6">{resultMessage.message}</p>
-
-              {gameState.currentTurn?.turnEnded ? (
-                <button
-                  onClick={endTurnAndContinue}
-                  className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
-                >
-                  Tiếp tục → Nhóm tiếp theo
-                </button>
-              ) : (
-                <button
-                  onClick={() => setShowResultModal(false)}
-                  className="w-full py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
-                >
-                  Đóng
-                </button>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

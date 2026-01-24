@@ -27,7 +27,7 @@ const navigation: NavItem[] = [
     ],
   },
   { name: "🎮 Game Hành Trình", href: "/quiz" },
-  { name: "Mini Game", href: "/minigame" },
+  { name: "Game Nhóm", href: "/minigame" },
   { name: "🗺️ Game Chiến Lược", href: "/hcm-strategy" },
   { name: "AI Hỗ Trợ", href: "/ai-ho-tro" },
   { name: "Case Study", href: "/case-study" },
@@ -43,11 +43,11 @@ export default function Header() {
     e.preventDefault();
     setDropdownOpen(null);
     setMobileMenuOpen(false);
-    
+
     // If it's an anchor link (starts with #)
     if (href.startsWith('#')) {
       const sectionId = href.substring(1); // Remove the # symbol
-      
+
       // Check if we're on the home page
       if (window.location.pathname === '/') {
         // Already on home page, just scroll
@@ -148,9 +148,8 @@ export default function Header() {
                     >
                       {item.name}
                       <svg
-                        className={`w-4 h-4 transition-transform ${
-                          dropdownOpen === item.name ? "rotate-180" : ""
-                        }`}
+                        className={`w-4 h-4 transition-transform ${dropdownOpen === item.name ? "rotate-180" : ""
+                          }`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -166,8 +165,8 @@ export default function Header() {
                     {dropdownOpen === item.name && (
                       <>
                         {/* Backdrop to close dropdown when clicking outside */}
-                        <div 
-                          className="fixed inset-0 z-10" 
+                        <div
+                          className="fixed inset-0 z-10"
                           onClick={() => setDropdownOpen(null)}
                         />
                         <div

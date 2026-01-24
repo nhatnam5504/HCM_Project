@@ -17,39 +17,38 @@ export default function LibraryPage() {
   // Historical images from DomeGallery with additional ones
   const domeImages = [
     {
-      src: "https://i.ibb.co/gbs8Xv1B/images2285462-image004.jpg",
-      alt: "Vào đầu những năm 1910, một thanh niên Việt Nam rời quê hương với khát vọng tìm con đường giải phóng dân tộc. Trên hành trình bôn ba khắp thế giới, ông đã đến Pháp và phải lao động bằng nhiều nghề khác nhau để sinh sống, trong đó có nghề phụ bếp/đầu bếp tại các nhà hàng, khách sạn. Ở Paris, công việc trong bếp rất vất vả: dậy từ rất sớm, làm việc nhiều giờ liền, công việc nặng nhọc, lương thấp, sống trong những căn phòng chật hẹp của người lao động nhập cư. Nhưng chính trong những căn bếp nóng nực ấy, ông học được tác phong kỷ luật, ngăn nắp, quan sát xã hội Pháp, sự phân hóa giàu nghèo, đời sống công nhân, tiếp cận tư tưởng tiến bộ, tham gia các cuộc thảo luận chính trị, đọc báo, viết bài. Ban ngày lao động kiếm sống, ban đêm ông học tập và viết, từng bước hình thành tư duy cách mạng. Từ một người làm bếp vô danh, ông dần trở thành một nhà hoạt động chính trị, rồi sau này là lãnh tụ của phong trào giải phóng dân tộc Việt Nam.",
+      src: "https://i.ibb.co/chF8QtjR/hcm1.jpg",
+      alt: "Tháng 6/1919, với bút danh Nguyễn Ái Quốc, Người đã thay mặt những người yêu nước Việt Nam soạn thảo và gửi tới Hội nghị Hòa bình Versailles bản Yêu sách của nhân dân An Nam gồm 8 điểm. Bản yêu sách đòi chính quyền thực dân Pháp phải công nhận các quyền tự do, dân chủ cơ bản và quyền bình đẳng về pháp lý cho người Việt. Dù không được Hội nghị chấp nhận, hành động này đã đánh dấu lần đầu tiên vấn đề độc lập, tự quyết của Việt Nam được chính thức đưa ra trước cộng đồng quốc tế, mở đầu cho một giai đoạn đấu tranh chính trị công khai của Người.",
     },
     {
-      src: "https://i.ibb.co/Z4TZd1j/congly-vn-bachovoinuocnga8.jpg",
-      alt: `Sau Hiệp định Giơnevơ 1954, Chủ tịch Hồ Chí Minh xác định đấu tranh thực hiện hòa bình, thống nhất đất nước là lâu dài và gian khổ, trong đó đấu tranh ngoại giao và tranh thủ sự ủng hộ quốc tế giữ vai trò rất quan trọng. Xuất phát từ nhận thức đó, năm 1955, Người dẫn đầu đoàn đại biểu Chính phủ Việt Nam Dân chủ Cộng hòa đi thăm hữu nghị Liên Xô, Trung Quốc và Mông Cổ.
-Chuyến thăm nhằm củng cố tình đoàn kết với các nước xã hội chủ nghĩa anh em, tranh thủ sự ủng hộ quốc tế cho sự nghiệp hòa bình, thống nhất và xây dựng đất nước. Trong các cuộc gặp gỡ và tuyên bố chung, các nước đều bày tỏ sự ủng hộ mạnh mẽ đối với Việt Nam, đặc biệt là việc thực hiện hiệp thương, tổng tuyển cử theo Hiệp định Giơnevơ.
-Kết quả, Việt Nam nhận được sự giúp đỡ to lớn về chính trị, kinh tế, kỹ thuật, đào tạo cán bộ và hợp tác văn hóa – giáo dục. Chủ tịch Hồ Chí Minh khẳng định chuyến đi đã hoàn toàn đạt mục đích, góp phần nâng cao uy tín quốc tế của Việt Nam, củng cố mặt trận đoàn kết quốc tế, tạo cơ sở cho cuộc đấu tranh thống nhất và phát triển đất nước sau này.`,
+      src: "https://i.ibb.co/tPCt7btN/hcm2.jpg",
+      alt: "Khoảng năm 1913-1917, để kiếm sống và có điều kiện quan sát thế giới, Người đã làm việc tại bếp của khách sạn Carlton danh tiếng ở London, Anh. Công việc của một phụ bếp (commis de cuisine) vô cùng vất vả, với những giờ làm dài, công việc nặng nhọc trong không gian nóng bức. Nhưng chính tại nơi đây, từ góc nhìn của người lao động, Người đã tận mắt chứng kiến sự phân hóa giàu nghèo, học được tác phong làm việc kỷ luật và ngăn nắp của phương Tây. Những năm tháng này không chỉ để mưu sinh, mà còn là quá trình tự học hỏi, tích lũy hiểu biết về xã hội và văn hóa, từng bước hình thành nên tư duy và quyết tâm tìm ra con đường giải phóng cho dân tộc khỏi ách thực dân.",
     },
     {
-      src: "https://i.ibb.co/BVcw2k89/Bac-Ho-tham-dao-Titop.jpg",
-      alt: "Tháng 01 năm 1962, trong chuyến thăm Việt Nam, anh hùng phi công vũ trụ Liên Xô Gherman Titov đã có dịp cùng Chủ tịch Hồ Chí Minh tham quan vịnh Hạ Long, một thắng cảnh nổi tiếng của đất nước Việt Nam, trên con tàu lướt nhẹ giữa làn nước xanh biếc và những đảo đá trùng điệp, Bác Hồ với phong thái giản dị, thân tình đã trò chuyện cởi mở với Titov và các bạn Liên Xô, hỏi thăm về chuyến bay vào vũ trụ, về khoa học kỹ thuật hiện đại, đồng thời kể cho bạn bè quốc tế nghe về thiên nhiên, con người và khát vọng hòa bình của nhân dân Việt Nam, Bác ví tình hữu nghị Việt Nam – Liên Xô như những hòn đảo vững chãi giữa biển khơi, dù sóng gió vẫn bền chặt và gắn bó, còn Titov thì bày tỏ sự khâm phục trước ý chí kiên cường của dân tộc Việt Nam và vẻ đẹp kỳ vĩ của vịnh Hạ Long, cuộc trò chuyện diễn ra trong không khí ấm áp, chan hòa, thể hiện sâu sắc tình đoàn kết quốc tế, sự giao thoa giữa trí tuệ khoa học tiên tiến của nhân loại với tâm hồn yêu nước, yêu hòa bình của vị lãnh tụ Việt Nam, để lại một kỷ niệm đẹp về tình bạn thủy chung giữa hai dân tộc Việt Nam và Liên Xô.",
+      src: "https://i.ibb.co/q3ZTXkGt/hcm3.jpg",
+      alt: "Ngày 26 tháng 12 năm 1920, tại Đại hội lần thứ 18 của Đảng Xã hội Pháp ở thành phố Tours, Người đã có bài phát biểu đầy xúc động và sắc bén. Người nói bằng giọng điệu của một người con từ xứ thuộc địa, vạch trần chính sách tàn bạo của chủ nghĩa thực dân và khẳng định: Chúng tôi tin rằng Quốc tế III sẽ chú ý đến số phận các dân tộc bị áp bức... và chỉ có Quốc tế Cộng sản mới giúp chúng tôi giành lại tự do và độc lập. Bài phát biểu đó là tiếng nói ủng hộ mạnh mẽ Luận cương về các vấn đề dân tộc và thuộc địa của Lênin - văn kiện đã chỉ cho Người thấy ánh sáng của con đường giải phóng dân tộc gắn liền với cách mạng vô sản. Cùng ngày hôm đó, Nguyễn Ái Quốc đã bỏ phiếu tán thành gia nhập Quốc tế Cộng sản, tách khỏi Đảng Xã hội và tham gia sáng lập nên Đảng Cộng sản Pháp. Bước đi lịch sử này không chỉ đánh dấu Người trở thành người cộng sản đầu tiên của Việt Nam, mà còn là lời tuyên bố chính thức rằng cuộc đấu tranh của nhân dân Việt Nam sẽ đi theo ngọn cờ của chủ nghĩa Mác - Lênin và phong trào cách mạng thế giới."
     },
     {
-      src: "https://i.ibb.co/SDvsHmz0/ae8080ce0a7550c9538ababaf43a33e1bac-ho-voi-nuoc-duc.jpg",
-      alt: "Những năm 1980, khi công nhân Việt Nam sang lao động tại Cộng hòa Dân chủ Đức, hình ảnh Chủ tịch Hồ Chí Minh đã trở thành sợi dây gắn kết đặc biệt giữa người Việt và người Đức, bởi chỉ cần nhắc đến tên Bác là nhận được sự trân trọng, thân thiện và giúp đỡ chân thành, thể hiện qua việc nhiều người Đức hiểu biết, kính trọng Bác, nhiều đội thiếu niên, khu phố, công trình mang tên Hồ Chí Minh, bắt nguồn từ tình hữu nghị Việt Nam – Đức được Người đặt nền móng trong chuyến thăm năm 1957 và từ tấm gương đạo đức, nhân cách lớn lao của Bác được bạn bè quốc tế yêu mến.",
+      src: "https://i.ibb.co/LXhTj6Qj/hcm4.jpg",
+      alt: "Ngày 5 tháng 6 năm 1911, dưới cái tên Văn Ba, người thanh niên Nguyễn Tất Thành với tấm lòng yêu nước nồng nàn và nỗi đau trước cảnh nước mất, nhà tan, đã bước lên con tàu buôn Pháp mang tên Amiral Latouche-Tréville, rời bến cảng Nhà Rồng ở Sài Gòn để bắt đầu một hành trình dài và đầy thử thách. Người xin làm phụ bếp trên tàu với mục đích chính: được sang các nước phương Tây, xem họ làm thế nào rồi trở về giúp đồng bào mình. Chuyến ra đi này không có tiền đồ cụ thể, nhưng tràn đầy khát vọng tìm đường giải phóng dân tộc. Đây không chỉ là bước đi đầu tiên của một vĩ nhân, mà còn là sự kiện mở màn cho một cuộc hành trình 30 năm bôn ba qua nhiều quốc gia, lục địa, vừa lao động, học tập, vừa hình thành nên con đường cách mạng đúng đắn, dẫn lối cho dân tộc Việt Nam đi tới độc lập, tự do.",
     },
     {
-      src: "https://i.ibb.co/1tdmDrms/b1-hinh-anh-bac-ho.jpg",
-      alt: "Sự kiện Chủ tịch Hồ Chí Minh giao lưu với thiếu nhi nước ngoài thể hiện rõ tình yêu thương con người và phong cách ngoại giao nhân dân của Người. Qua những cuộc gặp gỡ thân mật, giản dị, Bác gửi gắm thông điệp đoàn kết, hữu nghị và hòa bình giữa các dân tộc, góp phần xây dựng hình ảnh Việt Nam nhân ái, yêu chuộng hòa bình và thắt chặt tình hữu nghị quốc tế ngay từ thế hệ trẻ.",
-    },
-    { // 
-      src: "https://i.ibb.co/vvTxMZY0/congly-vn-bachovoinuocnga3.jpg",
-      alt: "Trong Chiến dịch Điện Biên Phủ năm 1954, Chủ tịch Hồ Chí Minh đã gặp gỡ và trao đổi với nhà làm phim nổi tiếng Liên Xô Roman Karmen, người trực tiếp ghi lại bằng ống kính điện ảnh chân thực và sinh động cuộc chiến đấu anh dũng của quân và dân Việt Nam, góp phần đưa chiến thắng lịch sử Điện Biên Phủ ra trước dư luận tiến bộ và yêu chuộng hòa bình trên toàn thế giới.",
-    },
-    { // 
-      src: "https://i.ibb.co/27kdn2sG/congly-vn-bachovoinuocnga12.jpg",
-      alt: "Năm 1962, Chủ tịch Hồ Chí Minh đã có cuộc gặp gỡ thân thiết với phi hành gia Liên Xô German Titov, thể hiện tình hữu nghị sâu sắc giữa Việt Nam và Liên Xô, đồng thời bày tỏ sự trân trọng của Bác đối với những thành tựu khoa học vũ trụ của nhân loại và tinh thần đoàn kết quốc tế vì hòa bình.",
+      src: "https://i.ibb.co/XxP5sPW2/hcm5.jpg",
+      alt: "Mùa hè năm 1924, đồng chí Nguyễn Ái Quốc có mặt tại Moskva để tham dự Đại hội lần thứ V của Quốc tế Cộng sản với tư cách là đại biểu chính thức - một sự kiện đánh dấu bước trưởng thành vượt bậc trên con đường hoạt động cách mạng quốc tế. Trong phiên họp ngày 1 tháng 7, Nguyễn Ái Quốc đã có bài phát biểu nổi tiếng, thẳng thắn chỉ trích thái độ thờ ơ của một số đảng cộng sản đối với vấn đề thuộc địa và khẳng định: Chủ nghĩa tư bản là một con đỉa có một cái vòi bám vào giai cấp vô sản ở chính quốc, và một cái vòi khác bám vào giai cấp vô sản ở các thuộc địa. Nếu muốn giết con vật ấy, người ta phải đồng thời cắt cả hai cái vòi. Bài phát biểu đó đã gây tiếng vang lớn, thể hiện tầm nhìn chiến lược và khẳng định vị thế của Người. Những ngày ở Moskva, Người không chỉ tham gia các phiên họp mà còn dành thời gian học tập, nghiên cứu tại Đại học Phương Đông, gặp gỡ các nhà lãnh đạo như Dimitrov, và đặc biệt là chuẩn bị cho nhiệm vụ lịch sử sắp tới: về Quảng Châu (Trung Quốc) để trực tiếp huấn luyện, đào tạo cán bộ và chuẩn bị cho sự ra đời của một tổ chức tiền thân của Đảng Cộng sản Việt Nam.",
     },
     { //
-      src: "https://i.ibb.co/XrFFBw4f/congly-vn-bachovoinuocnga10.jpg",
-      alt: "Năm 1959, trong chuyến thăm Liên Xô, Chủ tịch Hồ Chí Minh đã tới nhà hát Bolshoi ở Moscow, thể hiện sự trân trọng của Người đối với nền văn hóa, nghệ thuật Nga và tình hữu nghị bền chặt giữa Việt Nam và Liên Xô.",
+      src: "https://i.ibb.co/FLr7vZBJ/hcm6.jpg",
+      alt: "Trong những năm tháng hoạt động sôi nổi tại Liên Xô, đồng chí Nguyễn Ái Quốc (đứng ở vị trí thứ hai từ trái sang) đã chụp bức ảnh này cùng các chiến sĩ cách mạng đến từ châu Phi. Đây không chỉ là một kỷ niệm cá nhân thông thường, mà còn là một minh chứng sống động cho tầm nhìn quốc tế và mối liên hệ đoàn kết sâu sắc mà Người đã chủ động xây dựng.Tại các diễn đàn quốc tế và trong môi trường học tập ở Moskva, Nguyễn Ái Quốc không chỉ đơn thuần là một học viên.Người đã trở thành một cầu nối, một người đồng chí nhiệt thành, tích cực trao đổi, chia sẻ kinh nghiệm đấu tranh chống chủ nghĩa thực dân với những người yêu nước từ khắp các dân tộc bị áp bức.Bức ảnh này, với những gương mặt đầy quyết tâm đến từ các vùng đất xa xôi, là biểu tượng cho sự đoàn kết đó.Nó cho thấy, ngay từ rất sớm, tư tưởng của Người đã vượt ra khỏi biên giới dân tộc, xác định rằng con đường giải phóng của Việt Nam phải gắn liền và nhận được sự ủng hộ từ phong trào cách mạng chung của nhân dân các nước thuộc địa trên toàn thế giới.",
+    },
+    { //
+      src: "https://i.ibb.co/xcKsFqT/hcm7.jpg",
+      alt: "Khoảng năm 1928, tại vùng Đông Bắc Xiêm (nay là Thái Lan), một nhà cách mạng Việt Nam được bà con nơi đây yêu mến gọi bằng cái tên thân thương: Thầu Chín (Ông Chín). Đó chính là lãnh tụ Nguyễn Ái Quốc trong một giai đoạn hoạt động bí mật và đầy hiệu quả. Trong bức ảnh này, Thầu Chín (ngồi hàng đầu, thứ hai từ phải sang) hiện lên giản dị, gần gũi giữa các đồng chí và có thể là những người dân địa phương. Giai đoạn ở Xiêm (1928-1929) là một chương đặc biệt trong hành trình cách mạng của Người. Không chỉ đơn thuần là nơi trú ẩn, đây là một căn cứ địa được Người chủ động xây dựng. Với vỏ bọc là một thầy giáo, một thầy lang, Thầu Chín đã sống và hòa mình vào cộng đồng Việt kiều và cả người dân Thái-Lào. Người dạy chữ quốc ngữ, chữa bệnh bằng thuốc nam, đồng thời âm thầm dịch các tác phẩm lý luận cách mạng, viết báo và tổ chức những lớp huấn luyện chính trị ngắn ngày ngay trong những căn nhà sàn đơn sơ. Cách tiếp cận vừa đánh trống, vừa ăn cướp tinh tế này đã giúp Người vừa xây dựng được cơ sở quần chúng vững chắc, vừa đào tạo được một lớp cán bộ nòng cốt, tạo ra một mạng lưới liên lạc an toàn nối giữa hải ngoại và trong nước. Những công việc tưởng chừng nhỏ bé ấy chính là những viên gạch nền móng vô cùng quan trọng, góp phần trực tiếp vào việc chuẩn bị về tổ chức và nhân sự cho sự ra đời của Đảng Cộng sản Việt Nam vào tháng 2 năm 1930."
+    },
+    { //
+      src: "https://i.ibb.co/0yyQ9gx6/hcm8.jpg",
+      alt: "Nhà tù Victoria (Victoria Gaol) tại Hồng Kông là nơi đã giam cầm nhà cách mạng Nguyễn Ái Quốc trong một thử thách cực kỳ nguy hiểm và cam go. Dưới cái tên giả Tống Văn Sơ, Người bị chính quyền thuộc địa Anh bắt giam từ ngày 6 tháng 6 năm 1931. Trong gần 20 tháng bị cầm tù (cho đến ngày 22 tháng 1 năm 1933), Người không chỉ phải đối mặt với điều kiện sống khắc nghiệt, bệnh tật mà còn đứng trước nguy cơ bị dẫn độ về Đông Dương, nơi bản án tử hình chắc chắn đang chờ đợi. Tuy nhiên, bằng trí tuệ, bản lĩnh phi thường và đặc biệt là nhờ sự giúp đỡ tận tình của luật sư tiến bộ người Anh Francis Henry Loseby, Người đã biến phiên tòa thành nơi tố cáo tội ác thực dân và giành chiến thắng pháp lý ngoạn mục. Việc được trả tự do không chỉ là một kỳ tích cá nhân mà còn là một thắng lợi có ý nghĩa lịch sử to lớn, bảo toàn được lãnh tụ tương lai của cách mạng Việt Nam và trở thành một biểu tượng sáng ngời về ý chí kiên cường, bất khuất.",
     }
+
 
     // ========================================================================
   ];
@@ -73,8 +72,8 @@ Kết quả, Việt Nam nhận được sự giúp đỡ to lớn về chính tr
         <div className="flex gap-2 bg-[rgba(139,26,26,0.9)] p-1 rounded-full border-2 border-[#FFD700]/40 shadow-[0_0_20px_rgba(255,215,0,0.2)] backdrop-blur-md">
           <button
             className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${mode === "dome"
-                ? "bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-[#8B1A1A] shadow-[0_4px_12px_rgba(255,215,0,0.5)]"
-                : "bg-transparent text-[#FFD700] hover:bg-[rgba(255,215,0,0.1)]"
+              ? "bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-[#8B1A1A] shadow-[0_4px_12px_rgba(255,215,0,0.5)]"
+              : "bg-transparent text-[#FFD700] hover:bg-[rgba(255,215,0,0.1)]"
               }`}
             onClick={() => setMode("dome")}
           >
@@ -83,8 +82,8 @@ Kết quả, Việt Nam nhận được sự giúp đỡ to lớn về chính tr
           </button>
           <button
             className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${mode === "circular"
-                ? "bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-[#8B1A1A] shadow-[0_4px_12px_rgba(255,215,0,0.5)]"
-                : "bg-transparent text-[#FFD700] hover:bg-[rgba(255,215,0,0.1)]"
+              ? "bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-[#8B1A1A] shadow-[0_4px_12px_rgba(255,215,0,0.5)]"
+              : "bg-transparent text-[#FFD700] hover:bg-[rgba(255,215,0,0.1)]"
               }`}
             onClick={() => setMode("circular")}
           >

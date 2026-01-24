@@ -63,21 +63,21 @@ const HCMStrategyGame: React.FC = () => {
     // Cho phép sai 1-2 quốc gia vẫn có thể thắng
     // Phải hoàn thành ít nhất 8/10 điểm dừng (cho phép sai tối đa 2 quốc gia)
     const minLocationsCompleted = gameState.completedLocations.length >= locations.length - 2;
-    
+
     // Phải đạt mức kiến thức và kinh nghiệm cao (giảm nhẹ để cho phép sai 1-2 quốc gia)
     const highKnowledge = gameState.resources.knowledge >= 75; // Giảm từ 85 xuống 75
     const highExperience = gameState.resources.experience >= 70; // Giảm từ 80 xuống 70
-    
+
     // Phải còn sức khỏe và tiền bạc đủ
     const hasHealth = gameState.resources.health >= 15; // Giảm từ 20 xuống 15
     const hasMoney = gameState.resources.money >= 20; // Giảm từ 30 xuống 20
-    
+
     // Phải ở điểm dừng cuối cùng
     const atLastLocation = gameState.currentLocationIndex >= locations.length - 1;
-    
+
     // Không được sai quá 2 quốc gia
     const notTooManyFailures = gameState.failedLocations.length <= 2;
-    
+
     return (
       minLocationsCompleted &&
       highKnowledge &&
@@ -187,7 +187,7 @@ const HCMStrategyGame: React.FC = () => {
           const newFailedLocations = [...prev.failedLocations];
           if (!newFailedLocations.includes(location.id)) {
             newFailedLocations.push(location.id);
-            
+
             // Apply penalty for failing a location (không đủ số lượng quyết định)
             const penalty: ResourceChange = {
               knowledge: -10, // Trừ 10% kiến thức
@@ -195,9 +195,9 @@ const HCMStrategyGame: React.FC = () => {
               money: -20, // Trừ 20₫
               health: -5, // Trừ 5% sức khỏe
             };
-            
+
             const penalizedResources = applyResourceChange(prev.resources, penalty);
-            
+
             // Check if too many failures (3+ locations)
             if (newFailedLocations.length >= 3) {
               return {
@@ -207,7 +207,7 @@ const HCMStrategyGame: React.FC = () => {
                 gamePhase: 'game-over', // Game over if 3+ failures
               };
             }
-            
+
             return {
               ...prev,
               resources: penalizedResources,
@@ -224,11 +224,11 @@ const HCMStrategyGame: React.FC = () => {
       setGameState((prev) => {
         const newCompletedLocations = [...prev.completedLocations];
         const newFailedLocations = [...prev.failedLocations];
-        
+
         if (!newCompletedLocations.includes(location.id)) {
           newCompletedLocations.push(location.id);
         }
-        
+
         // Remove from failed if was there
         const failedIndex = newFailedLocations.indexOf(location.id);
         if (failedIndex > -1) {
@@ -292,7 +292,7 @@ const HCMStrategyGame: React.FC = () => {
         const missingPrerequisites = selectedDecision.requiredDecisions.filter(
           (reqId) => !currentSelected.includes(reqId)
         );
-        
+
         if (missingPrerequisites.length > 0) {
           // Trừ điểm vì chọn sai thứ tự, nhưng vẫn cho phép chọn
           penalty = {
@@ -301,7 +301,7 @@ const HCMStrategyGame: React.FC = () => {
             money: -15, // Trừ 15₫ vì lãng phí thời gian
             health: -3, // Trừ 3% sức khỏe
           };
-          
+
           penaltyMessage = `⚠️ Bạn đã chọn "${selectedDecision.title}" trước khi hoàn thành các quyết định cần thiết! Việc không tuân thủ thứ tự lịch sử đã làm bạn mất thời gian và kiến thức.`;
           penaltyApplied = true;
         }
@@ -315,14 +315,14 @@ const HCMStrategyGame: React.FC = () => {
         // Trừ điểm nhẹ hơn khi thiếu kiến thức/kinh nghiệm
         const knowledgePenalty = selectedDecision.minKnowledge && gameState.resources.knowledge < selectedDecision.minKnowledge ? -3 : 0;
         const experiencePenalty = selectedDecision.minExperience && gameState.resources.experience < selectedDecision.minExperience ? -2 : 0;
-        
+
         penalty = {
           ...penalty,
           knowledge: (penalty.knowledge || 0) + knowledgePenalty,
           experience: (penalty.experience || 0) + experiencePenalty,
           money: (penalty.money || 0) - 5,
         };
-        
+
         if (!penaltyMessage) {
           penaltyMessage = `⚠️ Bạn chưa đủ kiến thức/kinh nghiệm để thực hiện "${selectedDecision.title}" một cách hiệu quả. Hãy tích lũy thêm trước khi quyết định!`;
         }
@@ -332,7 +332,7 @@ const HCMStrategyGame: React.FC = () => {
       // Áp dụng hình phạt nếu có
       if (penaltyApplied) {
         const penalizedResources = applyResourceChange(gameState.resources, penalty);
-        
+
         // Hiển thị cảnh báo
         setWrongOrderAttempts({
           show: true,
@@ -358,10 +358,10 @@ const HCMStrategyGame: React.FC = () => {
       }
 
       const resourcesBefore = { ...gameState.resources };
-      
+
       // Apply cost first (subtract resources)
       let newResources = applyResourceChange(gameState.resources, selectedDecision.cost);
-      
+
       // Then apply reward (add resources)
       newResources = applyResourceChange(newResources, selectedDecision.reward);
 
@@ -376,7 +376,7 @@ const HCMStrategyGame: React.FC = () => {
 
       // Update year based on duration
       const newYear = Math.min(END_YEAR, gameState.currentYear + selectedDecision.duration);
-      
+
       // Also update time resource (duration consumes time)
       if (selectedDecision.duration) {
         newResources.time = Math.max(0, newResources.time - selectedDecision.duration);
@@ -481,10 +481,10 @@ const HCMStrategyGame: React.FC = () => {
   const moveToNextLocation = useCallback(() => {
     const currentLoc = locations[gameState.currentLocationIndex];
     const selectedDecisions = gameState.selectedDecisionsAtLocation[currentLoc.id] || [];
-    
+
     // Chỉ kiểm tra số lượng quyết định tối thiểu (không bắt buộc thứ tự)
     const locationFailed = checkLocationFailed(currentLoc, selectedDecisions);
-    
+
     if (locationFailed && !gameState.failedLocations.includes(currentLoc.id)) {
       // Apply penalty for moving without enough decisions
       const penalty: ResourceChange = {
@@ -493,11 +493,11 @@ const HCMStrategyGame: React.FC = () => {
         money: -20,
         health: -5,
       };
-      
+
       setGameState((prev) => {
         const newFailedLocations = [...prev.failedLocations, currentLoc.id];
         const penalizedResources = applyResourceChange(prev.resources, penalty);
-        
+
         // Check if too many failures (3+ locations)
         if (newFailedLocations.length >= 3) {
           return {
@@ -507,7 +507,7 @@ const HCMStrategyGame: React.FC = () => {
             gamePhase: 'game-over',
           };
         }
-        
+
         return {
           ...prev,
           resources: penalizedResources,
@@ -581,17 +581,17 @@ const HCMStrategyGame: React.FC = () => {
   // Intro screen
   if (gameState.gamePhase === 'intro') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 via-yellow-50 to-white py-10 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#8b1a1a] via-[#ac0705] to-[#d32f2f] py-10 px-4">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-yellow-400"
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-[#ffd700]"
           >
-            <div className="bg-gradient-to-r from-red-600 to-yellow-600 p-8 text-white text-center">
+            <div className="bg-gradient-to-r from-[#ac0705] to-[#ffd700] p-8 text-white text-center">
               <div className="text-6xl mb-4">🗺️</div>
               <h1 className="text-4xl font-bold mb-2">Hành Trình Bác Hồ</h1>
-              <p className="text-xl opacity-90">Mini Game Chiến Lược</p>
+              <p className="text-xl opacity-90">Game Chiến Lược</p>
             </div>
 
             <div className="p-8 space-y-6">
@@ -628,10 +628,10 @@ const HCMStrategyGame: React.FC = () => {
 
               <button
                 onClick={startGame}
-                className="w-full py-4 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-xl font-bold text-xl hover:shadow-xl transition-all flex items-center justify-center gap-3"
+                className="w-full py-4 bg-gradient-to-r from-[#ac0705] to-[#ffd700] text-white rounded-xl font-bold text-xl hover:shadow-xl transition-all flex items-center justify-center gap-3"
               >
                 <Play className="w-6 h-6" />
-                Bắt đầu chơi
+                Khởi hành
               </button>
             </div>
           </motion.div>
@@ -646,14 +646,14 @@ const HCMStrategyGame: React.FC = () => {
       <VictoryScreen
         gameState={gameState}
         onRestart={resetGame}
-        onHome={() => {}}
+        onHome={() => { }}
       />
     );
   }
 
   // Main game screen
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-yellow-50 to-white py-6 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#8b1a1a] via-[#ac0705] to-[#d32f2f] py-6 px-4">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -885,7 +885,7 @@ const HCMStrategyGame: React.FC = () => {
                     </div>
                   );
                 })()}
-                
+
                 {/* Warning about failed locations */}
                 {gameState.failedLocations.length > 0 && (
                   <div className="bg-red-50 border-2 border-red-400 rounded-xl p-4">
@@ -910,7 +910,7 @@ const HCMStrategyGame: React.FC = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setShowDecisionModal(true)}
-                  className="w-full py-4 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
+                  className="w-full py-4 bg-gradient-to-r from-[#ac0705] to-[#ffd700] text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
                 >
                   <MapPin className="w-5 h-5" />
                   Chọn quyết định tại {currentLocation.nameVi}
@@ -982,9 +982,8 @@ const HCMStrategyGame: React.FC = () => {
                         💰 Tiền bạc
                       </span>
                       <span
-                        className={`font-bold text-lg ${
-                          decisionFeedback.changes.money > 0 ? 'text-green-600' : 'text-red-600'
-                        }`}
+                        className={`font-bold text-lg ${decisionFeedback.changes.money > 0 ? 'text-green-600' : 'text-red-600'
+                          }`}
                       >
                         {decisionFeedback.changes.money > 0 ? '+' : ''}
                         {Math.round(decisionFeedback.changes.money)}₫
@@ -1002,9 +1001,8 @@ const HCMStrategyGame: React.FC = () => {
                         ❤️ Sức khỏe
                       </span>
                       <span
-                        className={`font-bold text-lg ${
-                          decisionFeedback.changes.health > 0 ? 'text-green-600' : 'text-red-600'
-                        }`}
+                        className={`font-bold text-lg ${decisionFeedback.changes.health > 0 ? 'text-green-600' : 'text-red-600'
+                          }`}
                       >
                         {decisionFeedback.changes.health > 0 ? '+' : ''}
                         {Math.round(decisionFeedback.changes.health)}%
@@ -1022,9 +1020,8 @@ const HCMStrategyGame: React.FC = () => {
                         📚 Kiến thức
                       </span>
                       <span
-                        className={`font-bold text-lg ${
-                          decisionFeedback.changes.knowledge > 0 ? 'text-green-600' : 'text-red-600'
-                        }`}
+                        className={`font-bold text-lg ${decisionFeedback.changes.knowledge > 0 ? 'text-green-600' : 'text-red-600'
+                          }`}
                       >
                         {decisionFeedback.changes.knowledge > 0 ? '+' : ''}
                         {Math.round(decisionFeedback.changes.knowledge)}%
@@ -1042,9 +1039,8 @@ const HCMStrategyGame: React.FC = () => {
                         ⭐ Kinh nghiệm
                       </span>
                       <span
-                        className={`font-bold text-lg ${
-                          decisionFeedback.changes.experience > 0 ? 'text-green-600' : 'text-red-600'
-                        }`}
+                        className={`font-bold text-lg ${decisionFeedback.changes.experience > 0 ? 'text-green-600' : 'text-red-600'
+                          }`}
                       >
                         {decisionFeedback.changes.experience > 0 ? '+' : ''}
                         {Math.round(decisionFeedback.changes.experience)}%
@@ -1062,9 +1058,8 @@ const HCMStrategyGame: React.FC = () => {
                         ⏰ Thời gian
                       </span>
                       <span
-                        className={`font-bold text-lg ${
-                          decisionFeedback.changes.time > 0 ? 'text-green-600' : 'text-red-600'
-                        }`}
+                        className={`font-bold text-lg ${decisionFeedback.changes.time > 0 ? 'text-green-600' : 'text-red-600'
+                          }`}
                       >
                         {decisionFeedback.changes.time > 0 ? '+' : ''}
                         {decisionFeedback.changes.time.toFixed(1)} năm
@@ -1109,7 +1104,7 @@ const HCMStrategyGame: React.FC = () => {
                 <div className="flex-1">
                   <h4 className="font-bold text-red-800 mb-2">Chọn sai thứ tự!</h4>
                   <p className="text-sm text-red-700 mb-3">{wrongOrderAttempts.message}</p>
-                  
+
                   {/* Hiển thị hình phạt */}
                   <div className="bg-white rounded-lg p-3 border border-red-200">
                     <p className="text-xs font-semibold text-red-800 mb-2">📉 Hình phạt:</p>

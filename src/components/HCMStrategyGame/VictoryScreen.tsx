@@ -45,18 +45,16 @@ const VictoryScreen: React.FC<VictoryScreenProps> = ({ gameState, onRestart, onH
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className={`rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden ${
-          isVictory
-            ? 'bg-gradient-to-br from-yellow-50 to-red-50 border-4 border-yellow-400'
-            : 'bg-gradient-to-br from-red-50 to-gray-50 border-4 border-red-400'
-        }`}
+        className={`rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden ${isVictory
+            ? 'bg-gradient-to-br from-[#fafafa] to-[#ffd700]/20 border-4 border-[#ffd700]'
+            : 'bg-gradient-to-br from-[#fafafa] to-red-100 border-4 border-[#ac0705]'
+          }`}
       >
         <div
-          className={`p-8 text-center ${
-            isVictory
-              ? 'bg-gradient-to-r from-yellow-600 to-red-600'
-              : 'bg-gradient-to-r from-red-600 to-gray-600'
-          } text-white`}
+          className={`p-8 text-center ${isVictory
+              ? 'bg-gradient-to-r from-[#ffd700] to-[#ac0705]'
+              : 'bg-gradient-to-r from-[#ac0705] to-[#8b1a1a]'
+            } text-white`}
         >
           {isVictory ? (
             <>
@@ -68,31 +66,31 @@ const VictoryScreen: React.FC<VictoryScreenProps> = ({ gameState, onRestart, onH
               >
                 🏆
               </motion.div>
-              <h1 className="text-4xl font-bold mb-2">Chiến thắng!</h1>
+              <h1 className="text-4xl font-bold mb-2">Hoàn Thành Hành Trình!</h1>
               <p className="text-xl opacity-90">
-                Bạn đã hoàn thành hành trình 30 năm tìm đường cứu nước
+                Bạn đã thành công trong hành trình 30 năm tìm đường cứu nước
               </p>
             </>
-            ) : (
-              <>
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', delay: 0.2 }}
-                  className="text-8xl mb-4"
-                >
-                  😢
-                </motion.div>
-                <h1 className="text-4xl font-bold mb-2">Game Over</h1>
-                <p className="text-xl opacity-90 mb-3">
-                  Hành trình đã kết thúc. Hãy thử lại để hoàn thành sứ mệnh!
-                </p>
-                <div className="bg-red-100 border-2 border-red-300 rounded-lg p-4 mt-4">
-                  <p className="text-sm font-semibold text-red-800 mb-1">Lý do thất bại:</p>
-                  <p className="text-base text-red-700">{getGameOverReason()}</p>
-                </div>
-              </>
-            )}
+          ) : (
+            <>
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', delay: 0.2 }}
+                className="text-8xl mb-4"
+              >
+                😢
+              </motion.div>
+              <h1 className="text-4xl font-bold mb-2">Game Over</h1>
+              <p className="text-xl opacity-90 mb-3">
+                Hành trình đã kết thúc. Hãy thử lại để hoàn thành sứ mệnh!
+              </p>
+              <div className="bg-red-100 border-2 border-red-300 rounded-lg p-4 mt-4">
+                <p className="text-sm font-semibold text-red-800 mb-1">Lý do thất bại:</p>
+                <p className="text-base text-red-700">{getGameOverReason()}</p>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="p-8 space-y-6">
@@ -155,10 +153,10 @@ const VictoryScreen: React.FC<VictoryScreenProps> = ({ gameState, onRestart, onH
           <div className="flex gap-4">
             <button
               onClick={onRestart}
-              className="flex-1 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-bold hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              className="flex-1 py-4 bg-gradient-to-r from-[#ac0705] to-[#ffd700] text-white rounded-xl font-bold hover:shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <RotateCcw className="w-5 h-5" />
-              Chơi lại
+              Hành trình mới
             </button>
             <button
               onClick={() => navigate('/')}

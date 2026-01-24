@@ -55,7 +55,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, onContinue }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4"
       >
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
@@ -82,25 +82,23 @@ const EventModal: React.FC<EventModalProps> = ({ event, onContinue }) => {
 
             {effectText && (
               <div
-                className={`p-4 rounded-lg ${
-                  event.type === 'positive'
+                className={`p-4 rounded-lg ${event.type === 'positive'
                     ? 'bg-green-50 border-2 border-green-300'
                     : event.type === 'negative'
-                    ? 'bg-red-50 border-2 border-red-300'
-                    : 'bg-blue-50 border-2 border-blue-300'
-                }`}
+                      ? 'bg-red-50 border-2 border-red-300'
+                      : 'bg-blue-50 border-2 border-blue-300'
+                  }`}
               >
                 <p className="text-sm font-semibold mb-1">
                   {event.type === 'positive' ? '✅ Ảnh hưởng tích cực:' : '⚠️ Ảnh hưởng:'}
                 </p>
                 <p
-                  className={`text-base font-bold ${
-                    event.type === 'positive'
+                  className={`text-base font-bold ${event.type === 'positive'
                       ? 'text-green-700'
                       : event.type === 'negative'
-                      ? 'text-red-700'
-                      : 'text-blue-700'
-                  }`}
+                        ? 'text-red-700'
+                        : 'text-blue-700'
+                    }`}
                 >
                   {effectText}
                 </p>
