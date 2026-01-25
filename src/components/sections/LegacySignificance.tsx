@@ -16,46 +16,46 @@ const LegacySignificance: React.FC = () => {
     {
       id: 1,
       icon: "✅",
-      title: "GIẢI QUYẾT TRIỆT ĐỂ CUỘC KHỦNG HOẢNG ĐƯỜNG LỐI KÉO DÀI",
+      title: "GIẢI QUYẾT KHỦNG HOẢNG ĐƯỜNG LỐI",
       points: [
-        "Tìm ra và khẳng định con đường cứu nước duy nhất đúng đắn: Độc lập dân tộc gắn liền với Chủ nghĩa Xã hội",
-        'Kết thúc thời kỳ dài "trăm năm đen tối", bế tắc về lý luận và phương hướng đấu tranh',
+        "Tìm ra con đường cứu nước: Độc lập dân tộc gắn liền với Chủ nghĩa Xã hội",
+        "Kết thúc thời kỳ bế tắc về lý luận và phương hướng đấu tranh",
       ],
     },
     {
       id: 2,
       icon: "✅",
-      title: "SÁNG LẬP ĐẢNG CỘNG SẢN VIỆT NAM - NHÂN TỐ THEN CHỐT",
+      title: "SÁNG LẬP ĐẢNG CỘNG SẢN VIỆT NAM",
       points: [
-        'Tạo ra đội tiên phong chính trị, "là đạo đức, là văn minh", có đủ năng lực lãnh đạo toàn bộ sự nghiệp cách mạng',
-        "Đảng ra đời là bước ngoặt vĩ đại, đáp ứng đòi hỏi khách quan của lịch sử, trở thành người tổ chức và lãnh đạo mọi thắng lợi",
+        "Tạo đội tiên phong chính trị có đủ năng lực lãnh đạo",
+        "Bước ngoặt vĩ đại, nhân tố then chốt cho mọi thắng lợi",
       ],
     },
     {
       id: 3,
       icon: "✅",
-      title: "ĐỂ LẠI DI SẢN TƯ TƯỞNG HỒ CHÍ MINH - NỀN TẢNG, KIM CHỈ NAM",
+      title: "TƯ TƯỞNG HỒ CHÍ MINH",
       points: [
-        "Là sự vận dụng và phát triển sáng tạo Chủ nghĩa Mác-Lênin vào điều kiện cụ thể của Việt Nam",
-        "Trở thành tài sản tinh thần vô giá, hệ tư tưởng chính thức của Đảng, soi đường cho sự nghiệp cách mạng",
+        "Vận dụng sáng tạo Mác-Lênin vào Việt Nam",
+        "Tài sản tinh thần vô giá, kim chỉ nam cho cách mạng",
       ],
     },
     {
       id: 4,
       icon: "✅",
-      title: "MỞ RA THỜI ĐẠI HỒ CHÍ MINH - THỜI ĐẠI RỰC RỠ NHẤT",
+      title: "MỞ RA THỜI ĐẠI HỒ CHÍ MINH",
       points: [
-        "Đánh dấu bước chuyển từ thời đại phong kiến, thuộc địa sang thời đại mới của độc lập, tự do, thống nhất",
-        "Dẫn dắt dân tộc tới những thắng lợi vĩ đại: Cách mạng Tháng Tám 1945, kháng chiến chống Pháp, chống Mỹ, thống nhất đất nước",
+        "Chuyển từ thời đại thuộc địa sang độc lập, tự do",
+        "Dẫn dắt đến Cách mạng Tháng Tám, thống nhất đất nước",
       ],
     },
     {
       id: 5,
       icon: "✅",
-      title: "KẾT NỐI CÁCH MẠNG VIỆT NAM VỚI PHONG TRÀO CÁCH MẠNG THẾ GIỚI",
+      title: "KẾT NỐI VỚI CÁCH MẠNG THẾ GIỚI",
       points: [
-        "Đặt cách mạng giải phóng dân tộc Việt Nam vào dòng chảy chính của cách mạng vô sản thế giới",
-        "Góp phần vào cuộc đấu tranh chung của các dân tộc bị áp bức trên toàn thế giới",
+        "Đặt cách mạng Việt Nam vào dòng chảy cách mạng vô sản thế giới",
+        "Góp phần đấu tranh của các dân tộc bị áp bức",
       ],
     },
   ];
@@ -68,9 +68,9 @@ const LegacySignificance: React.FC = () => {
     >
       {/* Majestic golden/ceremonial background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1a1507] via-[#2a2010] to-[#1a1507]" />
-      
+
       {/* Golden radiance from center */}
-      <div 
+      <div
         className="absolute inset-0"
         style={{
           background: `
@@ -80,28 +80,28 @@ const LegacySignificance: React.FC = () => {
           `
         }}
       />
-      
+
       {/* Trophy/achievement watermarks */}
       <div className="absolute top-20 left-20 text-[120px] text-yellow-500/5 select-none pointer-events-none">🏆</div>
       <div className="absolute bottom-20 right-20 text-[100px] text-yellow-500/5 select-none pointer-events-none">⭐</div>
-      
+
       {/* Central star burst */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         {[0, 45, 90, 135].map((rotation) => (
-          <div 
+          <div
             key={rotation}
             className="absolute top-1/2 left-1/2 w-[500px] h-px bg-gradient-to-r from-transparent via-yellow-500/10 to-transparent"
             style={{ transform: `translate(-50%, -50%) rotate(${rotation}deg)` }}
           />
         ))}
       </div>
-      
+
       {/* Laurel wreath suggestion */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 text-[60px] text-yellow-500/5 select-none pointer-events-none">🏅</div>
-      
+
       {/* Elegant border */}
       <div className="absolute inset-8 border border-yellow-600/20 pointer-events-none" />
-      
+
       {/* Border lines */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600" />
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-800 via-red-600 to-red-800" />
@@ -138,7 +138,7 @@ const LegacySignificance: React.FC = () => {
             className="text-xl max-w-3xl mx-auto leading-relaxed"
             style={{ color: "var(--ancient-stone)" }}
           >
-            Hành trình 30 năm tìm đường cứu nước của Hồ Chí Minh không chỉ thành công 
+            Hành trình 30 năm tìm đường cứu nước của Hồ Chí Minh không chỉ thành công
             trong việc <strong>giải phóng dân tộc</strong> mà còn để lại một{" "}
             <strong style={{ color: "var(--vietnam-red)" }}>
               di sản tư tưởng và thực tiễn vô giá

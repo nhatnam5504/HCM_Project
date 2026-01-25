@@ -120,26 +120,26 @@ export const gameStages: GameStage[] = [
     symbolDescription: 'Biểu tượng của việc học từ thực tế và tư duy độc lập',
     bgImage: '',
     bgGradient: 'from-blue-900 via-red-800 to-blue-900',
-    
+
     // STORYLINE
     storyIntro: `Năm 1911, từ bến cảng Nhà Rồng, một chàng thanh niên 21 tuổi tên Nguyễn Tất Thành đã bước lên con tàu Amiral Latouche Tréville, bắt đầu hành trình tìm đường cứu nước.
 
 Những năm 1912-1913, Người tới Hoa Kỳ - một xã hội phát triển nhanh nhưng đồng thời phân hóa mạnh. Trong đời sống lao động và tiếp xúc nhiều tầng lớp, Người quan sát những gì diễn ra sau vẻ ngoài hào nhoáng.
 
 Cuốn sổ tay ghi chép là cách Người lưu giữ nhận xét từ thực tiễn - không để kết luận vội vàng, mà để suy ngẫm và tìm lời giải.`,
-    
+
     storyConnection: '🚢 Đây là chặng khởi đầu của hành trình 30 năm tìm đường cứu nước.',
-    
+
     keyPoints: [
       'Quan sát từ thực tế: thấy, nghe, hỏi và ghi lại',
       'Không dừng ở bề ngoài: từ hiện tượng tìm đến bản chất',
       'Hình thành thói quen tư duy độc lập và phản biện'
     ],
-    
+
     storyConclusion: 'Quan sát không chỉ để biết, mà để hiểu. Từ những ghi chép thực tế, ta học cách nhìn sau bề ngoài và hình thành tư duy độc lập.',
-    
+
     practiceHint: 'Giữ thói quen ghi chép: mỗi tuần 1 trang về điều mình thấy và điều mình rút ra.',
-    
+
     scenarios: [
       // Scenario 1: Multiple choice - Quan sát thực tiễn như Bác
       {
@@ -162,25 +162,25 @@ Cuốn sổ tay ghi chép là cách Người lưu giữ nhận xét từ thực 
         intro: 'Trong thời gian ở Mỹ (1912-1913), Nguyễn Tất Thành đã ghi chép nhiều điều vào sổ tay. Hãy phân biệt đâu là "vẻ bề ngoài" và đâu là "bản chất" mà Người nhận ra.',
         question: 'Phân loại các quan sát của Bác:',
         categories: [
-          { 
-            id: 'phenomenon', 
-            name: '✨ Vẻ bề ngoài (Hiện tượng)', 
+          {
+            id: 'phenomenon',
+            name: '✨ Vẻ bề ngoài (Hiện tượng)',
             items: [
               'Tòa nhà chọc trời, đường phố sáng đèn suốt đêm',
               'Tuyên ngôn "tất cả mọi người sinh ra đều bình đẳng"',
               'Báo chí tự do, nhiều đảng phái chính trị',
               'Tượng Nữ Thần Tự Do - biểu tượng của nước Mỹ'
-            ] 
+            ]
           },
-          { 
-            id: 'essence', 
-            name: '💔 Bản chất (Thực tế)', 
+          {
+            id: 'essence',
+            name: '💔 Bản chất (Thực tế)',
             items: [
               'Người da đen bị phân biệt, không được vào nhiều nơi công cộng',
               'Công nhân làm việc 12-14 tiếng/ngày với lương rẻ mạt',
               'Ku Klux Klan tấn công, giết hại người da màu mà không bị trừng phạt',
               'Người nghèo, người nhập cư sống trong khu ổ chuột tồi tàn'
-            ] 
+            ]
           },
         ],
         message: '📚 Bác Hồ viết: "Họ tuyên bố bình đẳng nhưng người da đen vẫn bị treo cổ. Họ nói tự do nhưng công nhân vẫn bị bóc lột." Quan sát thực tiễn giúp thấy rõ bản chất!',
@@ -204,26 +204,26 @@ Cuốn sổ tay ghi chép là cách Người lưu giữ nhận xét từ thực 
     symbolDescription: 'Biểu tượng của kỷ luật, chuẩn bị và tôn trọng lao động',
     bgImage: '',
     bgGradient: 'from-red-900 via-gray-800 to-blue-900',
-    
+
     // STORYLINE - Kết nối từ Hoa Kỳ
     storyIntro: `Rời nước Mỹ với cuốn sổ tay đầy những ghi chép và suy tư, Nguyễn Tất Thành tiếp tục hành trình sang nước Anh.
 
 Tại Anh (1913-1917), Người làm nhiều công việc lao động và trải nghiệm cuộc sống của giai cấp công nhân. Từ việc cào tuyết, đốt lò, đến phụ bếp trong khách sạn - mỗi công việc đều đòi hỏi tác phong kỷ luật.
 
 Chiếc túi dụng cụ tuy nhỏ bé, nhưng phản ánh một thái độ: luôn chuẩn bị chu đáo, làm việc có trách nhiệm, và tự rèn mình trong những điều bình thường hằng ngày.`,
-    
+
     storyConnection: '📔 → 🧰 Từ việc QUAN SÁT ở Mỹ, giờ đây Người bắt đầu THỰC HÀNH - rèn luyện bản thân qua lao động.',
-    
+
     keyPoints: [
       'Lao động rèn luyện tác phong kỷ luật và tính tự giác',
       'Chuẩn bị chu đáo giúp chủ động trước khó khăn',
       'Tôn trọng công cụ lao động cũng là tôn trọng giá trị lao động'
     ],
-    
+
     storyConclusion: 'Kỷ luật không đến từ điều to tát, mà từ tác phong hằng ngày. Chuẩn bị chu đáo, làm việc ngăn nắp và đúng giờ giúp ta bền bỉ, tự tin và tôn trọng giá trị lao động.',
-    
+
     practiceHint: 'Trước mỗi buổi học/làm, dành 2 phút kiểm tra: "Đã đủ và gọn chưa?"',
-    
+
     scenarios: [
       // Scenario 1: Ordering - Một ngày làm việc của Bác ở Anh
       {
@@ -232,11 +232,11 @@ Chiếc túi dụng cụ tuy nhỏ bé, nhưng phản ánh một thái độ: lu
         intro: 'Tại London (1914-1917), Nguyễn Tất Thành làm phụ bếp tại khách sạn Carlton - một công việc vất vả nhưng Người vẫn tự học tiếng Anh mỗi ngày. Hãy sắp xếp lịch trình một ngày của Bác.',
         question: 'Sắp xếp các hoạt động theo thứ tự HỢP LÝ của một ngày:',
         orderItems: [
-          { id: 1, text: '🌅 Dậy sớm, chuẩn bị đồ dùng gọn gàng trước khi đi làm', correctOrder: 1 },
-          { id: 2, text: '👨‍🍳 Làm việc chăm chỉ, quan sát và học hỏi từ đầu bếp Escoffier', correctOrder: 2 },
-          { id: 3, text: '🧹 Dọn dẹp sạch sẽ vị trí làm việc trước khi về', correctOrder: 3 },
-          { id: 4, text: '📖 Tranh thủ thời gian rảnh đọc sách, học từ vựng tiếng Anh', correctOrder: 4 },
-          { id: 5, text: '✍️ Ghi chép những điều quan sát được trong ngày vào sổ tay', correctOrder: 5 },
+          { id: 1, text: '📖 Tranh thủ thời gian rảnh đọc sách, học từ vựng tiếng Anh', correctOrder: 4 },
+          { id: 2, text: '🌅 Dậy sớm, chuẩn bị đồ dùng gọn gàng trước khi đi làm', correctOrder: 1 },
+          { id: 3, text: '✍️ Ghi chép những điều quan sát được trong ngày vào sổ tay', correctOrder: 5 },
+          { id: 4, text: '🧹 Dọn dẹp sạch sẽ vị trí làm việc trước khi về', correctOrder: 3 },
+          { id: 5, text: '�‍🍳 Làm việc chăm chỉ, quan sát và học hỏi từ đầu bếp Escoffier', correctOrder: 2 },
         ],
         message: '⚒️ Đầu bếp Escoffier rất quý Bác vì tính cần cù, sạch sẽ. Ông muốn dạy Bác nấu ăn, nhưng Bác từ chối vì có "mục đích khác lớn hơn". Kỷ luật + Mục tiêu rõ ràng!',
       },
@@ -273,26 +273,26 @@ Chiếc túi dụng cụ tuy nhỏ bé, nhưng phản ánh một thái độ: lu
     symbolDescription: 'Biểu tượng của trí tuệ, báo chí và đấu tranh bằng ngôn từ',
     bgImage: '',
     bgGradient: 'from-blue-900 via-white/20 to-red-900',
-    
+
     // STORYLINE - Kết nối từ Anh
     storyIntro: `Mang theo kỷ luật lao động và khả năng ngôn ngữ được rèn giũa ở Anh, Nguyễn Tất Thành trở lại Pháp năm 1917 - ngay giữa cao trào đấu tranh chính trị sôi sục.
 
 Tại Pháp (1917-1923), Người lấy tên Nguyễn Ái Quốc và bắt đầu hoạt động trong môi trường giao thoa nhiều luồng tư tưởng. Giữa tranh luận và biến động thời cuộc, Người kiên trì sử dụng ngòi bút để lên tiếng cho quyền lợi của nhân dân Việt Nam.
 
 Cây bút không chỉ là công cụ ghi chép, mà là vũ khí của trí tuệ, lòng can đảm và sự chuẩn bị kỹ lưỡng trong đấu tranh bằng ngôn từ.`,
-    
+
     storyConnection: '🧰 → 🖋️ Từ người LAO ĐỘNG ở Anh, giờ đây Người trở thành người CHIẾN SĨ bằng ngòi bút.',
-    
+
     keyPoints: [
       'Báo chí và ngôn từ là con đường đấu tranh có sức lan tỏa mạnh',
       'Đấu tranh cần lý lẽ, chứng cứ, mục tiêu rõ ràng',
       'Từ nhận thức, Người tiến tới hành động tổ chức và đường lối'
     ],
-    
+
     storyConclusion: 'Ngôn từ có sức mạnh khi phục vụ lẽ phải. Đấu tranh cần trí tuệ, chứng cứ và mục tiêu rõ ràng - để tiếng nói của người yếu thế được lắng nghe.',
-    
+
     practiceHint: 'Khi viết một đoạn ý kiến, hãy tự hỏi: viết để làm gì, cho ai, thông điệp chính là gì?',
-    
+
     scenarios: [
       // Scenario 1: Multiple choice - Bản yêu sách 8 điểm
       {
@@ -341,26 +341,26 @@ Cây bút không chỉ là công cụ ghi chép, mà là vũ khí của trí tu�
     symbolDescription: 'Biểu tượng của học tập hệ thống và vận dụng sáng tạo',
     bgImage: '',
     bgGradient: 'from-red-900 via-red-800 to-yellow-900',
-    
+
     // STORYLINE - Kết nối từ Pháp
     storyIntro: `Sau khi tham gia thành lập Đảng Cộng sản Pháp (1920) và hoạt động báo chí sôi nổi, Nguyễn Ái Quốc được cử sang Liên Xô - quê hương của Cách mạng Tháng Mười.
 
 Tại Liên Xô (1923-1924), Người tiếp cận hệ thống lý luận cách mạng được trình bày có cấu trúc và tính khoa học. Việc học tập không dừng ở "biết", mà hướng tới "hiểu" và "vận dụng".
 
 Từ kho lý luận, Người tìm cách kết nối nguyên lý chung với hoàn cảnh cụ thể của Việt Nam: một đất nước thuộc địa cần độc lập, cần tổ chức, cần lực lượng và cần đường lối.`,
-    
+
     storyConnection: '🖋️ → 📕 Từ người CHIẾN SĨ bằng ngòi bút, giờ đây Người trở thành người HỌC TRÒ của lý luận cách mạng.',
-    
+
     keyPoints: [
       'Lý luận là đèn soi đường, nhưng phải gắn với thực tiễn',
       'Học tập cần hệ thống và kỷ luật, tránh học "chớp nhoáng"',
       'Vận dụng sáng tạo theo hoàn cảnh Việt Nam là điều quyết định'
     ],
-    
+
     storyConclusion: 'Học tập lý luận là để mở đường cho hành động. Chọn điều cốt lõi, hiểu cho đúng, và vận dụng sáng tạo - để lý luận trở thành sức mạnh thực tiễn.',
-    
+
     practiceHint: 'Khi học một khái niệm, hãy viết 1 câu: "Nó áp dụng vào việc gì trong học tập/đời sống của mình?"',
-    
+
     scenarios: [
       // Scenario 1: Balance - Cân bằng lý luận và thực tiễn
       {
@@ -379,59 +379,59 @@ Từ kho lý luận, Người tìm cách kết nối nguyên lý chung với ho�
           },
           weights: [
             // ĐÚNG - Nên chọn
-            { 
-              id: 'w1', 
-              text: 'Khảo sát thực tế đời sống nhân dân', 
-              icon: '🔍', 
+            {
+              id: 'w1',
+              text: 'Khảo sát thực tế đời sống nhân dân',
+              icon: '🔍',
               belongsTo: 'right',
               isCorrect: true,
               explanation: 'Bác luôn đi sâu vào quần chúng để hiểu thực tế.'
             },
-            { 
-              id: 'w2', 
-              text: 'Thí điểm mô hình nhỏ trước khi nhân rộng', 
-              icon: '🧪', 
+            {
+              id: 'w2',
+              text: 'Thí điểm mô hình nhỏ trước khi nhân rộng',
+              icon: '🧪',
               belongsTo: 'right',
               isCorrect: true,
               explanation: 'Làm thử trước, rút kinh nghiệm rồi mới triển khai rộng.'
             },
-            { 
-              id: 'w3', 
-              text: 'Lao động sản xuất cùng quần chúng', 
-              icon: '⚒️', 
+            {
+              id: 'w3',
+              text: 'Lao động sản xuất cùng quần chúng',
+              icon: '⚒️',
               belongsTo: 'right',
               isCorrect: true,
               explanation: 'Cán bộ phải gắn bó với nhân dân, không xa rời thực tế.'
             },
-            { 
-              id: 'w4', 
-              text: 'Điều chỉnh lý luận dựa trên kết quả thực tế', 
-              icon: '📝', 
+            {
+              id: 'w4',
+              text: 'Điều chỉnh lý luận dựa trên kết quả thực tế',
+              icon: '📝',
               belongsTo: 'right',
               isCorrect: true,
               explanation: 'Thực tiễn là thước đo chân lý, phải biết sửa đổi khi sai.'
             },
             // SAI - Bẫy, không nên chọn
-            { 
-              id: 'w5', 
-              text: 'Sao chép nguyên xi mô hình Liên Xô về Việt Nam', 
-              icon: '📋', 
+            {
+              id: 'w5',
+              text: 'Sao chép nguyên xi mô hình Liên Xô về Việt Nam',
+              icon: '📋',
               belongsTo: 'right',
               isCorrect: false,
               explanation: 'Sao chép máy móc không phù hợp với hoàn cảnh Việt Nam!'
             },
-            { 
-              id: 'w6', 
-              text: 'Chỉ cần học thuộc sách vở, không cần thực hành', 
-              icon: '📚', 
+            {
+              id: 'w6',
+              text: 'Chỉ cần học thuộc sách vở, không cần thực hành',
+              icon: '📚',
               belongsTo: 'right',
               isCorrect: false,
               explanation: 'Đây chính là "lý luận suông" mà Bác phê phán!'
             },
-            { 
-              id: 'w7', 
-              text: 'Áp đặt lý thuyết mà không cần kiểm chứng', 
-              icon: '⛔', 
+            {
+              id: 'w7',
+              text: 'Áp đặt lý thuyết mà không cần kiểm chứng',
+              icon: '⛔',
               belongsTo: 'right',
               isCorrect: false,
               explanation: 'Áp đặt cứng nhắc sẽ thất bại vì không phù hợp thực tế.'
@@ -476,26 +476,26 @@ Từ kho lý luận, Người tìm cách kết nối nguyên lý chung với ho�
     symbolDescription: 'Biểu tượng của tự rèn luyện và giữ vững bản lĩnh',
     bgImage: '',
     bgGradient: 'from-red-900 via-orange-800 to-red-900',
-    
+
     // STORYLINE - Kết nối từ Liên Xô
     storyIntro: `Rời Liên Xô với hành trang lý luận vững chắc, Nguyễn Ái Quốc bắt đầu hành trình trở về phương Đông. Con đường không hề dễ dàng - phải đi qua nhiều nước, đối mặt với muôn vàn khó khăn.
 
 Trên những chặng đường dài, không chỉ cần kiên trì mà còn cần tự rèn. Hình ảnh chiếc gương tay là biểu tượng của "tự soi, tự sửa": nhìn lại mình đã làm được gì, còn thiếu gì, và cần giữ vững điều gì để không lung lay trước khó khăn.
 
 Chặng này tập trung vào trải nghiệm phản tư - không "trả lời cho đúng", mà chọn những giá trị muốn giữ lấy cho mình.`,
-    
+
     storyConnection: '📕 → 🪞 Từ người HỌC TRÒ của lý luận, giờ đây Người phải TỰ RÈN MÌNH trên đường trường.',
-    
+
     keyPoints: [
       'Tự rèn luyện là nền tảng của bản lĩnh',
       'Biết tự nhìn lại giúp tiến bộ mỗi ngày',
       'Giữ vững giá trị cốt lõi giúp không lạc hướng'
     ],
-    
+
     storyConclusion: 'Chặng đường dài luôn có lúc mệt mỏi và hoang mang. Chiếc gương tay nhắc ta: biết tự soi, tự sửa và giữ vững giá trị cốt lõi. Tự rèn là nền tảng để làm việc lớn.',
-    
+
     practiceHint: 'Chọn 1 thói quen nhỏ và giữ liên tục 7 ngày (đúng giờ, ghi chép, tiết kiệm...).',
-    
+
     scenarios: [
       // Scenario 1: Multiple choice - Kiên trì trước khó khăn như Bác
       {
@@ -518,10 +518,10 @@ Chặng này tập trung vào trải nghiệm phản tư - không "trả lời c
         intro: 'Bác Hồ nổi tiếng với việc "tự soi, tự sửa" - một phương pháp mà Người thực hành suốt đời. Hãy sắp xếp quy trình này theo đúng logic.',
         question: 'Sắp xếp các bước "tự soi, tự sửa" theo thứ tự ĐÚNG:',
         orderItems: [
-          { id: 1, text: '🔍 TỰ SOI: Nhìn lại hành động của mình - làm được gì? còn thiếu gì?', correctOrder: 1 },
+          { id: 1, text: '⚡ HÀNH ĐỘNG: Thực hành thay đổi trong thực tế hàng ngày', correctOrder: 4 },
           { id: 2, text: '📝 NHẬN LỖI: Thành thật thừa nhận điểm yếu, không bao biện', correctOrder: 2 },
-          { id: 3, text: '🎯 ĐẶT MỤC TIÊU: Xác định cụ thể điều cần sửa đổi', correctOrder: 3 },
-          { id: 4, text: '⚡ HÀNH ĐỘNG: Thực hành thay đổi trong thực tế hàng ngày', correctOrder: 4 },
+          { id: 3, text: '🔍 TỰ SOI: Nhìn lại hành động của mình - làm được gì? còn thiếu gì?', correctOrder: 1 },
+          { id: 4, text: '🎯 ĐẶT MỤC TIÊU: Xác định cụ thể điều cần sửa đổi', correctOrder: 3 },
           { id: 5, text: '🔄 KIỂM TRA: Đánh giá kết quả, điều chỉnh nếu cần', correctOrder: 5 },
         ],
         message: '🌟 Bác Hồ dạy: "Phải tự phê bình và phê bình một cách thành khẩn." Tự rèn không phải tự hành xác, mà là PHƯƠNG PHÁP tiến bộ từng ngày!',
@@ -545,26 +545,26 @@ Chặng này tập trung vào trải nghiệm phản tư - không "trả lời c
     symbolDescription: 'Biểu tượng của sự giản dị, gắn bó nhân dân và tiết kiệm',
     bgImage: '',
     bgGradient: 'from-red-900 via-yellow-700 to-red-900',
-    
+
     // STORYLINE - Kết nối từ Thổ Nhĩ Kỳ
     storyIntro: `Sau 30 năm bôn ba tìm đường cứu nước, Nguyễn Ái Quốc trở về Tổ quốc vào năm 1941, mang theo hành trang quý giá: sổ tay quan sát, túi dụng cụ kỷ luật, cây bút đấu tranh, cẩm nang lý luận và tấm gương tự rèn.
 
 Gắn bó với nhân dân, Chủ tịch Hồ Chí Minh giữ nếp sống thanh bạch và giản dị. Những vật dụng như nón lá hay phong bao giấy không mang giá trị vật chất lớn, nhưng thể hiện phong cách: gần gũi, tiết kiệm, tôn trọng người lao động.
 
 Chặng cuối mời bạn tự hỏi: nếu muốn sống "vì người", mình có thể bắt đầu từ điều gì nhỏ nhất?`,
-    
+
     storyConnection: '🪞 → 🎋 Từ người TỰ RÈN MÌNH, giờ đây Người trở thành tấm gương SỐNG VÌ NHÂN DÂN.',
-    
+
     keyPoints: [
       'Giản dị không phải thiếu thốn, mà là lựa chọn có ý thức',
       'Gắn bó với nhân dân thể hiện qua cách sống và cách ứng xử',
       'Tiết kiệm, chống lãng phí là giá trị thiết thực mọi thời'
     ],
-    
+
     storyConclusion: 'Giản dị, tiết kiệm và gắn bó với nhân dân không phải điều xa xôi. Đó là những lựa chọn nhỏ, lặp lại mỗi ngày - để sống có ích và có ý nghĩa.',
-    
+
     practiceHint: 'Chọn 1 hành động tiết kiệm nhỏ và giữ trong 7 ngày.',
-    
+
     scenarios: [
       // Scenario 1: Categorize - Phong cách giản dị của Bác
       {
@@ -573,25 +573,25 @@ Chặng cuối mời bạn tự hỏi: nếu muốn sống "vì người", mình
         intro: 'Khi đã trở thành Chủ tịch nước, Bác Hồ vẫn giữ lối sống vô cùng giản dị. Hãy phân biệt đâu là phong cách sống của Bác và đâu là điều Bác KHÔNG làm.',
         question: 'Phân loại các thói quen/hành vi sau:',
         categories: [
-          { 
-            id: 'hcm-style', 
-            name: '⭐ Phong cách Bác Hồ', 
+          {
+            id: 'hcm-style',
+            name: '⭐ Phong cách Bác Hồ',
             items: [
               '🍚 Bữa cơm chỉ có cá kho, rau luộc, dưa cà muối',
               '👔 Mặc bộ kaki sờn vai, đôi dép cao su mòn gót',
               '🏠 Ở nhà sàn nhỏ thay vì Phủ Chủ tịch sang trọng',
               '🚶 Thường xuyên đi bộ thăm dân, vào tận ruộng đồng'
-            ] 
+            ]
           },
-          { 
-            id: 'not-hcm', 
-            name: '❌ KHÔNG phải phong cách Bác', 
+          {
+            id: 'not-hcm',
+            name: '❌ KHÔNG phải phong cách Bác',
             items: [
               '🍽️ Yêu cầu bữa ăn đặc biệt vì là Chủ tịch nước',
               '🤵 Mặc com-lê đắt tiền để thể hiện uy quyền',
               '🚗 Dùng xe riêng có người hầu đi mọi nơi',
               '💎 Nhận quà biếu giá trị từ cấp dưới'
-            ] 
+            ]
           },
         ],
         message: '🌾 Bác nói: "Người ta thường nói: Địa vị càng cao thì càng phải giản dị. Đó là đạo đức cách mạng." Giản dị không phải nghèo khó, mà là LỰA CHỌN có ý thức!',
@@ -683,6 +683,102 @@ export const rewards: Reward[] = [
   },
 ];
 
+// ==================== LESSONS (Bài học kết thúc game) ====================
+
+export type Lesson = {
+  id: string;
+  title: string;
+  icon: string;
+  thankYouMessage: string;
+  lessonContent: string;
+  quote: string;
+  quoteAuthor: string;
+  practiceChallenge: string;
+};
+
+export const lessons: Lesson[] = [
+  {
+    id: 'lesson-1',
+    title: 'Quan Sát Và Tư Duy Độc Lập',
+    icon: '👁️',
+    thankYouMessage: 'Cảm ơn bạn đã hoàn thành hành trình!',
+    lessonContent: 'Bác Hồ dạy chúng ta: Hãy nhìn qua bề ngoài để thấy bản chất. Quan sát thực tế, ghi chép cẩn thận, và tự mình suy nghĩ - đó là cách học hiệu quả nhất.',
+    quote: '"Học để làm việc, làm người, làm cán bộ."',
+    quoteAuthor: '- Hồ Chí Minh',
+    practiceChallenge: '📝 Thử thách 7 ngày: Mỗi ngày ghi 3 điều bạn quan sát được và 1 bài học rút ra.',
+  },
+  {
+    id: 'lesson-2',
+    title: 'Kỷ Luật Và Kiên Trì',
+    icon: '⚒️',
+    thankYouMessage: 'Xuất sắc! Bạn đã hoàn thành hành trình!',
+    lessonContent: 'Bác Hồ làm việc cực khổ 12-14 tiếng/ngày nhưng vẫn tự học mỗi đêm. Kỷ luật tự giác và kiên trì chính là bí quyết thành công.',
+    quote: '"Có công mài sắt, có ngày nên kim."',
+    quoteAuthor: '- Hồ Chí Minh',
+    practiceChallenge: '⏰ Thử thách 7 ngày: Dậy sớm 15 phút mỗi ngày để đọc sách hoặc học bài.',
+  },
+  {
+    id: 'lesson-3',
+    title: 'Học Tập Suốt Đời',
+    icon: '📚',
+    thankYouMessage: 'Tuyệt vời! Bạn đã hoàn thành hành trình!',
+    lessonContent: 'Dù bận rộn đến đâu, Bác vẫn tự học tiếng Anh, tiếng Pháp, tiếng Nga... Học không bao giờ là đủ, và thời gian luôn có nếu ta biết trân trọng.',
+    quote: '"Học hỏi là một việc phải tiếp tục suốt đời."',
+    quoteAuthor: '- Hồ Chí Minh',
+    practiceChallenge: '📖 Thử thách 7 ngày: Đọc 10 trang sách mỗi ngày, bất kể bận rộn thế nào.',
+  },
+  {
+    id: 'lesson-4',
+    title: 'Lý Luận Gắn Thực Tiễn',
+    icon: '🎯',
+    thankYouMessage: 'Chúc mừng bạn đã hoàn thành hành trình!',
+    lessonContent: 'Bác Hồ học Mác-Lênin nhưng vận dụng sáng tạo cho Việt Nam. Lý luận mà không có thực tiễn là lý luận suông, thực tiễn mà không có lý luận là thực tiễn mù quáng.',
+    quote: '"Thực hành sinh ra hiểu biết."',
+    quoteAuthor: '- Hồ Chí Minh',
+    practiceChallenge: '🧪 Thử thách 7 ngày: Mỗi bài học mới, viết 1 ví dụ áp dụng vào đời sống.',
+  },
+  {
+    id: 'lesson-5',
+    title: 'Tự Soi - Tự Sửa',
+    icon: '🪞',
+    thankYouMessage: 'Thật tuyệt vời! Bạn đã hoàn thành hành trình!',
+    lessonContent: 'Bác Hồ thực hành "tự phê bình" mỗi ngày. Biết nhìn lại mình, thừa nhận điểm yếu và kiên quyết sửa chữa - đó là cách để tiến bộ mỗi ngày.',
+    quote: '"Phải tự phê bình và phê bình một cách thành khẩn."',
+    quoteAuthor: '- Hồ Chí Minh',
+    practiceChallenge: '🪞 Thử thách 7 ngày: Mỗi tối, viết 1 điều làm tốt và 1 điều cần cải thiện.',
+  },
+  {
+    id: 'lesson-6',
+    title: 'Giản Dị Và Tiết Kiệm',
+    icon: '🌾',
+    thankYouMessage: 'Cảm ơn bạn đã đồng hành cùng hành trình!',
+    lessonContent: 'Là Chủ tịch nước nhưng Bác vẫn mặc bộ kaki sờn, ăn cơm rau muối. Giản dị không phải nghèo khó, mà là lựa chọn có ý thức để sống ý nghĩa hơn.',
+    quote: '"Cần kiệm liêm chính, chí công vô tư."',
+    quoteAuthor: '- Hồ Chí Minh',
+    practiceChallenge: '💰 Thử thách 7 ngày: Tiết kiệm 10.000đ mỗi ngày để làm việc thiện cuối tuần.',
+  },
+  {
+    id: 'lesson-7',
+    title: 'Vì Nhân Dân Phục Vụ',
+    icon: '❤️',
+    thankYouMessage: 'Tuyệt vời! Cảm ơn bạn đã hoàn thành!',
+    lessonContent: 'Cả đời Bác sống vì dân, vì nước. Giúp đỡ người khác không cần to tát, chỉ cần chân thành và đều đặn.',
+    quote: '"Không có gì quý hơn độc lập, tự do."',
+    quoteAuthor: '- Hồ Chí Minh',
+    practiceChallenge: '🤝 Thử thách 7 ngày: Làm 1 việc tốt cho người khác mỗi ngày, dù nhỏ thôi.',
+  },
+  {
+    id: 'lesson-8',
+    title: 'Đoàn Kết Là Sức Mạnh',
+    icon: '🤝',
+    thankYouMessage: 'Cảm ơn bạn đã trải nghiệm hành trình!',
+    lessonContent: 'Bác Hồ đoàn kết mọi tầng lớp, mọi dân tộc. Một người đi nhanh, nhưng cả nhóm đi xa. Học cách hợp tác và tôn trọng sự khác biệt.',
+    quote: '"Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công."',
+    quoteAuthor: '- Hồ Chí Minh',
+    practiceChallenge: '👥 Thử thách 7 ngày: Chủ động giúp đỡ 1 bạn trong lớp mỗi ngày.',
+  },
+];
+
 // ==================== HELPER FUNCTIONS ====================
 
 // Lấy random scenario từ một stage
@@ -697,6 +793,12 @@ export const getRandomReward = (): Reward => {
   return rewards[randomIndex];
 };
 
+// Lấy random lesson (bài học kết thúc game)
+export const getRandomLesson = (): Lesson => {
+  const randomIndex = Math.floor(Math.random() * lessons.length);
+  return lessons[randomIndex];
+};
+
 // Lấy stage theo id
 export const getStageById = (id: string): GameStage | undefined => {
   return gameStages.find(stage => stage.id === id);
@@ -705,7 +807,7 @@ export const getStageById = (id: string): GameStage | undefined => {
 // Lấy storyline connection text
 export const getStoryConnection = (stageIndex: number): string => {
   if (stageIndex === 0) return '🚢 Khởi đầu hành trình...';
-  
+
   const stage = gameStages[stageIndex];
   return stage?.storyConnection || '';
 };

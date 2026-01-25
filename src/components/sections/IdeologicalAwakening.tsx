@@ -6,29 +6,29 @@ const IdeologicalAwakening: React.FC = () => {
     {
       id: 1,
       icon: "🔥",
-      title: "1917: Ảnh Hưởng Từ Cách Mạng Tháng Mười Nga",
+      title: "1917: Cách Mạng Tháng Mười Nga",
       content:
-        "Ngày 7/11/1917, cuộc cách mạng do Lênin lãnh đạo đã lật đổ chế độ Nga Hoàng, thành lập nhà nước Xô Viết - nhà nước công nông đầu tiên trên thế giới. Sự kiện này 'như tiếng sét' làm thức tỉnh phong trào cách mạng trên toàn thế giới, thu hút sự chú ý của Nguyễn Ái Quốc đang hoạt động tại Paris.",
+        "7/11/1917, Lênin lãnh đạo lật đổ Nga Hoàng, lập nhà nước Xô Viết công nông đầu tiên. Sự kiện 'như tiếng sét' thức tỉnh phong trào cách mạng thế giới.",
       color: "var(--vietnam-red)",
       isHighlight: false,
     },
     {
       id: 2,
       icon: "📝",
-      title: "1919: Bản Yêu Sách 8 Điểm Gửi Hội Nghị Versailles",
+      title: "1919: Bản Yêu Sách Gửi Hội Nghị Versailles",
       content:
-        "Tháng 6/1919, thay mặt nhóm người Việt Nam yêu nước tại Pháp, Nguyễn Ái Quốc gửi 'Bản yêu sách của nhân dân An Nam' đến Hội nghị Versailles, đòi các quyền tự do, dân chủ cho nhân dân Việt Nam. Dù không được đáp ứng, sự kiện này khẳng định tên tuổi Nguyễn Ái Quốc trên chính trường quốc tế và cho Người bài học: Không thể trông chờ vào lòng tốt của đế quốc.",
+        "Nguyễn Ái Quốc gửi 'Bản yêu sách 8 điểm' đòi quyền tự do cho nhân dân An Nam. Không được đáp ứng - bài học: Không thể trông chờ vào đế quốc.",
       color: "var(--vietnam-gold)",
       isHighlight: false,
     },
     {
       id: 3,
       icon: "📖",
-      title: "Mùa Hè 1920: Đọc Luận Cương Của Lênin - Bước Ngoặt Lịch Sử",
+      title: "7/1920: Đọc Luận Cương Của Lênin",
       content:
-        'Tháng 7/1920, Nguyễn Ái Quốc đọc "Sơ thảo lần thứ nhất những luận cương về vấn đề dân tộc và vấn đề thuộc địa" của Lênin đăng trên báo L\'Humanité. Luận cương khẳng định cách mạng thuộc địa là bộ phận không thể tách rời của cách mạng vô sản thế giới.',
+        'Đọc "Luận cương về vấn đề dân tộc và thuộc địa" của Lênin. Khẳng định cách mạng thuộc địa là bộ phận của cách mạng vô sản thế giới.',
       quote:
-        '"Luận cương của Lênin làm cho tôi rất cảm động, phấn khởi, sáng tỏ, tin tưởng biết bao!... Đây là cái cần thiết cho chúng ta, đây là con đường giải phóng chúng ta!"',
+        '"Đây là cái cần thiết cho chúng ta, đây là con đường giải phóng chúng ta!"',
       quoteAuthor: "- Hồ Chí Minh",
       color: "var(--vietnam-gold)",
       isHighlight: true,
@@ -36,9 +36,9 @@ const IdeologicalAwakening: React.FC = () => {
     {
       id: 4,
       icon: "🎯",
-      title: "Tháng 12/1920: Sáng Lập Đảng Cộng Sản Pháp Tại Tours",
+      title: "12/1920: Sáng Lập Đảng Cộng Sản Pháp",
       content:
-        "Tại Đại hội Đảng Xã hội Pháp ở thành phố Tours (25-30/12/1920), Nguyễn Ái Quốc bỏ phiếu tán thành gia nhập Quốc tế Cộng sản (Quốc tế III) và tham gia sáng lập Đảng Cộng sản Pháp. Sự kiện này đánh dấu Người trở thành một trong những người Cộng sản đầu tiên của Việt Nam.",
+        "Đại hội Tours (25-30/12/1920): Bỏ phiếu gia nhập Quốc tế III, sáng lập Đảng Cộng sản Pháp. Trở thành người Cộng sản đầu tiên của Việt Nam.",
       color: "var(--vietnam-red)",
       isHighlight: false,
     },
@@ -47,25 +47,25 @@ const IdeologicalAwakening: React.FC = () => {
       icon: "🏛️",
       title: "1921-1923: Hoạt Động Tại Pháp",
       content:
-        "Sáng lập Hội Liên hiệp Thuộc địa (1921). Làm chủ bút báo 'Le Paria' (Người cùng khổ). Viết nhiều bài báo tố cáo tội ác thực dân, tuyên truyền chủ nghĩa Mác-Lênin. Tham gia Đại hội V Quốc tế Cộng sản (Moscow, 1924) - trình bày về phương Đông và cách mạng thuộc địa.",
+        "Sáng lập Hội Liên hiệp Thuộc địa (1921), làm chủ bút báo 'Le Paria'. Viết báo tố cáo tội ác thực dân, tuyên truyền chủ nghĩa Mác-Lênin.",
       color: "var(--vietnam-gold)",
       isHighlight: false,
     },
     {
       id: 6,
       icon: "🇷🇺",
-      title: "1923-1924: Hoạt Động Tại Liên Xô - Đào Tạo Lý Luận",
+      title: "1923-1924: Học Tập Tại Liên Xô",
       content:
-        "Tháng 6/1923, Nguyễn Ái Quốc tới Moscow (Liên Xô). Học tập tại Trường Đại học Phương Đông - nơi đào tạo cán bộ cách mạng cho các nước thuộc địa. Nghiên cứu sâu chủ nghĩa Mác-Lênin, kinh nghiệm xây dựng Đảng, lãnh đạo cách mạng. Hoạt động trong Quốc tế Cộng sản, Ban Phương Đông.",
+        "Tới Moscow (6/1923), học Đại học Phương Đông. Nghiên cứu sâu chủ nghĩa Mác-Lênin, kinh nghiệm xây dựng Đảng.",
       color: "var(--vietnam-red)",
       isHighlight: false,
     },
     {
       id: 7,
       icon: "🌟",
-      title: "Kết Luận: Xác Định Con Đường Cứu Nước Đúng Đắn",
+      title: "Xác Định Con Đường Cứu Nước",
       content:
-        "Từ đây, Người khẳng định: Con đường duy nhất đúng đắn để giải phóng dân tộc Việt Nam là con đường Cách mạng Vô sản - tức là tiến hành cuộc cách mạng do giai cấp công nhân lãnh đạo, kết hợp độc lập dân tộc với Chủ nghĩa Xã hội, gắn cách mạng Việt Nam với cách mạng thế giới.",
+        "Khẳng định con đường Cách mạng Vô sản: giai cấp công nhân lãnh đạo, kết hợp độc lập dân tộc với Chủ nghĩa Xã hội.",
       color: "var(--vietnam-gold)",
       isHighlight: false,
     },
@@ -78,9 +78,9 @@ const IdeologicalAwakening: React.FC = () => {
     >
       {/* Enlightenment-themed background - dawn colors */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#fdf6e3] via-[#fff8e7] to-[#fef3cd]" />
-      
+
       {/* Radiant light effect from center */}
-      <div 
+      <div
         className="absolute inset-0"
         style={{
           background: `
@@ -89,18 +89,18 @@ const IdeologicalAwakening: React.FC = () => {
           `
         }}
       />
-      
+
       {/* Book/Document watermarks */}
       <div className="absolute top-20 left-20 text-[150px] text-amber-600/5 select-none pointer-events-none">📜</div>
       <div className="absolute bottom-20 right-20 text-[120px] text-red-800/5 select-none pointer-events-none">💡</div>
-      
+
       {/* Star burst pattern - enlightenment symbol */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="w-[600px] h-[600px] rounded-full border border-amber-300/20" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-amber-300/15" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full border border-amber-300/10" />
       </div>
-      
+
       {/* Border decorations */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-700 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
@@ -120,7 +120,7 @@ const IdeologicalAwakening: React.FC = () => {
               backgroundColor: "var(--parchment-dark)",
               color: "var(--vietnam-red)",
               borderColor: "var(--vietnam-red)",
-            }}
+            } as React.CSSProperties}
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
@@ -136,9 +136,9 @@ const IdeologicalAwakening: React.FC = () => {
             className="text-xl max-w-3xl mx-auto leading-relaxed"
             style={{ color: "var(--ancient-stone)" }}
           >
-            Tại Paris - trung tâm văn hóa, chính trị châu Âu, Nguyễn Ái Quốc đã tiếp cận và 
+            Tại Paris - trung tâm văn hóa, chính trị châu Âu, Nguyễn Ái Quốc đã tiếp cận và
             say mê nghiên cứu lý luận cách mạng tiên tiến nhất thời đại, tìm thấy{" "}
-            <strong style={{ color: "var(--vietnam-red)" }}>"cẩm nang thần kỳ"</strong> cho 
+            <strong style={{ color: "var(--vietnam-red)" }}>"cẩm nang thần kỳ"</strong> cho
             con đường giải phóng dân tộc.
           </p>
         </motion.div>
@@ -158,7 +158,7 @@ const IdeologicalAwakening: React.FC = () => {
               {index < flowSteps.length - 1 && (
                 <motion.div
                   className="absolute left-1/2 -translate-x-1/2 top-full h-8 w-1 z-0"
-                  style={{ backgroundColor: "var(--vietnam-gold)" }}
+                  style={{ backgroundColor: "var(--vietnam-gold)" } as React.CSSProperties}
                   initial={{ scaleY: 0 }}
                   whileInView={{ scaleY: 1 }}
                   viewport={{ once: false }}
@@ -168,9 +168,8 @@ const IdeologicalAwakening: React.FC = () => {
 
               {/* Step Card */}
               <motion.div
-                className={`rounded-2xl shadow-xl p-8 border-4 relative z-10 ${
-                  step.isHighlight ? "transform scale-105" : ""
-                }`}
+                className={`rounded-2xl shadow-xl p-8 border-4 relative z-10 ${step.isHighlight ? "transform scale-105" : ""
+                  }`}
                 style={{
                   backgroundColor: step.isHighlight
                     ? "var(--vietnam-red)"
@@ -179,7 +178,7 @@ const IdeologicalAwakening: React.FC = () => {
                   color: step.isHighlight
                     ? "var(--vietnam-white)"
                     : "var(--ink-black)",
-                }}
+                } as React.CSSProperties}
                 whileHover={{ scale: step.isHighlight ? 1.07 : 1.02 }}
               >
                 {/* Step Number Badge */}
@@ -192,7 +191,7 @@ const IdeologicalAwakening: React.FC = () => {
                     color: step.isHighlight
                       ? "var(--ink-black)"
                       : "var(--vietnam-white)",
-                  }}
+                  } as React.CSSProperties}
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 3, repeat: Infinity, delay: index * 0.2 }}
                 >
@@ -228,7 +227,7 @@ const IdeologicalAwakening: React.FC = () => {
                       style={{
                         backgroundColor: "rgba(255,255,255,0.1)",
                         borderLeft: "4px solid var(--vietnam-gold)",
-                      }}
+                      } as React.CSSProperties}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: false }}
@@ -255,7 +254,7 @@ const IdeologicalAwakening: React.FC = () => {
               {index < flowSteps.length - 1 && (
                 <motion.div
                   className="absolute left-1/2 -translate-x-1/2 -bottom-6 text-3xl z-20"
-                  style={{ color: "var(--vietnam-gold)" }}
+                  style={{ color: "var(--vietnam-gold)" } as React.CSSProperties}
                   animate={{ y: [0, 10, 0] }}
                   transition={{ duration: 1, repeat: Infinity }}
                 >
@@ -298,9 +297,9 @@ const IdeologicalAwakening: React.FC = () => {
               className="text-lg leading-relaxed"
               style={{ color: "var(--ancient-stone)" }}
             >
-              Từ một thanh niên yêu nước mang hoài bão tìm đường cứu nước, 
-              Nguyễn Ái Quốc đã trở thành <strong>người Cộng sản</strong>, 
-              tìm thấy <strong>con đường giải phóng dân tộc</strong> đúng đắn - 
+              Từ một thanh niên yêu nước mang hoài bão tìm đường cứu nước,
+              Nguyễn Ái Quốc đã trở thành <strong>người Cộng sản</strong>,
+              tìm thấy <strong>con đường giải phóng dân tộc</strong> đúng đắn -
               <span style={{ color: "var(--vietnam-red)" }}> Con đường Cách mạng Vô sản</span>.
             </p>
           </div>

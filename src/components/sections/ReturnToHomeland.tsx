@@ -17,77 +17,62 @@ const ReturnToHomeland: React.FC = () => {
   const timelineEvents: TimelineEvent[] = [
     {
       year: "1930-1931",
-      title: "Cao Trào Cách Mạng Xô Viết Nghệ Tĩnh",
+      title: "Cao Trào Xô Viết Nghệ Tĩnh",
       icon: "🔥",
-      location: "Nghệ An - Hà Tĩnh, Việt Nam",
-      content:
-        "Sau khi Đảng ra đời, phong trào cách mạng bùng nổ mạnh mẽ. Cao trào Xô Viết Nghệ Tĩnh (1930-1931) - đỉnh cao của phong trào công nông trong thời kỳ này. Lần đầu tiên, chính quyền Xô Viết công nông được thành lập ở một số địa phương.",
-      significance:
-        "Cuộc diễn tập đầu tiên của cách mạng Việt Nam, khẳng định sức mạnh của quần chúng dưới sự lãnh đạo của Đảng.",
+      location: "Nghệ An - Hà Tĩnh",
+      content: "Phong trào cách mạng bùng nổ sau khi Đảng ra đời. Chính quyền Xô Viết công nông đầu tiên được thành lập.",
+      significance: "Cuộc diễn tập đầu tiên của cách mạng Việt Nam.",
     },
     {
       year: "1931-1933",
-      title: "Nguyễn Ái Quốc Bị Bắt Tại Hồng Kông",
+      title: "Bị Bắt Tại Hồng Kông",
       icon: "⚖️",
       location: "Hồng Kông",
-      content:
-        "Tháng 6/1931, Nguyễn Ái Quốc bị cảnh sát Anh bắt tại Hồng Kông. Nhờ sự giúp đỡ của luật sư tiến bộ Frank Loseby và phong trào quốc tế đấu tranh, Người được trả tự do năm 1933.",
-      significance:
-        "Trong thời gian này, Đảng Cộng sản Đông Dương chịu tổn thất nặng nề do khủng bố trắng của thực dân. Nhiều lãnh đạo như Trần Phú, Lê Hồng Phong bị bắt hoặc hy sinh.",
+      content: "6/1931, bị cảnh sát Anh bắt. Nhờ luật sư Frank Loseby và phong trào quốc tế, được trả tự do năm 1933.",
+      significance: "Đảng chịu tổn thất nặng nề do khủng bố trắng.",
     },
     {
       year: "1934-1938",
-      title: "Trở Lại Liên Xô - Tiếp Tục Học Tập",
+      title: "Trở Lại Liên Xô",
       icon: "🎓",
       location: "Moscow, Liên Xô",
-      content:
-        "Năm 1934, Nguyễn Ái Quốc trở lại Liên Xô, học tập tại Trường Quốc tế Lênin (1934-1935). Nghiên cứu sâu thêm chủ nghĩa Mác-Lênin, kinh nghiệm xây dựng Đảng và phong trào cộng sản quốc tế.",
-      significance:
-        "Giai đoạn củng cố lý luận, chờ thời cơ thuận lợi để trở về nước trực tiếp lãnh đạo cách mạng.",
+      content: "Học tại Trường Quốc tế Lênin, nghiên cứu sâu chủ nghĩa Mác-Lênin.",
+      significance: "Củng cố lý luận, chờ thời cơ về nước.",
     },
     {
       year: "1938-1940",
-      title: "Từ Liên Xô Trở Về Trung Quốc",
+      title: "Về Trung Quốc",
       icon: "🚂",
-      location: "Diên An → Quế Lâm → Côn Minh, Trung Quốc",
-      content:
-        "Cuối năm 1938, Nguyễn Ái Quốc rời Liên Xô về Trung Quốc. Hoạt động tại Diên An (căn cứ địa của Đảng Cộng sản Trung Quốc), sau đó di chuyển đến Quế Lâm, Côn Minh để tìm cách bắt liên lạc với Đảng trong nước.",
-      significance:
-        "Tình hình thế giới biến chuyển - Thế chiến II bùng nổ (1939), Pháp đầu hàng Đức (1940), Nhật xâm nhập Đông Dương - tạo thời cơ mới cho cách mạng Việt Nam.",
+      location: "Diên An → Quế Lâm → Côn Minh",
+      content: "Rời Liên Xô về Trung Quốc, tìm cách liên lạc với Đảng trong nước.",
+      significance: "Thế chiến II bùng nổ - thời cơ mới cho cách mạng Việt Nam.",
     },
     {
       year: "28/1/1941",
-      title: "TRỞ VỀ TỔ QUỐC - PÁC BÓ, CAO BẰNG",
+      title: "TRỞ VỀ TỔ QUỐC - PÁC BÓ",
       icon: "🏠",
-      location: "Pác Bó, xã Trường Hà, huyện Hà Quảng, tỉnh Cao Bằng",
-      content:
-        "Sau 30 năm bôn ba tìm đường cứu nước (1911-1941), ngày 28/1/1941 (mùng 2 Tết Tân Tỵ), Nguyễn Ái Quốc - lúc này lấy tên Già Thu - đã bước qua cột mốc 108 biên giới Việt-Trung, đặt chân trở lại Tổ quốc tại Pác Bó, Cao Bằng.",
-      quote:
-        '"Sáng hồng bên suối in thơ Đảng, Tối lạnh bên đèn dịch sử Đảng..."',
-      quoteAuthor: "- Thơ Bác tại hang Pác Bó",
-      significance:
-        "Đây là thời khắc lịch sử vô cùng quan trọng - Người về nước để TRỰC TIẾP lãnh đạo cách mạng Việt Nam trong giai đoạn quyết định.",
+      location: "Pác Bó, Cao Bằng",
+      content: "Sau 30 năm bôn ba, Nguyễn Ái Quốc (tên Già Thu) bước qua cột mốc 108, đặt chân về Tổ quốc.",
+      quote: '"Sáng hồng bên suối in thơ Đảng..."',
+      quoteAuthor: "- Thơ Bác tại Pác Bó",
+      significance: "Thời khắc lịch sử - về nước TRỰC TIẾP lãnh đạo cách mạng.",
       isHighlight: true,
     },
     {
       year: "5/1941",
-      title: "Hội Nghị Trung Ương 8 - Thành Lập Mặt Trận Việt Minh",
+      title: "Thành Lập Mặt Trận Việt Minh",
       icon: "🚩",
-      location: "Khuổi Nậm, Pác Bó, Cao Bằng",
-      content:
-        "Từ ngày 10-19/5/1941, Hội nghị lần thứ 8 Ban Chấp hành Trung ương Đảng họp tại Khuổi Nậm do Nguyễn Ái Quốc chủ trì. Thành lập Mặt trận Việt Nam Độc lập Đồng minh (gọi tắt là Việt Minh) ngày 19/5/1941.",
-      significance:
-        "Xác định nhiệm vụ trước mắt: Giải phóng dân tộc là nhiệm vụ bức thiết nhất. Chuẩn bị lực lượng, đón thời cơ khởi nghĩa giành chính quyền.",
+      location: "Khuổi Nậm, Pác Bó",
+      content: "Hội nghị Trung ương 8 (10-19/5/1941) thành lập Mặt trận Việt Nam Độc lập Đồng minh (19/5/1941).",
+      significance: "Xác định nhiệm vụ: Giải phóng dân tộc là bức thiết nhất.",
     },
     {
       year: "1941-1945",
-      title: "Xây Dựng Lực Lượng, Chuẩn Bị Khởi Nghĩa",
+      title: "Chuẩn Bị Khởi Nghĩa",
       icon: "⚔️",
       location: "Cao Bằng - Việt Bắc",
-      content:
-        "Xây dựng căn cứ địa cách mạng, phát triển lực lượng vũ trang. Thành lập Đội Việt Nam Tuyên truyền Giải phóng quân (22/12/1944) - tiền thân của Quân đội nhân dân Việt Nam. Chuẩn bị mọi điều kiện cho Tổng khởi nghĩa.",
-      significance:
-        "Từ hang Pác Bó, từ rừng Việt Bắc, ngọn lửa cách mạng lan tỏa khắp cả nước, dẫn đến thắng lợi vĩ đại của Cách mạng Tháng Tám 1945.",
+      content: "Xây dựng căn cứ địa, thành lập Đội Việt Nam Tuyên truyền Giải phóng quân (22/12/1944).",
+      significance: "Ngọn lửa cách mạng lan tỏa, dẫn đến Cách mạng Tháng Tám 1945.",
     },
   ];
 
@@ -98,9 +83,9 @@ const ReturnToHomeland: React.FC = () => {
     >
       {/* Warm homeland background - deep red with golden accents */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1a0808] via-[#2d1010] to-[#1a0808]" />
-      
+
       {/* Mountain silhouette overlay in warm tones */}
-      <div 
+      <div
         className="absolute bottom-0 left-0 right-0 h-64 opacity-20"
         style={{
           background: `
@@ -109,18 +94,18 @@ const ReturnToHomeland: React.FC = () => {
           `
         }}
       />
-      
+
       {/* Vietnamese symbols */}
       <div className="absolute top-10 left-10 text-[120px] text-yellow-500/5 select-none pointer-events-none">🇻🇳</div>
       <div className="absolute bottom-10 right-10 text-[100px] text-yellow-500/5 select-none pointer-events-none">🏔️</div>
-      
+
       {/* Home symbol watermark */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] text-yellow-500/5 select-none pointer-events-none">🏠</div>
-      
+
       {/* Star symbol - representing Vietnam */}
       <div className="absolute top-1/3 right-20 text-[100px] text-red-500/5 select-none pointer-events-none">★</div>
       <div className="absolute bottom-1/3 left-20 text-[80px] text-yellow-500/5 select-none pointer-events-none">⛰️</div>
-      
+
       {/* Border decorations - all red and yellow */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-600 via-red-600 to-yellow-600" />
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-700 via-yellow-500 to-red-700" />
@@ -158,7 +143,7 @@ const ReturnToHomeland: React.FC = () => {
             className="text-xl max-w-3xl mx-auto leading-relaxed"
             style={{ color: "var(--ancient-stone)" }}
           >
-            Sau 30 năm bôn ba tìm đường cứu nước qua 3 đại dương, 4 châu lục, 
+            Sau 30 năm bôn ba tìm đường cứu nước qua 3 đại dương, 4 châu lục,
             Người đã tìm thấy con đường cách mạng đúng đắn và{" "}
             <strong style={{ color: "var(--vietnam-red)" }}>
               trở về Tổ quốc để trực tiếp lãnh đạo nhân dân đấu tranh giành độc lập
@@ -192,9 +177,8 @@ const ReturnToHomeland: React.FC = () => {
 
               {/* Event Card */}
               <motion.div
-                className={`rounded-2xl shadow-xl p-6 md:p-8 border-4 relative z-10 ${
-                  event.isHighlight ? "transform" : ""
-                }`}
+                className={`rounded-2xl shadow-xl p-6 md:p-8 border-4 relative z-10 ${event.isHighlight ? "transform" : ""
+                  }`}
                 style={{
                   backgroundColor: event.isHighlight
                     ? "var(--vietnam-red)"
@@ -202,8 +186,8 @@ const ReturnToHomeland: React.FC = () => {
                   borderColor: event.isHighlight
                     ? "var(--vietnam-gold)"
                     : index % 2 === 0
-                    ? "var(--vietnam-red)"
-                    : "var(--vietnam-gold)",
+                      ? "var(--vietnam-red)"
+                      : "var(--vietnam-gold)",
                   color: event.isHighlight
                     ? "var(--vietnam-white)"
                     : "var(--ink-black)",
@@ -444,7 +428,7 @@ const ReturnToHomeland: React.FC = () => {
                 className="text-lg md:text-xl leading-relaxed"
                 style={{ color: "var(--vietnam-white)" }}
               >
-                Từ ngày 5/6/1911 ra đi tìm đường cứu nước đến ngày 28/1/1941 trở về Tổ quốc, 
+                Từ ngày 5/6/1911 ra đi tìm đường cứu nước đến ngày 28/1/1941 trở về Tổ quốc,
                 Chủ tịch Hồ Chí Minh đã hoàn thành sứ mệnh lịch sử:{" "}
                 <strong style={{ color: "var(--vietnam-gold)" }}>
                   Tìm ra con đường cứu nước đúng đắn cho dân tộc Việt Nam

@@ -17,10 +17,9 @@ const HistoricalContext: React.FC = () => {
       title: "Ách Đô Hộ Thực Dân",
       icon: "🔴",
       content: [
-        "🔴 Chế độ cai trị hà khắc từ năm 1858, bóc lột kinh tế triệt để",
-        "🔴 Đàn áp văn hóa và tinh thần dân tộc một cách tàn nhẫn",
-        "🔴 Xã hội phân hóa sâu sắc: mâu thuẫn dân tộc và giai cấp gay gắt",
-        "🔴 Dân tộc Việt Nam chìm trong đêm đen nô lệ và khủng hoảng trầm trọng",
+        "🔴 Từ năm 1858, thực dân Pháp cai trị hà khắc, bóc lột triệt để",
+        "🔴 Đàn áp văn hóa, tinh thần dân tộc tàn nhẫn",
+        "🔴 Mâu thuẫn dân tộc và giai cấp ngày càng gay gắt",
       ],
     },
     {
@@ -28,10 +27,9 @@ const HistoricalContext: React.FC = () => {
       title: "Các Phong Trào Thất Bại",
       icon: "⚠️",
       content: [
-        "⚔️ Phong trào Cần Vương (1885-1896): Khởi nghĩa vũ trang dưới ngọn cờ 'phù Lê' đã lỗi thời, thiếu đường lối đúng đắn",
-        "📚 Phong trào Duy Tân, Đông Du (đầu thế kỷ XX): Đông Du dựa vào Nhật Bản dễ bị phản bội; Duy Tân ảo tưởng vào 'khai hóa' của thực dân",
-        "🏔️ Khởi nghĩa Yên Thế (1884-1913) của Hoàng Hoa Thám: Mang tính chất tự phát, địa phương, cuối cùng bị dập tắt",
-        "❌ Tất cả đều thất bại do thiếu đường lối cách mạng đúng đắn và tổ chức vững chắc",
+        "⚔️ Cần Vương (1885-1896): Khởi nghĩa vũ trang theo đường lối cũ, thất bại",
+        "📚 Đông Du, Duy Tân: Dựa vào Nhật/Pháp - không đúng đắn",
+        "🏔️ Yên Thế (1884-1913): Tự phát, thiếu tổ chức vững chắc",
       ],
     },
     {
@@ -39,10 +37,9 @@ const HistoricalContext: React.FC = () => {
       title: "Khủng Hoảng Đường Lối",
       icon: "🔴",
       content: [
-        "❓ Câu hỏi lớn 'Cứu nước bằng cách nào? Theo con đường nào?' chưa có lời giải đáp",
-        "🏛️ Hệ tư tưởng phong kiến đã hoàn toàn bất lực trước nhiệm vụ giải phóng dân tộc",
-        "⚖️ Dân chủ tư sản tỏ ra không phù hợp với hoàn cảnh Việt Nam thuộc địa",
-        "🌟 Thanh niên Nguyễn Tất Thành sinh ra (1890) trong bối cảnh ấy, sớm thấm thía nỗi đau mất nước",
+        "❓ Chưa tìm ra con đường cứu nước đúng đắn",
+        "🏛️ Hệ tư tưởng phong kiến bất lực, tư sản không phù hợp",
+        "🌟 Nguyễn Tất Thành (sinh 1890) sớm thấm thía nỗi đau mất nước",
       ],
     },
   ];
@@ -56,9 +53,9 @@ const HistoricalContext: React.FC = () => {
     >
       {/* Solemn Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#f5f0e8] via-[#ede5d8] to-[#f5f0e8]" />
-      
+
       {/* Traditional Pattern Overlay */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `
@@ -67,11 +64,11 @@ const HistoricalContext: React.FC = () => {
           `
         }}
       />
-      
+
       {/* Decorative lotus pattern */}
       <div className="absolute top-10 left-10 text-[120px] text-red-900/5 select-none pointer-events-none">❀</div>
       <div className="absolute bottom-10 right-10 text-[120px] text-red-900/5 select-none pointer-events-none rotate-180">❀</div>
-      
+
       {/* Top and Bottom Border with gradient */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-800 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-800 to-transparent" />
@@ -91,7 +88,7 @@ const HistoricalContext: React.FC = () => {
               backgroundColor: "var(--parchment-dark)",
               color: "var(--vietnam-red)",
               borderColor: "var(--vietnam-red)",
-            }}
+            } as React.CSSProperties}
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
@@ -127,9 +124,8 @@ const HistoricalContext: React.FC = () => {
             <motion.button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 font-semibold transition-all border-2 ${
-                activeTab === tab.id ? "shadow-xl" : "shadow-md"
-              }`}
+              className={`px-6 py-3 font-semibold transition-all border-2 ${activeTab === tab.id ? "shadow-xl" : "shadow-md"
+                }`}
               style={{
                 backgroundColor:
                   activeTab === tab.id
@@ -143,7 +139,7 @@ const HistoricalContext: React.FC = () => {
                   activeTab === tab.id
                     ? "var(--vietnam-gold)"
                     : "var(--ancient-stone)",
-              }}
+              } as React.CSSProperties}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -197,7 +193,7 @@ const HistoricalContext: React.FC = () => {
                     style={{
                       backgroundColor: "var(--vietnam-white)",
                       borderColor: "var(--parchment-dark)",
-                    }}
+                    } as React.CSSProperties}
                   >
                     <motion.div
                       className="text-2xl"
@@ -250,7 +246,7 @@ const HistoricalContext: React.FC = () => {
                 className="text-xl italic font-medium leading-relaxed"
                 style={{ color: "var(--vietnam-white)" }}
               >
-                "Thanh niên Nguyễn Tất Thành sinh ra và lớn lên trong bối cảnh ấy, 
+                "Thanh niên Nguyễn Tất Thành sinh ra và lớn lên trong bối cảnh ấy,
                 sớm thấm thía nỗi đau mất nước và day dứt trước sự thất bại của các bậc tiền bối."
               </p>
               <p

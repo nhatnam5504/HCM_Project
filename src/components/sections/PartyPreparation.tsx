@@ -19,59 +19,48 @@ const PartyPreparation: React.FC = () => {
   const prepCards: PrepCard[] = [
     {
       year: "11/1924",
-      title: "ĐẺN QUẢNG CHÂU",
+      title: "ĐẾN QUẢNG CHÂU",
       icon: "🇨🇳",
-      event: "Nguyễn Ái Quốc tới Quảng Châu (Trung Quốc) - trung tâm cách mạng Phương Đông lúc bấy giờ",
+      event: "Nguyễn Ái Quốc tới Quảng Châu - trung tâm cách mạng Phương Đông",
       location: "Quảng Châu, Trung Quốc",
-      activity:
-        "Liên lạc với các nhà cách mạng Việt Nam lưu vong, chuẩn bị điều kiện thành lập tổ chức cách mạng.",
+      activity: "Liên lạc nhà cách mạng Việt Nam, chuẩn bị thành lập tổ chức cách mạng.",
       color: "var(--vietnam-gold)",
     },
     {
       year: "6/1925",
       title: "THÀNH LẬP HỘI VIỆT NAM CÁCH MẠNG THANH NIÊN",
       icon: "🏛️",
-      event: "Thành lập Hội Việt Nam Cách mạng Thanh niên - tổ chức tiền thân của Đảng",
+      event: "Thành lập tổ chức tiền thân của Đảng",
       location: "Quảng Châu (Trung Quốc)",
-      activity:
-        'Mở các lớp huấn luyện chính trị, đào tạo cán bộ nòng cốt (như Lê Hồng Phong, Hồ Tùng Mậu, Trần Phú...). Ra báo "Thanh niên" - cơ quan ngôn luận của Hội (21/6/1925). Đưa người về nước hoạt động bí mật.',
+      activity: "Mở lớp huấn luyện, đào tạo cán bộ. Ra báo 'Thanh niên' (21/6/1925). Đưa người về nước hoạt động bí mật.",
       color: "var(--vietnam-red)",
     },
     {
       year: "1927",
       title: "SOẠN THẢO 'ĐƯỜNG KÁCH MỆNH'",
       icon: "📖",
-      event:
-        'Xuất bản tác phẩm "Đường Kách mệnh" - tập hợp các bài giảng cho các lớp huấn luyện',
-      coreContent:
-        "Vạch ra đường lối cơ bản của cách mạng Việt Nam: (1) Cách mạng là sự nghiệp của quần chúng; (2) Cách mạng trước hết phải có đảng cách mạng; (3) Cách mạng Việt Nam là một bộ phận của cách mạng thế giới.",
-      role:
-        "Trở thành cuốn cẩm nang lý luận chính trị đầu tiên, trang bị thế giới quan, phương pháp cách mạng cho một thế hệ thanh niên yêu nước, chuẩn bị về tư tưởng.",
+      event: "Xuất bản tác phẩm 'Đường Kách mệnh'",
+      coreContent: "Vạch đường lối: Cách mạng cần có Đảng, là sự nghiệp của quần chúng, gắn với cách mạng thế giới.",
+      role: "Trang bị phương pháp cách mạng cho thanh niên yêu nước.",
       color: "var(--vietnam-gold)",
     },
     {
       year: "1929",
-      title: "SỰ PHÂN HÓA VÀ XU THẾ THỐNG NHẤT",
+      title: "XU THẾ THỐNG NHẤT",
       icon: "⚖️",
-      event:
-        "Phong trào công nhân và phong trào yêu nước phát triển mạnh mẽ. Xuất hiện 3 tổ chức cộng sản:",
-      activity:
-        "• Đông Dương Cộng sản Đảng (6/1929 - Bắc Kỳ)\n• An Nam Cộng sản Đảng (8/1929 - Nam Kỳ)\n• Đông Dương Cộng sản Liên đoàn (9/1929 - Trung Kỳ)",
-      result:
-        "Sự tồn tại 3 tổ chức cộng sản riêng rẽ gây nguy cơ chia rẽ phong trào. Quốc tế Cộng sản giao Nguyễn Ái Quốc nhiệm vụ thống nhất các tổ chức này.",
+      event: "Xuất hiện 3 tổ chức cộng sản riêng rẽ tại Bắc, Trung, Nam Kỳ",
+      activity: "• Đông Dương Cộng sản Đảng (6/1929)\\n• An Nam Cộng sản Đảng (8/1929)\\n• Đông Dương Cộng sản Liên đoàn (9/1929)",
+      result: "Quốc tế Cộng sản giao Nguyễn Ái Quốc nhiệm vụ thống nhất các tổ chức.",
       color: "var(--vietnam-red)",
     },
     {
       year: "3/2/1930",
       title: "THÀNH LẬP ĐẢNG CỘNG SẢN VIỆT NAM",
       icon: "🚩",
-      event:
-        "Nguyễn Ái Quốc chủ trì Hội nghị hợp nhất các tổ chức cộng sản tại Cửu Long (Hồng Kông), thành lập Đảng Cộng sản Việt Nam",
-      location: "Cửu Long, Hồng Kông (Trung Quốc)",
-      document:
-        "Thông qua Chính cương vắn tắt, Sách lược vắn tắt (do Nguyễn Ái Quốc soạn thảo) - là Cương lĩnh chính trị đầu tiên của Đảng. Xác định đường lối chiến lược: Làm tư sản dân quyền cách mạng và thổ địa cách mạng để đi tới xã hội cộng sản.",
-      result:
-        "CHẤM DỨT CUỘC KHỦNG HOẢNG VỀ ĐƯỜNG LỐI VÀ TỔ CHỨC LÃNH ĐẠO KÉO DÀI GẦN MỘT THẾ KỶ. Tạo ra nhân tố quyết định cho mọi thắng lợi của cách mạng Việt Nam sau này.",
+      event: "Nguyễn Ái Quốc chủ trì Hội nghị hợp nhất tại Cửu Long (Hồng Kông)",
+      location: "Cửu Long, Hồng Kông",
+      document: "Thông qua Chính cương vắn tắt, Sách lược vắn tắt - Cương lĩnh chính trị đầu tiên của Đảng.",
+      result: "CHẤM DỨT KHỦNG HOẢNG ĐƯỜNG LỐI KÉO DÀI GẦN MỘT THẾ KỶ.",
       color: "var(--vietnam-red)",
     },
   ];
@@ -83,9 +72,9 @@ const PartyPreparation: React.FC = () => {
     >
       {/* Revolutionary red background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#2d0a0a] via-[#3d1212] to-[#2d0a0a]" />
-      
+
       {/* Flag wave pattern */}
-      <div 
+      <div
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `
@@ -99,20 +88,20 @@ const PartyPreparation: React.FC = () => {
           `
         }}
       />
-      
+
       {/* Star centerpiece */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[350px] text-yellow-500/5 select-none pointer-events-none">★</div>
-      
+
       {/* Flag symbols */}
       <div className="absolute top-20 left-10 text-[100px] text-yellow-500/5 select-none pointer-events-none">🚩</div>
       <div className="absolute bottom-20 right-10 text-[80px] text-yellow-500/5 select-none pointer-events-none">⭐</div>
-      
+
       {/* Gold corner decorations */}
       <div className="absolute top-0 left-0 w-32 h-32 border-l-4 border-t-4 border-yellow-500/30" />
       <div className="absolute top-0 right-0 w-32 h-32 border-r-4 border-t-4 border-yellow-500/30" />
       <div className="absolute bottom-0 left-0 w-32 h-32 border-l-4 border-b-4 border-yellow-500/30" />
       <div className="absolute bottom-0 right-0 w-32 h-32 border-r-4 border-b-4 border-yellow-500/30" />
-      
+
       {/* Border lines */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
@@ -404,7 +393,7 @@ const PartyPreparation: React.FC = () => {
                 className="text-xl leading-relaxed"
                 style={{ color: "var(--vietnam-white)" }}
               >
-                Đánh dấu bước ngoặt vĩ đại trong lịch sử dân tộc, chấm dứt gần một thế kỷ 
+                Đánh dấu bước ngoặt vĩ đại trong lịch sử dân tộc, chấm dứt gần một thế kỷ
                 khủng hoảng về đường lối và tổ chức lãnh đạo cách mạng Việt Nam.
               </p>
             </div>
